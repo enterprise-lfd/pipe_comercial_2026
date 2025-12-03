@@ -39,71 +39,83 @@
         .nav-item:hover:not(.active) {
             background-color: #374151; /* Gray 700 */
         }
+
+        /* Transições suaves para o layout */
+        #sidebar, #mainContent {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800 h-screen overflow-hidden">
+<body class="bg-gray-100 text-gray-800 h-screen flex flex-col overflow-hidden">
 
-    <!-- MENU LATERAL (SIDEBAR) -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-[9999] w-64 bg-gray-900 text-white flex flex-col transition-transform duration-300 transform -translate-x-full md:translate-x-0 shadow-2xl">
-        <div class="p-6 border-b border-gray-800 flex items-center justify-between md:justify-center">
-            <h1 class="text-xl font-bold tracking-wider">TERRA<span class="text-indigo-500">SALES</span></h1>
-            <button id="closeSidebarBtn" class="md:hidden text-gray-400 hover:text-white">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    <!-- 1. CABEÇALHO FIXO (HEADER) -->
+    <header class="h-16 bg-white shadow-md flex items-center justify-between px-4 z-[50] relative shrink-0">
+        <div class="flex items-center">
+            <!-- Botão Hambúrguer (Funciona Desktop e Mobile) -->
+            <button id="menuToggleBtn" class="text-gray-600 focus:outline-none p-2 rounded hover:bg-gray-100 mr-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
             </button>
+            <!-- Logo no Cabeçalho -->
+            <h1 class="text-xl font-bold text-gray-800 tracking-wider">TERRA<span class="text-indigo-600">SALES</span></h1>
         </div>
-
-        <nav class="flex-1 overflow-y-auto py-4">
-            <ul class="space-y-2 px-3">
-                <li>
-                    <button onclick="switchView('view-pipeline')" id="nav-pipeline" class="nav-item active w-full flex items-center p-3 rounded-lg transition-colors duration-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                        </svg>
-                        <span class="font-medium">Pipeline de Propostas</span>
-                    </button>
-                </li>
-                <li>
-                    <button onclick="switchView('view-crm')" id="nav-crm" class="nav-item w-full flex items-center p-3 rounded-lg transition-colors duration-200 text-gray-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                        <span class="font-medium">Cadastro CRM</span>
-                    </button>
-                </li>
-                <li>
-                    <button onclick="switchView('view-settings')" id="nav-settings" class="nav-item w-full flex items-center p-3 rounded-lg transition-colors duration-200 text-gray-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                        </svg>
-                        <span class="font-medium">Novos Cadastros</span>
-                    </button>
-                </li>
-            </ul>
-        </nav>
         
-        <div class="p-4 border-t border-gray-800 text-xs text-gray-500 text-center">
-            &copy; 2025 Sistema Vendas
-        </div>
-    </aside>
-
-    <!-- Overlay para Mobile -->
-    <div id="mobileOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-[9998] hidden md:hidden glass transition-opacity"></div>
-
-    <!-- ÁREA PRINCIPAL -->
-    <main class="flex-1 flex flex-col h-screen overflow-hidden relative md:ml-64 transition-all duration-300">
-        
-        <!-- Header Mobile -->
-        <header class="bg-white shadow-sm p-4 flex items-center justify-between md:hidden z-10 sticky top-0">
-            <div class="flex items-center">
-                <button id="mobileMenuBtn" class="text-gray-600 focus:outline-none mr-3 p-2 rounded hover:bg-gray-100">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
-                <h1 class="text-xl font-bold text-gray-800">TERRA<span class="text-indigo-600">SALES</span></h1>
+        <!-- Opcional: Info do Usuário ou Ações de Topo -->
+        <div class="flex items-center gap-3">
+            <span id="userEmailDisplay" class="text-xs text-gray-500 hidden md:block"></span>
+            <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-sm">
+                TS
             </div>
-        </header>
+        </div>
+    </header>
 
-        <!-- Container de Conteúdo -->
-        <div class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 md:p-8">
+    <div class="flex flex-1 overflow-hidden relative">
+        
+        <!-- 2. MENU LATERAL (SIDEBAR) RETRÁTIL -->
+        <!-- Posicionado relativo ao container flex, mas com comportamento absolute em mobile -->
+        <aside id="sidebar" class="absolute md:relative inset-y-0 left-0 z-40 w-64 bg-gray-900 text-white flex flex-col transform -translate-x-full md:translate-x-0 shadow-xl h-full">
+            
+            <!-- Conteúdo do Menu -->
+            <nav class="flex-1 overflow-y-auto py-6">
+                <ul class="space-y-2 px-3">
+                    <li>
+                        <button onclick="switchView('view-pipeline')" id="nav-pipeline" class="nav-item active w-full flex items-center p-3 rounded-lg transition-colors duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                            <span class="font-medium whitespace-nowrap">Pipeline de Propostas</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="switchView('view-crm')" id="nav-crm" class="nav-item w-full flex items-center p-3 rounded-lg transition-colors duration-200 text-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <span class="font-medium whitespace-nowrap">Cadastro CRM</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="switchView('view-settings')" id="nav-settings" class="nav-item w-full flex items-center p-3 rounded-lg transition-colors duration-200 text-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                            </svg>
+                            <span class="font-medium whitespace-nowrap">Novos Cadastros</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-800 text-xs text-gray-500 text-center whitespace-nowrap overflow-hidden">
+                &copy; 2025 Sistema Vendas
+            </div>
+        </aside>
+
+        <!-- Overlay para Mobile (Fundo escuro quando menu abre) -->
+        <div id="mobileOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden transition-opacity"></div>
+
+        <!-- 3. ÁREA PRINCIPAL DE CONTEÚDO -->
+        <main id="mainContent" class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 md:p-8 w-full">
 
             <!-- VIEW 1: PIPELINE DE PROPOSTAS -->
             <div id="view-pipeline" class="view-section">
@@ -381,7 +393,7 @@
 
                 </div>
 
-                <!-- IMPORTAÇÃO EM MASSA (MOVED DOWN & STYLED) -->
+                <!-- IMPORTAÇÃO EM MASSA -->
                 <div class="bg-slate-100 rounded-lg shadow-inner p-6 border-2 border-dashed border-slate-400 relative">
                     <div class="absolute -top-3 left-4 bg-slate-600 text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-widest">
                         Funcionalidade de Desenvolvedor
@@ -419,8 +431,8 @@
                 </div>
             </div>
 
-        </div>
-    </main>
+        </main>
+    </div>
 
     <!-- MODAL ORIGINAL (PROPOSTAS) -->
     <div id="proposalModal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm">
@@ -792,9 +804,9 @@
 
     <!-- Script Firebase -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
         // --- Configuração Firebase ---
         let firebaseConfig;
@@ -928,7 +940,8 @@
                 activeNav.classList.add('active', 'text-white');
                 activeNav.classList.remove('text-gray-300');
             }
-            if(window.innerWidth < 768) toggleMobileMenu();
+            // Em mobile, fechar o menu após clicar
+            if(window.innerWidth < 768) toggleMenu();
         };
 
         // --- Helper Functions for Sorting ---
@@ -1935,6 +1948,10 @@
             onAuthStateChanged(auth, user => {
                 currentUser = user;
                 if (user) {
+                    // Update user display
+                    const userDisplay = document.getElementById('userEmailDisplay');
+                    if(userDisplay) userDisplay.textContent = user.isAnonymous ? 'Modo Anônimo' : (user.email || 'Usuário');
+                    
                     setupRealtimeListeners();
                 } else {
                     if (unsubscribeProposals) unsubscribeProposals();
@@ -1957,16 +1974,61 @@
         if(crmForm) crmForm.onsubmit = handleCrmSubmit;
         if(crmModal) crmModal.onclick = (e) => { if(e.target === crmModal) hideCrmModal(); };
 
+        // Toggle Menu Logic (Updated)
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('mobileOverlay');
+        const menuBtn = document.getElementById('menuToggleBtn');
+        const mainContent = document.getElementById('mainContent');
+
         const toggleMenu = () => {
-            sidebar.classList.toggle('-translate-x-full');
-            sidebar.classList.toggle('translate-x-0');
-            overlay.classList.toggle('hidden');
+            const isMobile = window.innerWidth < 768;
+            
+            if (isMobile) {
+                // Mobile behavior: Slide in/out with overlay
+                const isClosed = sidebar.classList.contains('-translate-x-full');
+                if (isClosed) {
+                    sidebar.classList.remove('-translate-x-full');
+                    overlay.classList.remove('hidden');
+                } else {
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.add('hidden');
+                }
+            } else {
+                // Desktop behavior: Collapse/Expand sidebar
+                const isClosed = sidebar.classList.contains('-translate-x-full');
+                if (isClosed) {
+                    sidebar.classList.remove('-translate-x-full'); // Open Sidebar
+                    mainContent.style.marginLeft = '0'; // Let flexbox handle it or reset margin
+                    // Actually, since we are using relative/absolute switch in CSS, 
+                    // on Desktop (md:relative), removing -translate-x-full makes it visible in flow.
+                    // We just need to manage the width transition if we want smooth effect.
+                    // Current setup: md:translate-x-0 is default.
+                    
+                    // Let's rely on class toggling for 'closed state'
+                } 
+                // Correction for Desktop Toggle Logic with existing classes:
+                // Sidebar has `md:translate-x-0` by default.
+                // We toggle a class to force hide it.
+                sidebar.classList.toggle('md:-translate-x-full');
+                
+                // Adjust content margin? 
+                // Since sidebar is `md:relative`, hiding it with transform might leave whitespace 
+                // if we don't also adjust its width or display.
+                // Better approach for smooth slide: Toggle margin-left on a wrapper or sidebar width.
+                // Given the current setup, let's use the 'hidden' strategy visually.
+                
+                if (sidebar.classList.contains('md:-translate-x-full')) {
+                    sidebar.classList.add('md:w-0', 'md:overflow-hidden');
+                    sidebar.classList.remove('w-64');
+                } else {
+                    sidebar.classList.remove('md:w-0', 'md:overflow-hidden');
+                    sidebar.classList.add('w-64');
+                }
+            }
         };
-        document.getElementById('mobileMenuBtn')?.addEventListener('click', toggleMenu);
-        document.getElementById('closeSidebarBtn')?.addEventListener('click', toggleMenu);
-        overlay?.addEventListener('click', toggleMenu);
+
+        if(menuBtn) menuBtn.addEventListener('click', toggleMenu);
+        if(overlay) overlay.addEventListener('click', toggleMenu);
 
     </script>
 </body>
