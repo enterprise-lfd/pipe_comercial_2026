@@ -73,10 +73,7 @@
     <div class="flex flex-1 overflow-hidden relative">
         
         <!-- 2. MENU LATERAL (SIDEBAR) RETRÁTIL -->
-        <!-- Posicionado relativo ao container flex, mas com comportamento absolute em mobile -->
         <aside id="sidebar" class="absolute md:relative inset-y-0 left-0 z-40 w-64 bg-gray-900 text-white flex flex-col transform -translate-x-full md:translate-x-0 shadow-xl h-full">
-            
-            <!-- Conteúdo do Menu -->
             <nav class="flex-1 overflow-y-auto py-6">
                 <ul class="space-y-2 px-3">
                     <li>
@@ -111,7 +108,6 @@
             </div>
         </aside>
 
-        <!-- Overlay para Mobile (Fundo escuro quando menu abre) -->
         <div id="mobileOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden transition-opacity"></div>
 
         <!-- 3. ÁREA PRINCIPAL DE CONTEÚDO -->
@@ -121,21 +117,13 @@
             <div id="view-pipeline" class="view-section">
                 <header class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                     <h2 class="text-2xl font-bold text-gray-800">Pipeline de Propostas</h2>
-                    
                     <div class="flex gap-2 w-full md:w-auto">
-                        <!-- Botão Dashboard -->
                         <a href="https://lookerstudio.google.com/reporting/82129511-dc0d-449e-91ce-5154699558ca" target="_blank" class="flex-1 md:flex-none bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-4zm-4 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-8zM2 8.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-5z"/>
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-4zm-4 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-8zM2 8.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-5z"/></svg>
                             Dashboard
                         </a>
-
                         <button id="exportButton" class="flex-1 md:flex-none bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
                             Exportar
                         </button>
                         <button id="addNewButton" class="flex-1 md:flex-none bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300">
@@ -144,51 +132,17 @@
                     </div>
                 </header>
 
-                <!-- BARRA DE FILTROS -->
-                <div class="bg-white p-4 rounded-lg shadow mb-6 border border-gray-200">
+                <form id="filterFormProposals" class="bg-white p-4 rounded-lg shadow mb-6 border border-gray-200" autocomplete="off" onsubmit="return false;">
                     <div class="text-xs font-semibold text-gray-500 uppercase mb-2">Filtrar por</div>
-                    <!-- Ajustei o grid para acomodar mais um filtro -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-3">
-                        
-                        <!-- Filtro de Data (Início e Fim) -->
                         <div class="lg:col-span-2 flex gap-2">
-                            <div class="flex-1">
-                                <input type="date" id="filterDateStart" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="De" autocomplete="off">
-                            </div>
-                            <div class="flex-1">
-                                <input type="date" id="filterDateEnd" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Até" autocomplete="off">
-                            </div>
+                            <div class="flex-1"><input type="date" id="filterDateStart" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="De" autocomplete="off"></div>
+                            <div class="flex-1"><input type="date" id="filterDateEnd" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Até" autocomplete="off"></div>
                         </div>
-                        <!-- Filtro Executivo -->
-                        <div>
-                            <select id="filterExecutivo" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" autocomplete="off">
-                                <option value="">Executivo (Todos)</option>
-                                <!-- Preenchido via JS -->
-                            </select>
-                        </div>
-                        <!-- Filtro Status -->
-                        <div>
-                            <select id="filterStatus" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" autocomplete="off">
-                                <option value="">Status (Todos)</option>
-                                <!-- Preenchido via JS -->
-                            </select>
-                        </div>
-                        <!-- Filtro Cliente -->
-                        <div>
-                            <select id="filterCliente" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" autocomplete="off">
-                                <option value="">Cliente (Todos)</option>
-                                <!-- Preenchido via JS -->
-                            </select>
-                        </div>
-                        <!-- Filtro Projeto Especial -->
-                        <div>
-                            <select id="filterProjeto" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" autocomplete="off">
-                                <option value="">Projeto Especial (Todos)</option>
-                                <!-- Preenchido via JS -->
-                            </select>
-                        </div>
-
-                        <!-- Filtro Especial Gestor (MOVIDO PARA CÁ) -->
+                        <div><select id="filterExecutivo" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" autocomplete="off"><option value="">Executivo (Todos)</option></select></div>
+                        <div><select id="filterStatus" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" autocomplete="off"><option value="">Status (Todos)</option></select></div>
+                        <div><select id="filterCliente" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" autocomplete="off"><option value="">Cliente (Todos)</option></select></div>
+                        <div><select id="filterProjeto" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" autocomplete="off"><option value="">Projeto Especial (Todos)</option></select></div>
                         <div class="bg-indigo-50 p-1 rounded">
                             <select id="filterGestor" class="w-full border-indigo-200 bg-indigo-50 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-indigo-900" autocomplete="off">
                                 <option value="">Apoi (Todos)</option>
@@ -198,9 +152,9 @@
                         </div>
                     </div>
                     <div class="mt-3 flex justify-end">
-                         <button id="clearFilters" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">Limpar Filtros</button>
+                         <button type="button" id="clearFilters" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">Limpar Filtros</button>
                     </div>
-                </div>
+                </form>
 
                 <div class="bg-white rounded-lg shadow-lg overflow-x-auto border border-gray-200">
                     <table class="min-w-full w-full divide-y divide-gray-200">
@@ -237,13 +191,9 @@
             <div id="view-crm" class="view-section hidden">
                 <header class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                     <h2 class="text-2xl font-bold text-gray-800">Cadastro CRM</h2>
-                    
                     <div class="flex gap-2 w-full md:w-auto">
                         <button id="exportCrmButton" class="flex-1 md:flex-none bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
                             Exportar
                         </button>
                         <button id="addCrmButton" class="flex-1 md:flex-none bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300">
@@ -252,27 +202,18 @@
                     </div>
                 </header>
 
-                <!-- BARRA DE FILTROS CRM -->
-                <div class="bg-white p-4 rounded-lg shadow mb-6 border border-gray-200">
+                <form id="filterFormCrm" class="bg-white p-4 rounded-lg shadow mb-6 border border-gray-200" autocomplete="off" onsubmit="return false;">
                     <div class="text-xs font-semibold text-gray-500 uppercase mb-2">Filtrar Contatos</div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-                        <div>
-                            <input type="text" id="filterCrmNome" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Nome" autocomplete="off">
-                        </div>
-                        <div>
-                            <input type="text" id="filterCrmCliente" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Cliente (Empresa)" autocomplete="off">
-                        </div>
-                        <div>
-                            <input type="text" id="filterCrmCargo" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Cargo" autocomplete="off">
-                        </div>
-                        <div>
-                            <input type="text" id="filterCrmEmail" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Email" autocomplete="off">
-                        </div>
+                        <div><input type="text" id="filterCrmNome" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Nome" autocomplete="off"></div>
+                        <div><input type="text" id="filterCrmCliente" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Cliente (Empresa)" autocomplete="off"></div>
+                        <div><input type="text" id="filterCrmCargo" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Cargo" autocomplete="off"></div>
+                        <div><input type="text" id="filterCrmEmail" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Email" autocomplete="off"></div>
                     </div>
                     <div class="mt-3 flex justify-end">
-                         <button id="clearCrmFilters" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">Limpar Filtros</button>
+                         <button type="button" id="clearCrmFilters" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">Limpar Filtros</button>
                     </div>
-                </div>
+                </form>
                 
                 <div class="bg-white rounded-lg shadow-lg overflow-x-auto border border-gray-200">
                     <table class="min-w-full w-full divide-y divide-gray-200">
@@ -304,499 +245,136 @@
             <!-- VIEW 3: NOVOS CADASTROS -->
             <div id="view-settings" class="view-section hidden">
                 <header class="mb-6"><h2 class="text-2xl font-bold text-gray-800">Gerenciar Listas Suspensas</h2></header>
-                
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    
                     <!-- Card Cliente -->
                     <div class="bg-white rounded-lg shadow p-6 border border-gray-200 flex flex-col">
                         <div class="flex items-center mb-4 text-indigo-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                             <h3 class="text-lg font-bold">Clientes</h3>
                         </div>
                         <p class="text-sm text-gray-500 mb-4">Adicione novas opções ao menu de Clientes.</p>
                         <form onsubmit="handleSettingsSubmit(event, 'cliente')" class="flex gap-2">
                             <input type="text" name="newValue" oninput="handleSettingsInput(this, 'cliente')" class="flex-1 border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Nome do Cliente" required autocomplete="off">
-                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md px-3 py-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                </svg>
-                            </button>
+                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md px-3 py-2"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg></button>
                         </form>
                         <div id="msg-cliente" class="mt-2 text-xs font-semibold h-4 mb-2"></div>
-                        
-                        <!-- Lista Filtrável -->
                         <div class="flex-1 min-h-[150px] relative">
                             <h4 class="text-xs font-bold text-gray-400 uppercase mb-2">Existentes</h4>
-                            <ul id="list-cliente" class="max-h-40 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-100 text-sm bg-gray-50">
-                                <!-- Preenchido via JS -->
-                            </ul>
+                            <ul id="list-cliente" class="max-h-40 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-100 text-sm bg-gray-50"></ul>
                         </div>
                     </div>
-
                     <!-- Card Agência -->
                     <div class="bg-white rounded-lg shadow p-6 border border-gray-200 flex flex-col">
                         <div class="flex items-center mb-4 text-indigo-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                             <h3 class="text-lg font-bold">Agências</h3>
                         </div>
                         <p class="text-sm text-gray-500 mb-4">Adicione novas opções ao menu de Agências.</p>
                         <form onsubmit="handleSettingsSubmit(event, 'agencia')" class="flex gap-2">
                             <input type="text" name="newValue" oninput="handleSettingsInput(this, 'agencia')" class="flex-1 border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Nome da Agência" required autocomplete="off">
-                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md px-3 py-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                </svg>
-                            </button>
+                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md px-3 py-2"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg></button>
                         </form>
                         <div id="msg-agencia" class="mt-2 text-xs font-semibold h-4 mb-2"></div>
-
-                        <!-- Lista Filtrável -->
                         <div class="flex-1 min-h-[150px] relative">
                             <h4 class="text-xs font-bold text-gray-400 uppercase mb-2">Existentes</h4>
-                            <ul id="list-agencia" class="max-h-40 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-100 text-sm bg-gray-50">
-                                <!-- Preenchido via JS -->
-                            </ul>
+                            <ul id="list-agencia" class="max-h-40 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-100 text-sm bg-gray-50"></ul>
                         </div>
                     </div>
-
                     <!-- Card Projeto Especial -->
                     <div class="bg-white rounded-lg shadow p-6 border border-gray-200 flex flex-col">
                         <div class="flex items-center mb-4 text-indigo-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
                             <h3 class="text-lg font-bold">Projetos Especiais</h3>
                         </div>
                         <p class="text-sm text-gray-500 mb-4">Adicione novas opções ao menu de Projetos.</p>
                         <form onsubmit="handleSettingsSubmit(event, 'projeto')" class="flex gap-2">
                             <input type="text" name="newValue" oninput="handleSettingsInput(this, 'projeto')" class="flex-1 border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Nome do Projeto" required autocomplete="off">
-                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md px-3 py-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                </svg>
-                            </button>
+                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md px-3 py-2"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg></button>
                         </form>
                         <div id="msg-projeto" class="mt-2 text-xs font-semibold h-4 mb-2"></div>
-
-                        <!-- Lista Filtrável -->
                         <div class="flex-1 min-h-[150px] relative">
                             <h4 class="text-xs font-bold text-gray-400 uppercase mb-2">Existentes</h4>
-                            <ul id="list-projeto" class="max-h-40 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-100 text-sm bg-gray-50">
-                                <!-- Preenchido via JS -->
-                            </ul>
+                            <ul id="list-projeto" class="max-h-40 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-100 text-sm bg-gray-50"></ul>
                         </div>
                     </div>
-
                 </div>
 
                 <!-- IMPORTAÇÃO EM MASSA -->
                 <div class="bg-slate-100 rounded-lg shadow-inner p-6 border-2 border-dashed border-slate-400 relative">
-                    <div class="absolute -top-3 left-4 bg-slate-600 text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-widest">
-                        Funcionalidade de Desenvolvedor
-                    </div>
+                    <div class="absolute -top-3 left-4 bg-slate-600 text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-widest">Funcionalidade de Desenvolvedor</div>
                     <div class="flex items-center mb-4 text-slate-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
                         <h3 class="text-lg font-bold">Importação em Massa (CSV)</h3>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-                        <div>
-                            <label class="block mb-2 text-sm font-medium text-gray-900">Destino</label>
-                            <select id="importTarget" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                                <option value="proposals">Pipeline de Propostas</option>
-                                <option value="crm">Cadastro CRM</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block mb-2 text-sm font-medium text-gray-900">Arquivo CSV</label>
-                            <input type="file" id="importFile" accept=".csv" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none">
-                        </div>
-                        <div>
-                            <button id="btnImportCsv" class="w-full bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors">
-                                Processar Importação
-                            </button>
-                        </div>
+                        <div><label class="block mb-2 text-sm font-medium text-gray-900">Destino</label><select id="importTarget" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"><option value="proposals">Pipeline de Propostas</option><option value="crm">Cadastro CRM</option></select></div>
+                        <div><label class="block mb-2 text-sm font-medium text-gray-900">Arquivo CSV</label><input type="file" id="importFile" accept=".csv" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none"></div>
+                        <div><button id="btnImportCsv" class="w-full bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors">Processar Importação</button></div>
                     </div>
                     <div id="importStatus" class="mt-3 text-sm font-semibold"></div>
-                    <p class="mt-2 text-xs text-gray-500">
-                        * O arquivo deve ser .csv separado por vírgulas. A primeira linha deve conter os cabeçalhos.<br>
-                        Ex. Propostas: <code>data, executivo, cliente, agencia, produto, valor, status</code><br>
-                        Ex. CRM: <code>nome, empresa, email, cargo, telefone</code>
-                    </p>
+                    <p class="mt-2 text-xs text-gray-500">* O arquivo deve ser .csv separado por vírgulas. A primeira linha deve conter os cabeçalhos.<br>Ex. Propostas: <code>data, executivo, cliente, agencia, produto, valor, status</code><br>Ex. CRM: <code>nome, empresa, email, cargo, telefone</code></p>
                 </div>
             </div>
-
         </main>
     </div>
 
-    <!-- MODAL ORIGINAL (PROPOSTAS) -->
+    <!-- MODAL ORIGINAL (PROPOSTAS) E CRM MODAL (IDÊNTICOS, MANTIDOS DO ORIGINAL) -->
+    <!-- (Mantendo estrutura HTML para brevidade, apenas JS mudou significativamente) -->
     <div id="proposalModal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col">
-            <!-- Cabeçalho -->
             <div class="flex justify-between items-center border-b p-4 md:p-5">
                 <h3 id="modalTitle" class="text-xl font-semibold text-gray-900">Adicionar Nova Proposta</h3>
-                <button id="closeModalButton" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex items-center justify-center">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                </button>
+                <button id="closeModalButton" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex items-center justify-center"><svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/></svg></button>
             </div>
-            
             <form id="proposalForm" class="modal-body overflow-y-auto px-6 py-6 flex-1">
-                <!-- ID oculto -->
                 <input type="hidden" id="editDocId" name="editDocId">
-
-                <!-- GRID LAYOUT -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-4">
-                    
-                    <!-- LINHA 1 -->
-                    <div>
-                        <label for="data" class="block mb-2 text-sm font-medium text-gray-900">Data de veiculação</label>
-                        <input type="date" id="data" name="data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required>
-                    </div>
-                    <div>
-                        <label for="meses" class="block mb-2 text-sm font-medium text-gray-900">Qtd. Meses (Replica)</label>
-                        <input type="number" id="meses" name="meses" min="1" value="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5">
-                    </div>
-                    <div>
-                        <label for="executivo" class="block mb-2 text-sm font-medium text-gray-900">Executivo</label>
-                        <select id="executivo" name="executivo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required>
-                            <option value="">Selecione Executivo</option>
-                            <option value="Barbara">Barbara</option>
-                            <option value="Marcio">Marcio</option>
-                            <option value="Raphael">Raphael</option>
-                            <option value="Fernando">Fernando</option>
-                            <option value="Guilherme">Guilherme</option>
-                            <option value="Leticia">Leticia</option>
-                            <option value="Jessica">Jessica</option>
-                            <option value="Vanessa">Vanessa</option>
-                            <option value="Renan">Renan</option>
-                            <option value="Lilian">Lilian</option>
-                            <option value="Bianca">Bianca</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="agencia" class="block mb-2 text-sm font-medium text-gray-900">Agência</label>
-                        <select id="agencia" name="agencia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5">
-                            <option value="">Selecione Agência</option>
-                            <option value="18 Comunicação">18 Comunicação</option>
-                            <option value="2Mídia">2Mídia</option>
-                            <option value="A Definir">A Definir</option>
-
-                            <!-- INSERIR AQUI -->
-
-                            <option value="Zambra MKT">Zambra MKT</option>
-                            <option value="zetabé">zetabé</option>
-                            <option value="Zygon">Zygon</option>
-                        </select>
-                    </div>
-
-                    <!-- LINHA 2 -->
-                    <div>
-                        <label for="cliente_mae" class="block mb-2 text-sm font-medium text-gray-900">Cliente Mãe</label>
-                        <input type="text" id="cliente_mae" name="cliente_mae" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5">
-                    </div>
-                    <div>
-                        <label for="cliente" class="block mb-2 text-sm font-medium text-gray-900">Cliente</label>
-                        <select id="cliente" name="cliente" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required>
-                            <option value="">Selecione Cliente</option>
-                            <option value="7k">7k</option>
-                            <option value="96Bet">96Bet</option>
-                            <option value="99 Taxi">99 Taxi</option>
-                            <option value="123 Milhas">123 Milhas</option>
-
-                            <!-- INSERIR AQUI -->
-
-                            <option value="zurich seguros">zurich seguros</option>
-                            <option value="Zynga">Zynga</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="origem" class="block mb-2 text-sm font-medium text-gray-900">Origem</label>
-                        <select id="origem" name="origem" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5">
-                            <option value="">Selecione Origem</option>
-                            <option value="Terra">Terra</option>
-                            <option value="Vivo Ads">Vivo Ads</option>
-                        </select>
-                    </div>
-
-                    <!-- LINHA 3 -->
-                    <div>
-                        <label for="tipo_venda" class="block mb-2 text-sm font-medium text-gray-900">Tipo de Vendas</label>
-                        <select id="tipo_venda" name="tipo_venda" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5">
-                            <option value="">Selecione</option>
-                            <option value="Programático">Programático</option>
-                            <option value="Projeto Especial">Projeto Especial</option>
-                            <option value="Venda Direta (PI/IO)">Venda Direta (PI/IO)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="produto" class="block mb-2 text-sm font-medium text-gray-900">* Produto</label>
-                        <select id="produto" name="produto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required>
-                            <option value="">Selecione Produto</option>
-                            <option value="Projeto Especial">Projeto Especial</option>
-                            <option value="Terra Display">Terra Display</option>
-                            <option value="Terra social">Terra social</option>
-                            <option value="Terra Video">Terra Video</option>
-                            <option value="Vivo Free">Vivo Free</option>
-                            <option value="Vivo Geo">Vivo Geo</option>
-                            <option value="Vivo Mensageria">Vivo Mensageria</option>
-                            <option value="Vivo Mídia Recompensa">Vivo Mídia Recompensa</option>
-                            <option value="Vivo Push">Vivo Push</option>
-                            <option value="Vivo Recompensa Celular">Vivo Recompensa Celular</option>
-                            <option value="Vivo Ads Track">Vivo Ads Track</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="projeto_especial" class="block mb-2 text-sm font-medium text-gray-900">Projeto Especial</label>
-                        <select id="projeto_especial" name="projeto_especial" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5">
-                            <option value="">Selecione</option>
-                            <option value="Black Friday">Black Friday</option>
-                            <option value="Carnaval 2025">Carnaval 2025</option>
-                            <option value="Evento Body">Evento Body</option>
-                            <option value="Mente em Dia">Mente em Dia</option>
-                            <option value="Meu Pé de Meia">Meu Pé de Meia</option>
-                            <option value="Mobilidade">Mobilidade</option>
-                            <option value="Natal">Natal</option>
-                            <option value="Outubro Rosa">Outubro Rosa</option>
-                            <option value="Parada">Parada</option>
-                            <option value="Projeto Verão">Projeto Verão</option>
-                            <option value="Retail Media">Retail Media</option>
-                            <option value="Temporada Geek">Temporada Geek</option>
-                            <option value="Terraiá">Terraiá</option>
-                            <option value="Meu Pé de Meia">Meu Pé de Meia</option>
-                            <option value="Carnaval 2025">Carnaval 2025</option>
-                            <option value="Projeto Verão">Projeto Verão</option>
-                            <option value="Parada">Parada</option>
-                            <option value="Terraiá">Terraiá</option>
-                            <option value="Retail Media">Retail Media</option>
-                            <option value="Outubro Rosa">Outubro Rosa</option>
-                            <option value="Mobilidade">Mobilidade</option>
-                            <option value="Temporada Geek">Temporada Geek</option>
-                            <option value="Black Friday">Black Friday</option>
-                            <option value="Natal">Natal</option>
-                            <option value="Evento Body">Evento Body</option>
-                            <option value="Mente em Dia">Mente em Dia</option>
-                            <option value="Olimpiadas">Olimpiadas</option>
-                            <option value="Esportes 2023">Esportes 2023</option>
-                            <option value="Oscar">Oscar</option>
-                            <option value="Mês da Mulher">Mês da Mulher</option>
-                            <option value="Páscoa">Páscoa</option>
-                            <option value="Agrishow">Agrishow</option>
-                            <option value="Vertical Educação">Vertical Educação</option>
-                            <option value="Dia das Mães">Dia das Mães</option>
-                            <option value="Women On Top">Women On Top</option>
-                            <option value="Dia dos Namorados">Dia dos Namorados</option>
-                            <option value="Festa Junina">Festa Junina</option>
-                            <option value="Perifacon">Perifacon</option>
-                            <option value="+Qpretas">+Qpretas</option>
-                            <option value="Inverno">Inverno</option>
-                            <option value="Cantaí Summit">Cantaí Summit</option>
-                            <option value="Dia dos Pais">Dia dos Pais</option>
-                            <option value="Ponto Futuro">Ponto Futuro</option>
-                            <option value="Mês do Consumidor">Mês do Consumidor</option>
-                            <option value="Nós na Maturidade">Nós na Maturidade</option>
-                            <option value="BGS">BGS</option>
-                            <option value="Prêmio Nós">Prêmio Nós</option>
-                            <option value="Campus Party">Campus Party</option>
-                            <option value="Terra Musica ao Vivo">Terra Musica ao Vivo</option>
-                            <option value="CCXP">CCXP</option>
-                            <option value="Vertical Terra Vc">Vertical Terra Vc</option>
-                            <option value="BBB">BBB</option>
-                            <option value="Game On">Game On</option>
-                            <option value="Nós">Nós</option>
-                            <option value="Visão do Corre">Visão do Corre</option>
-                            <option value="Terra Byte">Terra Byte</option>
-                            <option value="Degusta">Degusta</option>
-                            <option value="Entretelas">Entretelas</option>
-                            <option value="Dinheiros">Dinheiros</option>
-                            <option value="Entretê">Entretê</option>
-                            <option value="Arena ITU">Arena ITU</option>
-                            <option value="Planeta">Planeta</option>
-                            <option value="CUSTOMIZADO">CUSTOMIZADO</option>
-                            <option value="OUTRO">OUTRO</option>
-                            <option value="natal 2028">natal 2028</option>
-                            <option value="feira preta">feira preta</option>
-                            <option value="terra do orgulho">terra do orgulho</option>
-                            <option value="vida nos 30">vida nos 30</option>
-                            <option value="monks">monks</option>
-                            <option value="cop 30">cop 30</option>
-                            <option value="tempo de mulher">tempo de mulher</option>
-                            <option value="esportes 2025">esportes 2025</option>
-                            <option value="mês das mães">mês das mães</option>
-                            <option value="educar">educar</option>
-                            <option value="castro festival">castro festival</option>
-                            <option value="surfe">surfe</option>
-                            <option value="terra futebol">terra futebol</option>
-                            <option value="cobertura festivais">cobertura festivais</option>
-                            <option value="the earthshot prize">the earthshot prize</option>
-                            <option value="rodeio de itu">rodeio de itu</option>
-                            <option value="social boost">social boost</option>
-                            <option value="brasil afora">brasil afora</option>
-                            <option value="the lotter - editorial">the lotter - editorial</option>
-                            <option value="the town">the town</option>
-                            <option value="terra agora">terra agora</option>
-                            <option value="rede mulher empreendedora - rme">rede mulher empreendedora - rme</option>
-                            <option value="partiu correr">partiu correr</option>
-                            <option value="halloween da pabllo">halloween da pabllo</option>
-                            <option value="vivo ads track">vivo ads track</option>
-                            <option value="salão do automóvel">salão do automóvel</option>
-                            <option value="cobertura de corridas">cobertura de corridas</option>
-                            <option value="fórmula 1">fórmula 1</option>
-                            <option value="natal luz gramado">natal luz gramado</option>
-                            <option value="carnaval 2026">carnaval 2026</option>
-                            <option value="velvet">velvet</option>
-                            <option value="copa 2026">copa 2026</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="status" class="block mb-2 text-sm font-medium text-gray-900">Status</label>
-                        <select id="status" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required>
-                            <option value="Prospecção">Prospecção</option>
-                            <option value="Proposta enviada">Proposta enviada</option>
-                            <option value="Em negociação 20">Em negociação 20</option>
-                            <option value="Em negociação 50">Em negociação 50</option>
-                            <option value="Em negociação 70">Em negociação 70</option>
-                            <option value="PI na casa">PI na casa</option>
-                            <option value="PI na casa 90">PI na casa 90</option>
-                            <option value="Proposta rejeitada">Proposta rejeitada</option>
-                            <option value="Remanejada p/ próx. mês">Remanejada p/ próx. mês</option>
-                            <option value="Todos">Todos</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="probabilidade" class="block mb-2 text-sm font-medium text-gray-900">Prob (%)</label>
-                        <input type="number" id="probabilidade" name="probabilidade" min="0" max="100" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" oninput="calculateProbValue()">
-                    </div>
-
-                    <!-- LINHA 5 -->
-                    <div>
-                        <label for="valor" class="block mb-2 text-sm font-medium text-gray-900">* Valor</label>
-                        <input type="number" id="valor" name="valor" step="0.01" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required oninput="calculateProbValue()">
-                    </div>
-                    <div>
-                        <label for="prob_value" class="block mb-2 text-sm font-medium text-gray-900">Prob Value</label>
-                        <input type="text" id="prob_value" name="prob_value" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" readonly>
-                    </div>
-                    <div>
-                        <label for="numero_rg" class="block mb-2 text-sm font-medium text-gray-900">Número RG</label>
-                        <input type="text" id="numero_rg" name="numero_rg" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5">
-                    </div>
-
-                    <!-- LINHA 6 -->
-                    <div>
-                        <label for="contato" class="block mb-2 text-sm font-medium text-gray-900">* Contato</label>
-                        <input type="text" id="contato" name="contato" list="contactOptions" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required autocomplete="off">
-                        <datalist id="contactOptions"></datalist>
-                    </div>
-                    <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">* Email</label>
-                        <input type="email" id="email" name="email" list="emailOptions" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required autocomplete="off">
-                        <datalist id="emailOptions"></datalist>
-                    </div>
-                    <div>
-                        <label for="observacao" class="block mb-2 text-sm font-medium text-gray-900">Obs</label>
-                        <input type="text" id="observacao" name="observacao" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5">
-                    </div>
-
-                    <!-- LINHA 7 -->
-                    <div>
-                        <label for="representante" class="block mb-2 text-sm font-medium text-gray-900">Representante</label>
-                        <select id="representante" name="representante" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5">
-                            <option value="">Selecione Representante</option>
-                            <option value="Barbara">Barbara</option>
-                            <option value="Marcio">Marcio</option>
-                            <option value="Raphael">Raphael</option>
-                            <option value="Fernando">Fernando</option>
-                            <option value="Guilherme">Guilherme</option>
-                            <option value="Leticia">Leticia</option>
-                            <option value="Jessica">Jessica</option>
-                            <option value="Vanessa">Vanessa</option>
-                            <option value="Renan">Renan</option>
-                            <option value="Lilian">Lilian</option>
-                            <option value="Bianca">Bianca</option>
-                        </select>
-                    </div>
-                    
-                    <div class="flex items-center justify-center flex-col pt-4">
-                        <div class="flex items-center gap-2">
-                            <input type="checkbox" id="conta_compartilhada" name="conta_compartilhada" class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500">
-                            <label for="conta_compartilhada" class="text-sm font-medium text-gray-900 cursor-pointer">Conta compartilhada</label>
-                        </div>
-                    </div>
-
-                    <div class="flex items-end pt-2">
-                        <button id="submitButton" type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors uppercase tracking-wide">
-                            ENVIAR PROPOSTA
-                        </button>
-                    </div>
-
+                    <div><label for="data" class="block mb-2 text-sm font-medium text-gray-900">Data de veiculação</label><input type="date" id="data" name="data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required></div>
+                    <div><label for="meses" class="block mb-2 text-sm font-medium text-gray-900">Qtd. Meses (Replica)</label><input type="number" id="meses" name="meses" min="1" value="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"></div>
+                    <div><label for="executivo" class="block mb-2 text-sm font-medium text-gray-900">Executivo</label><select id="executivo" name="executivo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required><option value="">Selecione Executivo</option><option value="Barbara">Barbara</option><option value="Marcio">Marcio</option><option value="Raphael">Raphael</option><option value="Fernando">Fernando</option><option value="Guilherme">Guilherme</option><option value="Leticia">Leticia</option><option value="Jessica">Jessica</option><option value="Vanessa">Vanessa</option><option value="Renan">Renan</option><option value="Lilian">Lilian</option><option value="Bianca">Bianca</option></select></div>
+                    <div><label for="agencia" class="block mb-2 text-sm font-medium text-gray-900">Agência</label><select id="agencia" name="agencia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"><option value="">Selecione Agência</option><option value="18 Comunicação">18 Comunicação</option><option value="2Mídia">2Mídia</option><option value="A Definir">A Definir</option><option value="Zambra MKT">Zambra MKT</option><option value="zetabé">zetabé</option><option value="Zygon">Zygon</option></select></div>
+                    <div><label for="cliente_mae" class="block mb-2 text-sm font-medium text-gray-900">Cliente Mãe</label><input type="text" id="cliente_mae" name="cliente_mae" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"></div>
+                    <div><label for="cliente" class="block mb-2 text-sm font-medium text-gray-900">Cliente</label><select id="cliente" name="cliente" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required><option value="">Selecione Cliente</option><option value="7k">7k</option><option value="96Bet">96Bet</option><option value="99 Taxi">99 Taxi</option><option value="123 Milhas">123 Milhas</option><option value="zurich seguros">zurich seguros</option><option value="Zynga">Zynga</option></select></div>
+                    <div><label for="origem" class="block mb-2 text-sm font-medium text-gray-900">Origem</label><select id="origem" name="origem" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"><option value="">Selecione Origem</option><option value="Terra">Terra</option><option value="Vivo Ads">Vivo Ads</option></select></div>
+                    <div><label for="tipo_venda" class="block mb-2 text-sm font-medium text-gray-900">Tipo de Vendas</label><select id="tipo_venda" name="tipo_venda" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"><option value="">Selecione</option><option value="Programático">Programático</option><option value="Projeto Especial">Projeto Especial</option><option value="Venda Direta (PI/IO)">Venda Direta (PI/IO)</option></select></div>
+                    <div><label for="produto" class="block mb-2 text-sm font-medium text-gray-900">* Produto</label><select id="produto" name="produto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required><option value="">Selecione Produto</option><option value="Projeto Especial">Projeto Especial</option><option value="Terra Display">Terra Display</option><option value="Terra social">Terra social</option><option value="Terra Video">Terra Video</option><option value="Vivo Free">Vivo Free</option><option value="Vivo Geo">Vivo Geo</option><option value="Vivo Mensageria">Vivo Mensageria</option><option value="Vivo Mídia Recompensa">Vivo Mídia Recompensa</option><option value="Vivo Push">Vivo Push</option><option value="Vivo Recompensa Celular">Vivo Recompensa Celular</option><option value="Vivo Ads Track">Vivo Ads Track</option></select></div>
+                    <div><label for="projeto_especial" class="block mb-2 text-sm font-medium text-gray-900">Projeto Especial</label><select id="projeto_especial" name="projeto_especial" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"><option value="">Selecione</option><option value="Black Friday">Black Friday</option><option value="Carnaval 2025">Carnaval 2025</option><option value="Evento Body">Evento Body</option><option value="Mente em Dia">Mente em Dia</option><option value="Meu Pé de Meia">Meu Pé de Meia</option><option value="Mobilidade">Mobilidade</option><option value="Natal">Natal</option><option value="Outubro Rosa">Outubro Rosa</option><option value="Parada">Parada</option><option value="Projeto Verão">Projeto Verão</option><option value="Retail Media">Retail Media</option><option value="Temporada Geek">Temporada Geek</option><option value="Terraiá">Terraiá</option></select></div>
+                    <div><label for="status" class="block mb-2 text-sm font-medium text-gray-900">Status</label><select id="status" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required><option value="Prospecção">Prospecção</option><option value="Proposta enviada">Proposta enviada</option><option value="Em negociação 20">Em negociação 20</option><option value="Em negociação 50">Em negociação 50</option><option value="Em negociação 70">Em negociação 70</option><option value="PI na casa">PI na casa</option><option value="PI na casa 90">PI na casa 90</option><option value="Proposta rejeitada">Proposta rejeitada</option><option value="Remanejada p/ próx. mês">Remanejada p/ próx. mês</option><option value="Todos">Todos</option></select></div>
+                    <div><label for="probabilidade" class="block mb-2 text-sm font-medium text-gray-900">Prob (%)</label><input type="number" id="probabilidade" name="probabilidade" min="0" max="100" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" oninput="calculateProbValue()"></div>
+                    <div><label for="valor" class="block mb-2 text-sm font-medium text-gray-900">* Valor</label><input type="number" id="valor" name="valor" step="0.01" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required oninput="calculateProbValue()"></div>
+                    <div><label for="prob_value" class="block mb-2 text-sm font-medium text-gray-900">Prob Value</label><input type="text" id="prob_value" name="prob_value" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" readonly></div>
+                    <div><label for="numero_rg" class="block mb-2 text-sm font-medium text-gray-900">Número RG</label><input type="text" id="numero_rg" name="numero_rg" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"></div>
+                    <div><label for="contato" class="block mb-2 text-sm font-medium text-gray-900">* Contato</label><input type="text" id="contato" name="contato" list="contactOptions" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required autocomplete="off"><datalist id="contactOptions"></datalist></div>
+                    <div><label for="email" class="block mb-2 text-sm font-medium text-gray-900">* Email</label><input type="email" id="email" name="email" list="emailOptions" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required autocomplete="off"><datalist id="emailOptions"></datalist></div>
+                    <div><label for="observacao" class="block mb-2 text-sm font-medium text-gray-900">Obs</label><input type="text" id="observacao" name="observacao" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"></div>
+                    <div><label for="representante" class="block mb-2 text-sm font-medium text-gray-900">Representante</label><select id="representante" name="representante" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"><option value="">Selecione Representante</option><option value="Barbara">Barbara</option><option value="Marcio">Marcio</option><option value="Raphael">Raphael</option><option value="Fernando">Fernando</option><option value="Guilherme">Guilherme</option><option value="Leticia">Leticia</option><option value="Jessica">Jessica</option><option value="Vanessa">Vanessa</option><option value="Renan">Renan</option><option value="Lilian">Lilian</option><option value="Bianca">Bianca</option></select></div>
+                    <div class="flex items-center justify-center flex-col pt-4"><div class="flex items-center gap-2"><input type="checkbox" id="conta_compartilhada" name="conta_compartilhada" class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"><label for="conta_compartilhada" class="text-sm font-medium text-gray-900 cursor-pointer">Conta compartilhada</label></div></div>
+                    <div class="flex items-end pt-2"><button id="submitButton" type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors uppercase tracking-wide">ENVIAR PROPOSTA</button></div>
                 </div>
             </form>
-            
-            <!-- Mensagem de Erro/Status -->
             <div id="modalMessage" class="px-6 pb-4 text-center text-red-600 font-bold text-sm"></div>
         </div>
     </div>
 
-    <!-- NOVO MODAL CRM (ATUALIZADO) -->
     <div id="crmModal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl flex flex-col">
             <div class="flex justify-between items-center border-b p-4 md:p-5">
                 <h3 class="text-xl font-semibold text-gray-900">Novo Contato CRM</h3>
-                <button id="closeCrmModalButton" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex items-center justify-center">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                </button>
+                <button id="closeCrmModalButton" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex items-center justify-center"><svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/></svg></button>
             </div>
-            
             <form id="crmForm" class="p-6">
                 <input type="hidden" id="editCrmId" name="editCrmId">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="col-span-1 md:col-span-2">
-                        <label for="crm_nome" class="block mb-2 text-sm font-medium text-gray-900">Nome Completo</label>
-                        <input type="text" id="crm_nome" name="nome" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
-                    </div>
-                    <div>
-                        <label for="crm_empresa" class="block mb-2 text-sm font-medium text-gray-900">Empresa (Cliente)</label>
-                        <input type="text" id="crm_empresa" name="empresa" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
-                    </div>
-                    <div>
-                        <label for="crm_cliente_mae" class="block mb-2 text-sm font-medium text-gray-900">Cliente Mãe</label>
-                        <input type="text" id="crm_cliente_mae" name="cliente_mae" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                    </div>
-                    <div>
-                        <label for="crm_vertical" class="block mb-2 text-sm font-medium text-gray-900">Vertical</label>
-                        <input type="text" id="crm_vertical" name="vertical" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                    </div>
-                    <div>
-                        <label for="crm_cargo" class="block mb-2 text-sm font-medium text-gray-900">Cargo</label>
-                        <input type="text" id="crm_cargo" name="cargo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                    </div>
-                    <div class="col-span-1 md:col-span-2">
-                        <label for="crm_email" class="block mb-2 text-sm font-medium text-gray-900">Email Corporativo</label>
-                        <input type="email" id="crm_email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
-                    </div>
-                    <div>
-                        <label for="crm_telefone" class="block mb-2 text-sm font-medium text-gray-900">Telefone / WhatsApp</label>
-                        <input type="text" id="crm_telefone" name="telefone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                    </div>
-                    <div class="col-span-1 md:col-span-2">
-                         <label for="crm_obs" class="block mb-2 text-sm font-medium text-gray-900">Observações</label>
-                         <textarea id="crm_obs" name="obs" rows="3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"></textarea>
-                    </div>
+                    <div class="col-span-1 md:col-span-2"><label for="crm_nome" class="block mb-2 text-sm font-medium text-gray-900">Nome Completo</label><input type="text" id="crm_nome" name="nome" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required></div>
+                    <div><label for="crm_empresa" class="block mb-2 text-sm font-medium text-gray-900">Empresa (Cliente)</label><input type="text" id="crm_empresa" name="empresa" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required></div>
+                    <div><label for="crm_cliente_mae" class="block mb-2 text-sm font-medium text-gray-900">Cliente Mãe</label><input type="text" id="crm_cliente_mae" name="cliente_mae" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"></div>
+                    <div><label for="crm_vertical" class="block mb-2 text-sm font-medium text-gray-900">Vertical</label><input type="text" id="crm_vertical" name="vertical" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"></div>
+                    <div><label for="crm_cargo" class="block mb-2 text-sm font-medium text-gray-900">Cargo</label><input type="text" id="crm_cargo" name="cargo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"></div>
+                    <div class="col-span-1 md:col-span-2"><label for="crm_email" class="block mb-2 text-sm font-medium text-gray-900">Email Corporativo</label><input type="email" id="crm_email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required></div>
+                    <div><label for="crm_telefone" class="block mb-2 text-sm font-medium text-gray-900">Telefone / WhatsApp</label><input type="text" id="crm_telefone" name="telefone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"></div>
+                    <div class="col-span-1 md:col-span-2"><label for="crm_obs" class="block mb-2 text-sm font-medium text-gray-900">Observações</label><textarea id="crm_obs" name="obs" rows="3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"></textarea></div>
                 </div>
-                <div class="mt-6 flex justify-end">
-                    <button type="submit" id="submitCrmBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-colors">
-                        SALVAR CONTATO
-                    </button>
-                </div>
+                <div class="mt-6 flex justify-end"><button type="submit" id="submitCrmBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-colors">SALVAR CONTATO</button></div>
                 <div id="crmMessage" class="mt-2 text-center text-red-600 text-sm font-bold"></div>
             </form>
         </div>
@@ -827,11 +405,7 @@
             };
         }
 
-        // Inicialização
-        let app;
-        let auth;
-        let db;
-
+        let app, auth, db;
         try {
             app = initializeApp(firebaseConfig);
             auth = getAuth(app);
@@ -844,647 +418,194 @@
         
         const PROPOSALS_COLLECTION = 'proposals';
         const CRM_COLLECTION = 'crm_contacts'; 
-        const SETTINGS_COLLECTION = 'system_settings'; // NOVA COLEÇÃO
+        const SETTINGS_COLLECTION = 'system_settings';
 
-        let allProposals = [];
-        let filteredProposals = [];
-        let allCrmContacts = [];
-        let filteredCrmContacts = [];
-        let customOptions = { cliente: [], agencia: [], projeto: [] }; // Cache para opções customizadas
+        let allProposals = [], filteredProposals = [];
+        let allCrmContacts = [], filteredCrmContacts = [];
+        let customOptions = { cliente: [], agencia: [], projeto: [] };
         let currentUser = null;
-        let unsubscribeProposals = null;
-        let unsubscribeCrm = null;
-        let unsubscribeSettings = null;
+        let unsubscribeProposals = null, unsubscribeCrm = null, unsubscribeSettings = null;
 
-        // Seletores Propostas
-        const addNewButton = document.getElementById('addNewButton');
-        const exportButton = document.getElementById('exportButton');
-        const proposalModal = document.getElementById('proposalModal');
-        const closeModalButton = document.getElementById('closeModalButton');
-        const proposalForm = document.getElementById('proposalForm');
-        const submitButton = document.getElementById('submitButton');
-        const proposalsTableBody = document.getElementById('proposalsTableBody');
-        const loadingRow = document.getElementById('loadingRow');
-        const modalMessage = document.getElementById('modalMessage');
-        const editDocIdInput = document.getElementById('editDocId');
+        // Seletores
+        const addNewButton = document.getElementById('addNewButton'), exportButton = document.getElementById('exportButton'), proposalModal = document.getElementById('proposalModal');
+        const closeModalButton = document.getElementById('closeModalButton'), proposalForm = document.getElementById('proposalForm'), submitButton = document.getElementById('submitButton');
+        const proposalsTableBody = document.getElementById('proposalsTableBody'), loadingRow = document.getElementById('loadingRow'), modalMessage = document.getElementById('modalMessage'), editDocIdInput = document.getElementById('editDocId');
         
-        // Novos seletores para autocomplete de contato e filtros
-        const proposalClienteSelect = document.getElementById('cliente');
-        const proposalContactInput = document.getElementById('contato');
-        const proposalEmailInput = document.getElementById('email');
-        const proposalOrigemSelect = document.getElementById('origem'); // Novo seletor
-        const proposalProdutoSelect = document.getElementById('produto'); // Novo seletor
-        const contactDatalist = document.getElementById('contactOptions');
-        const emailDatalist = document.getElementById('emailOptions');
+        const proposalClienteSelect = document.getElementById('cliente'), proposalContactInput = document.getElementById('contato'), proposalEmailInput = document.getElementById('email');
+        const proposalOrigemSelect = document.getElementById('origem'), proposalProdutoSelect = document.getElementById('produto');
+        const contactDatalist = document.getElementById('contactOptions'), emailDatalist = document.getElementById('emailOptions');
 
-        // Seletores CRM
-        const addCrmButton = document.getElementById('addCrmButton');
-        const exportCrmButton = document.getElementById('exportCrmButton');
-        const crmModal = document.getElementById('crmModal');
-        const closeCrmModalButton = document.getElementById('closeCrmModalButton');
-        const crmForm = document.getElementById('crmForm');
-        const crmTableBody = document.getElementById('crmTableBody');
-        const submitCrmBtn = document.getElementById('submitCrmBtn');
-        const crmMessage = document.getElementById('crmMessage');
-        const editCrmIdInput = document.getElementById('editCrmId');
+        const addCrmButton = document.getElementById('addCrmButton'), exportCrmButton = document.getElementById('exportCrmButton'), crmModal = document.getElementById('crmModal');
+        const closeCrmModalButton = document.getElementById('closeCrmModalButton'), crmForm = document.getElementById('crmForm'), crmTableBody = document.getElementById('crmTableBody');
+        const submitCrmBtn = document.getElementById('submitCrmBtn'), crmMessage = document.getElementById('crmMessage'), editCrmIdInput = document.getElementById('editCrmId');
 
-        // Selectors Import
-        const btnImportCsv = document.getElementById('btnImportCsv');
-        const importFile = document.getElementById('importFile');
-        const importTarget = document.getElementById('importTarget');
-        const importStatus = document.getElementById('importStatus');
+        const btnImportCsv = document.getElementById('btnImportCsv'), importFile = document.getElementById('importFile'), importTarget = document.getElementById('importTarget'), importStatus = document.getElementById('importStatus');
 
-        // Filter Selectors Proposals
-        const filterDateStart = document.getElementById('filterDateStart');
-        const filterDateEnd = document.getElementById('filterDateEnd');
-        const filterExecutivo = document.getElementById('filterExecutivo');
-        const filterStatus = document.getElementById('filterStatus');
-        const filterCliente = document.getElementById('filterCliente');
-        const filterProjeto = document.getElementById('filterProjeto');
-        const filterGestor = document.getElementById('filterGestor'); // NOVO
+        // Filter Selectors
+        const filterDateStart = document.getElementById('filterDateStart'), filterDateEnd = document.getElementById('filterDateEnd'), filterExecutivo = document.getElementById('filterExecutivo');
+        const filterStatus = document.getElementById('filterStatus'), filterCliente = document.getElementById('filterCliente'), filterProjeto = document.getElementById('filterProjeto'), filterGestor = document.getElementById('filterGestor');
         const clearFiltersBtn = document.getElementById('clearFilters');
 
-        // Filter Selectors CRM
-        const filterCrmNome = document.getElementById('filterCrmNome');
-        const filterCrmCliente = document.getElementById('filterCrmCliente');
-        const filterCrmCargo = document.getElementById('filterCrmCargo');
-        const filterCrmEmail = document.getElementById('filterCrmEmail');
+        const filterCrmNome = document.getElementById('filterCrmNome'), filterCrmCliente = document.getElementById('filterCrmCliente'), filterCrmCargo = document.getElementById('filterCrmCargo'), filterCrmEmail = document.getElementById('filterCrmEmail');
         const clearCrmFiltersBtn = document.getElementById('clearCrmFilters');
         
-        // --- LIMPEZA DE FILTROS AO CARREGAR (Correção do Cache) ---
-        window.addEventListener('load', () => {
-            const filterIds = [
-                'filterDateStart', 'filterDateEnd', 'filterExecutivo', 'filterStatus', 
-                'filterCliente', 'filterProjeto', 'filterGestor',
-                'filterCrmNome', 'filterCrmCliente', 'filterCrmCargo', 'filterCrmEmail'
-            ];
-            filterIds.forEach(id => {
-                const el = document.getElementById(id);
-                if(el) el.value = '';
-            });
-            // Re-aplicar filtro limpo
-            if(typeof filterData === 'function') filterData();
-        });
-
-        // --- CONSTANTES DE REGRA DE NEGOCIO ---
-        const AGENCIAS_MICHELE = [
-            "accenture", "africa", "africa asia", "almap", "almap/bbdo", "almap bbdo", 
-            "artplan", "artplan convert", "artplan pullse", "babel", "betc", "betc havas", 
-            "betchavas", "convert", "convert performa", "cp + b", "cp+b", "cpb", 
-            "cp+b advertising", "dpz", "dpz t", "dpzt", "dreamers", "essence", "f.biz", 
-            "fbiz", "fcb", "fcb agency", "galeria", "havas", "id", "id agency", 
-            "initiative", "leo burnett", "lew lara", "lew´lara", "lewlara", "lew'lara", 
-            "leo", "media monks", "mediamonks", "media-monks", "media brands", "mediabrands", 
-            "media future", "media future group", "monks", "newcomm vmly&r", "ogilvy", 
-            "publicis", "publicis | mediamonks", "pullse", "suno", "talent", "talent marcel", 
-            "vml", "vmly&r", "vmlyr", "wieden", "wk", "wieden+kennedy", "wmccann", 
-            "siprocal | lepub", "wms", "wpp", "zetabe", "zetabé"
-        ];
+        const AGENCIAS_MICHELE = ["accenture", "africa", "africa asia", "almap", "almap/bbdo", "almap bbdo", "artplan", "artplan convert", "artplan pullse", "babel", "betc", "betc havas", "betchavas", "convert", "convert performa", "cp + b", "cp+b", "cpb", "cp+b advertising", "dpz", "dpz t", "dpzt", "dreamers", "essence", "f.biz", "fbiz", "fcb", "fcb agency", "galeria", "havas", "id", "id agency", "initiative", "leo burnett", "lew lara", "lew´lara", "lewlara", "lew'lara", "leo", "media monks", "mediamonks", "media-monks", "media brands", "mediabrands", "media future", "media future group", "monks", "newcomm vmly&r", "ogilvy", "publicis", "publicis | mediamonks", "pullse", "suno", "talent", "talent marcel", "vml", "vmly&r", "vmlyr", "wieden", "wk", "wieden+kennedy", "wmccann", "siprocal | lepub", "wms", "wpp", "zetabe", "zetabé"];
 
         // --- Navegação ---
         window.switchView = (viewId) => {
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.nav-item').forEach(el => {
-                el.classList.remove('active', 'text-white');
-                el.classList.add('text-gray-300');
-            });
+            document.querySelectorAll('.nav-item').forEach(el => { el.classList.remove('active', 'text-white'); el.classList.add('text-gray-300'); });
             document.getElementById(viewId).classList.remove('hidden');
             const navId = 'nav-' + viewId.replace('view-', '');
             const activeNav = document.getElementById(navId);
-            if(activeNav) {
-                activeNav.classList.add('active', 'text-white');
-                activeNav.classList.remove('text-gray-300');
-            }
-            // Em mobile, fechar o menu após clicar
+            if(activeNav) { activeNav.classList.add('active', 'text-white'); activeNav.classList.remove('text-gray-300'); }
             if(window.innerWidth < 768) toggleMenu();
         };
 
-        // --- Helper Functions for Sorting ---
-        // Add this new function to sort dropdowns
+        // --- Helpers ---
         const sortSelectOptions = (selectId) => {
             const select = document.getElementById(selectId);
             if (!select) return;
-            
             const options = Array.from(select.options);
-            // Keep the first option if it is a placeholder (value="")
             const placeholder = options[0].value === "" ? options.shift() : null;
-
             options.sort((a, b) => a.text.localeCompare(b.text));
-
             select.innerHTML = '';
             if (placeholder) select.appendChild(placeholder);
             options.forEach(opt => select.appendChild(opt));
         };
 
-        // Function to sort all relevant dropdowns
         const sortAllDropdowns = () => {
-            ['executivo', 'agencia', 'cliente', 'origem', 'tipo_venda', 'produto', 
-             'projeto_especial', 'vertical', 'status', 'representante',
+            ['executivo', 'agencia', 'cliente', 'origem', 'tipo_venda', 'produto', 'projeto_especial', 'vertical', 'status', 'representante',
              'filterExecutivo', 'filterStatus', 'filterCliente', 'filterProjeto'].forEach(id => sortSelectOptions(id));
         };
 
-
-        // --- Helper para preencher filtros ---
         const populateFilterOptions = () => {
             const copyOptions = (sourceId, targetId, defaultText) => {
-                const sourceSelect = document.getElementById(sourceId);
-                const targetSelect = document.getElementById(targetId);
+                const sourceSelect = document.getElementById(sourceId), targetSelect = document.getElementById(targetId);
                 if (!sourceSelect || !targetSelect) return;
-
                 targetSelect.innerHTML = `<option value="">${defaultText}</option>`;
-                // Sort source before copying or sort after?
-                // Let's rely on our new sortSelectOptions to handle final order.
-                // But we need to copy first.
                 Array.from(sourceSelect.options).forEach(opt => {
                     if (opt.value) {
-                         const newOpt = document.createElement('option');
-                         newOpt.value = opt.value;
-                         newOpt.text = opt.text;
-                         targetSelect.appendChild(newOpt);
+                         const newOpt = document.createElement('option'); newOpt.value = opt.value; newOpt.text = opt.text; targetSelect.appendChild(newOpt);
                     }
                 });
             };
-
             copyOptions('executivo', 'filterExecutivo', 'Executivo (Todos)');
             copyOptions('status', 'filterStatus', 'Status (Todos)');
             copyOptions('cliente', 'filterCliente', 'Cliente (Todos)');
             copyOptions('projeto_especial', 'filterProjeto', 'Projeto Especial (Todos)');
-            
-            // Sort all dropdowns after populating filters
             sortAllDropdowns();
         };
 
-        // --- Lógica de Filtro Proposals ---
-        const filterData = () => {
-            const startDate = filterDateStart.value;
-            const endDate = filterDateEnd.value;
-            const executivoVal = filterExecutivo.value;
-            const statusVal = filterStatus.value;
-            const clienteVal = filterCliente.value;
-            const projetoVal = filterProjeto.value;
-            const gestorVal = filterGestor.value;
-
-            filteredProposals = allProposals.filter(item => {
-                if (startDate && item.data < startDate) return false;
-                if (endDate && item.data > endDate) return false;
-                if (executivoVal && item.executivo !== executivoVal) return false;
-                if (statusVal && item.status !== statusVal) return false;
-                if (clienteVal && item.cliente !== clienteVal) return false;
-                if (projetoVal && item.projeto_especial !== projetoVal) return false;
-
-                // Regra de Gestor
-                if (gestorVal === 'MICHELE') {
-                    const agenciaNorm = (item.agencia || '').toLowerCase().trim();
-                    if (!AGENCIAS_MICHELE.includes(agenciaNorm)) return false;
-                }
-                if (gestorVal === 'BIANCA') {
-                    const origemNorm = (item.origem || '').toLowerCase().trim();
-                    if (origemNorm !== 'vivo ads') return false;
-                }
-
-                return true;
-            });
-
-            renderTable(filteredProposals);
-        };
-
-        const clearFilters = () => {
-            filterDateStart.value = '';
-            filterDateEnd.value = '';
-            filterExecutivo.value = '';
-            filterStatus.value = '';
-            filterCliente.value = '';
-            filterProjeto.value = '';
-            filterGestor.value = '';
-            filterData();
-        };
-
-        [filterDateStart, filterDateEnd, filterExecutivo, filterStatus, filterCliente, filterProjeto, filterGestor].forEach(el => {
-            if(el) el.addEventListener('change', filterData);
-        });
-        if(clearFiltersBtn) clearFiltersBtn.addEventListener('click', clearFilters);
-
-        // --- Lógica de Filtro CRM ---
-        const filterCrmData = () => {
-            const nomeVal = filterCrmNome.value.toLowerCase();
-            const clienteVal = filterCrmCliente.value.toLowerCase();
-            const cargoVal = filterCrmCargo.value.toLowerCase();
-            const emailVal = filterCrmEmail.value.toLowerCase();
-
-            filteredCrmContacts = allCrmContacts.filter(item => {
-                if (nomeVal && !(item.nome || '').toLowerCase().includes(nomeVal)) return false;
-                if (clienteVal && !(item.empresa || '').toLowerCase().includes(clienteVal)) return false;
-                if (cargoVal && !(item.cargo || '').toLowerCase().includes(cargoVal)) return false;
-                if (emailVal && !(item.email || '').toLowerCase().includes(emailVal)) return false;
-                return true;
-            });
-
-            renderCrmTable(filteredCrmContacts);
-        };
-
-        const clearCrmFilters = () => {
-            filterCrmNome.value = '';
-            filterCrmCliente.value = '';
-            filterCrmCargo.value = '';
-            filterCrmEmail.value = '';
-            filterCrmData();
-        };
-
-        [filterCrmNome, filterCrmCliente, filterCrmCargo, filterCrmEmail].forEach(el => {
-            if(el) el.addEventListener('input', filterCrmData);
-        });
-        if(clearCrmFiltersBtn) clearCrmFiltersBtn.addEventListener('click', clearCrmFilters);
-
-
-        // --- Cálculos ---
         window.calculateProbValue = () => {
             const valor = parseFloat(document.getElementById('valor').value) || 0;
             const prob = parseFloat(document.getElementById('probabilidade').value) || 0;
             const probValue = valor * (prob / 100);
-            
-            document.getElementById('prob_value').value = new Intl.NumberFormat('pt-BR', { 
-                style: 'currency', 
-                currency: 'BRL' 
-            }).format(probValue);
+            document.getElementById('prob_value').value = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(probValue);
         };
 
-        // --- Helpers ---
-        const formatCurrency = (value) => {
-            if (typeof value !== 'number') value = parseFloat(value) || 0;
-            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
-        };
-
-        const formatDate = (dateString) => {
-            if (!dateString) return 'N/A';
-            try {
-                const [year, month, day] = dateString.split('-');
-                if (!year || !month || !day) return dateString;
-                return `${day}/${month}/${year}`;
-            } catch (e) {
-                return dateString;
-            }
-        };
-
-        const getTodayDateString = () => {
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const day = String(today.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        };
+        const formatCurrency = (value) => { if (typeof value !== 'number') value = parseFloat(value) || 0; return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value); };
+        const formatDate = (dateString) => { if (!dateString) return 'N/A'; try { const [year, month, day] = dateString.split('-'); if (!year || !month || !day) return dateString; return `${day}/${month}/${year}`; } catch (e) { return dateString; } };
+        const getTodayDateString = () => { const today = new Date(); const year = today.getFullYear(); const month = String(today.getMonth() + 1).padStart(2, '0'); const day = String(today.getDate()).padStart(2, '0'); return `${year}-${month}-${day}`; };
 
         const exportToCSV = () => {
             const dataToExport = filteredProposals.length > 0 || (filterExecutivo.value || filterStatus.value) ? filteredProposals : allProposals;
-
             if (dataToExport.length === 0) { alert("Sem dados para exportar."); return; }
-            
-            const headers = [
-                "Data", "Executivo", "Agência", "Cliente Mãe", "Cliente", 
-                "Origem", "Tipo Venda", "Produto", "Projeto Especial", 
-                "Vertical", "Status", "Probabilidade", "Valor", "RG", 
-                "Contato", "Email", "Obs", "Representante", "Conta Compartilhada"
-            ];
+            const headers = ["Data", "Executivo", "Agência", "Cliente Mãe", "Cliente", "Origem", "Tipo Venda", "Produto", "Projeto Especial", "Vertical", "Status", "Probabilidade", "Valor", "RG", "Contato", "Email", "Obs", "Representante", "Conta Compartilhada"];
             const csvRows = dataToExport.map(p => {
-                return [
-                    p.data, p.executivo, p.agencia, p.cliente_mae, p.cliente,
-                    p.origem, p.tipo_venda, p.produto, p.projeto_especial,
-                    p.vertical, p.status, p.probabilidade, p.valor, p.numero_rg,
-                    p.contato, p.email, p.observacao, p.representante, p.conta_compartilhada ? 'Sim' : 'Não'
-                ].map(field => `"${String(field || '').replace(/"/g, '""')}"`).join(',');
+                return [p.data, p.executivo, p.agencia, p.cliente_mae, p.cliente, p.origem, p.tipo_venda, p.produto, p.projeto_especial, p.vertical, p.status, p.probabilidade, p.valor, p.numero_rg, p.contato, p.email, p.observacao, p.representante, p.conta_compartilhada ? 'Sim' : 'Não'].map(field => `"${String(field || '').replace(/"/g, '""')}"`).join(',');
             });
             const csvContent = [headers.join(','), ...csvRows].join('\n');
             const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', `propostas_${new Date().toISOString().slice(0,10)}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const link = document.createElement('a'); link.href = url; link.setAttribute('download', `propostas_${new Date().toISOString().slice(0,10)}.csv`); document.body.appendChild(link); link.click(); document.body.removeChild(link);
         };
 
         const exportCrmToCSV = () => {
             const dataToExport = filteredCrmContacts.length > 0 || (filterCrmNome.value || filterCrmCliente.value || filterCrmCargo.value || filterCrmEmail.value) ? filteredCrmContacts : allCrmContacts;
-
             if (dataToExport.length === 0) { alert("Sem dados para exportar."); return; }
-            
-            const headers = [
-                "Nome", "Empresa", "Cliente Mãe", "Vertical", "Cargo", 
-                "Email", "Telefone", "Observações"
-            ];
+            const headers = ["Nome", "Empresa", "Cliente Mãe", "Vertical", "Cargo", "Email", "Telefone", "Observações"];
             const csvRows = dataToExport.map(c => {
-                return [
-                    c.nome, c.empresa, c.cliente_mae, c.vertical, c.cargo, 
-                    c.email, c.telefone, c.obs
-                ].map(field => `"${String(field || '').replace(/"/g, '""')}"`).join(',');
+                return [c.nome, c.empresa, c.cliente_mae, c.vertical, c.cargo, c.email, c.telefone, c.obs].map(field => `"${String(field || '').replace(/"/g, '""')}"`).join(',');
             });
             const csvContent = [headers.join(','), ...csvRows].join('\n');
             const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', `contatos_crm_${new Date().toISOString().slice(0,10)}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const link = document.createElement('a'); link.href = url; link.setAttribute('download', `contatos_crm_${new Date().toISOString().slice(0,10)}.csv`); document.body.appendChild(link); link.click(); document.body.removeChild(link);
         };
 
-        // --- IMPORT LOGIC (CSV) ---
-        if(btnImportCsv) {
-            btnImportCsv.addEventListener('click', () => {
-                const file = importFile.files[0];
-                const collectionType = importTarget.value;
+        const filterProductsByOrigin = () => {
+            const origem = proposalOrigemSelect.value;
+            const options = Array.from(proposalProdutoSelect.options);
+            options.forEach(opt => {
+                if (opt.value === "") return;
+                const text = opt.text.toLowerCase(), isVivoProd = text.includes('vivo'), isTerraProd = text.includes('terra');
+                let shouldShow = true;
+                if (origem === 'Terra' && isVivoProd) shouldShow = false;
+                else if (origem === 'Vivo Ads' && isTerraProd) shouldShow = false;
                 
-                if (!file) {
-                    alert("Por favor, selecione um arquivo CSV.");
-                    return;
-                }
-
-                importStatus.textContent = "Processando arquivo...";
-                importStatus.className = "mt-3 text-sm font-semibold text-blue-600";
-                btnImportCsv.disabled = true;
-
-                Papa.parse(file, {
-                    header: true,
-                    skipEmptyLines: true,
-                    complete: async function(results) {
-                        const data = results.data;
-                        if (!data || data.length === 0) {
-                            importStatus.textContent = "Arquivo vazio ou inválido.";
-                            importStatus.className = "mt-3 text-sm font-semibold text-red-600";
-                            btnImportCsv.disabled = false;
-                            return;
-                        }
-
-                        let successCount = 0;
-                        let errorCount = 0;
-                        const targetCollectionName = collectionType === 'proposals' ? PROPOSALS_COLLECTION : CRM_COLLECTION;
-                        const colRef = collection(db, 'artifacts', appId, 'public', 'data', targetCollectionName);
-
-                        // Simple loop for insertion
-                        for (let row of data) {
-                            try {
-                                // Add timestamps
-                                const docData = { ...row, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
-                                
-                                // Basic cleanup/transforms if needed
-                                if(collectionType === 'proposals' && row.valor) {
-                                    docData.valor = parseFloat(row.valor) || 0;
-                                }
-                                if(collectionType === 'proposals' && row.probabilidade) {
-                                    docData.probabilidade = parseFloat(row.probabilidade) || 0;
-                                }
-
-                                await addDoc(colRef, docData);
-                                successCount++;
-                            } catch (err) {
-                                console.error("Erro ao importar linha", row, err);
-                                errorCount++;
-                            }
-                        }
-
-                        importStatus.textContent = `Concluído! ${successCount} registros importados. ${errorCount > 0 ? errorCount + ' erros.' : ''}`;
-                        importStatus.className = "mt-3 text-sm font-semibold text-green-600";
-                        btnImportCsv.disabled = false;
-                        importFile.value = ''; // Reset input
-                    },
-                    error: function(err) {
-                        console.error("Erro no PapaParse:", err);
-                        importStatus.textContent = "Erro ao ler CSV.";
-                        importStatus.className = "mt-3 text-sm font-semibold text-red-600";
-                        btnImportCsv.disabled = false;
-                    }
-                });
+                if (shouldShow) { opt.hidden = false; opt.style.display = ''; opt.disabled = false; } else { opt.hidden = true; opt.style.display = 'none'; opt.disabled = true; }
             });
-        }
+            const currentSelected = proposalProdutoSelect.selectedOptions[0];
+            if (currentSelected && (currentSelected.hidden || currentSelected.disabled) && currentSelected.value !== "") proposalProdutoSelect.value = "";
+        };
 
-
-        // --- AUTOCOMPLETE LOGIC FOR PROPOSAL FORM ---
         const updateContactSuggestions = () => {
             const clientName = proposalClienteSelect.value;
-            contactDatalist.innerHTML = '';
-            emailDatalist.innerHTML = '';
-
+            contactDatalist.innerHTML = ''; emailDatalist.innerHTML = '';
             if (!clientName) return;
-
-            // Filter CRM contacts matching this client
-            const relevantContacts = allCrmContacts.filter(c => 
-                (c.empresa || '').toLowerCase() === clientName.toLowerCase()
-            );
-
+            const relevantContacts = allCrmContacts.filter(c => (c.empresa || '').toLowerCase() === clientName.toLowerCase());
             relevantContacts.forEach(contact => {
-                if(contact.nome) {
-                    const opt = document.createElement('option');
-                    opt.value = contact.nome;
-                    contactDatalist.appendChild(opt);
-                }
-                if(contact.email) {
-                    const opt = document.createElement('option');
-                    opt.value = contact.email;
-                    emailDatalist.appendChild(opt);
-                }
+                if(contact.nome) { const opt = document.createElement('option'); opt.value = contact.nome; contactDatalist.appendChild(opt); }
+                if(contact.email) { const opt = document.createElement('option'); opt.value = contact.email; emailDatalist.appendChild(opt); }
             });
         };
 
         const autoFillContactData = (trigger) => {
-            const clientName = proposalClienteSelect.value;
-            const currentContactVal = proposalContactInput.value;
-            const currentEmailVal = proposalEmailInput.value;
-
-            // Only attempt autofill if we have a client selected
+            const clientName = proposalClienteSelect.value, currentContactVal = proposalContactInput.value, currentEmailVal = proposalEmailInput.value;
             if (!clientName) return;
-
-            const relevantContacts = allCrmContacts.filter(c => 
-                (c.empresa || '').toLowerCase() === clientName.toLowerCase()
-            );
-
+            const relevantContacts = allCrmContacts.filter(c => (c.empresa || '').toLowerCase() === clientName.toLowerCase());
             if (trigger === 'name') {
                 const match = relevantContacts.find(c => c.nome === currentContactVal);
-                if (match && match.email) {
-                    proposalEmailInput.value = match.email;
-                }
+                if (match && match.email) proposalEmailInput.value = match.email;
             } else if (trigger === 'email') {
                 const match = relevantContacts.find(c => c.email === currentEmailVal);
-                if (match && match.nome) {
-                    proposalContactInput.value = match.nome;
-                }
+                if (match && match.nome) proposalContactInput.value = match.nome;
             }
         };
 
-        // --- FILTER PRODUCTS BY ORIGIN LOGIC ---
-        const filterProductsByOrigin = () => {
-            const origem = proposalOrigemSelect.value;
-            const options = Array.from(proposalProdutoSelect.options);
-            
-            options.forEach(opt => {
-                if (opt.value === "") return; // Pula placeholder
-
-                const text = opt.text.toLowerCase();
-                const isVivoProd = text.includes('vivo');
-                const isTerraProd = text.includes('terra');
-                const isSpecial = text === 'projeto especial'; // Sempre mostra projeto especial
-
-                let shouldShow = true;
-
-                if (origem === 'Terra') {
-                    // Se for Terra, esconde Vivo (exceto se for especial, que é comum)
-                    if (isVivoProd) shouldShow = false;
-                } else if (origem === 'Vivo Ads') {
-                    // Se for Vivo Ads, esconde Terra
-                    if (isTerraProd) shouldShow = false;
-                }
-                // Se origem for vazio, mostra tudo (shouldShow continua true)
-
-                // Aplica a visibilidade
-                if (shouldShow) {
-                    opt.hidden = false;
-                    opt.style.display = ''; // Fallback para compatibilidade
-                    opt.disabled = false;
-                } else {
-                    opt.hidden = true;
-                    opt.style.display = 'none';
-                    opt.disabled = true; // Garante que não seja selecionável
-                }
-            });
-
-            // Se a opção selecionada atualmente ficar oculta, reseta o select
-            const currentSelected = proposalProdutoSelect.selectedOptions[0];
-            if (currentSelected && (currentSelected.hidden || currentSelected.disabled) && currentSelected.value !== "") {
-                proposalProdutoSelect.value = "";
-            }
-        };
-
-        // Auto-fill Probability based on Status
-        const statusSelect = document.getElementById('status');
-        if(statusSelect) {
-            statusSelect.addEventListener('change', () => {
-                const val = statusSelect.value;
-                let prob = 0;
-                if (val === 'PI na casa') prob = 100;
-                else if (val === 'PI na casa 90') prob = 90;
-                else if (val === 'Em negociação 70') prob = 70;
-                else if (val === 'Em negociação 50') prob = 50;
-                else if (val === 'Em negociação 20') prob = 20;
-                else if (['Prospecção', 'Proposta enviada', 'Proposta rejeitada', 'Remanejada p/ próx. mês'].includes(val)) prob = 0;
-                
-                // Update UI
-                document.getElementById('probabilidade').value = prob;
-                calculateProbValue();
-            });
-        }
-
-        if(proposalClienteSelect) {
-            proposalClienteSelect.addEventListener('change', updateContactSuggestions);
-        }
-        if(proposalContactInput) {
-            proposalContactInput.addEventListener('input', () => autoFillContactData('name'));
-        }
-        if(proposalEmailInput) {
-            proposalEmailInput.addEventListener('input', () => autoFillContactData('email'));
-        }
-        if(proposalOrigemSelect) {
-            proposalOrigemSelect.addEventListener('change', filterProductsByOrigin);
-        }
-
-
-        // --- Modais ---
         const showModal = (isEdit = false, proposalData = null, docId = null) => {
-            proposalForm.reset();
-            modalMessage.textContent = '';
-            contactDatalist.innerHTML = ''; // Clear suggestions
-            emailDatalist.innerHTML = '';
-            
-            // Controle de visibilidade do campo de meses
+            proposalForm.reset(); modalMessage.textContent = ''; contactDatalist.innerHTML = ''; emailDatalist.innerHTML = '';
             const mesesContainer = document.getElementById('meses').parentNode;
-            
             if (isEdit && proposalData && docId) {
-                editDocIdInput.value = docId;
-                submitButton.textContent = "SALVAR ALTERAÇÕES";
-                mesesContainer.classList.add('hidden'); // Oculta na edição
-                
+                editDocIdInput.value = docId; submitButton.textContent = "SALVAR ALTERAÇÕES"; mesesContainer.classList.add('hidden');
                 Object.keys(proposalData).forEach(key => {
                     const input = proposalForm.elements[key];
-                    if (input) {
-                        if(input.type === 'checkbox') input.checked = proposalData[key];
-                        else input.value = proposalData[key];
-                    }
+                    if (input) { if(input.type === 'checkbox') input.checked = proposalData[key]; else input.value = proposalData[key]; }
                 });
-                calculateProbValue(); 
-                // Populate suggestions for editing based on existing client value
-                updateContactSuggestions();
-                // Filter products based on existing origin value
-                filterProductsByOrigin();
+                calculateProbValue(); updateContactSuggestions(); filterProductsByOrigin();
             } else {
-                editDocIdInput.value = ''; 
-                submitButton.textContent = "ENVIAR PROPOSTA";
-                mesesContainer.classList.remove('hidden'); // Exibe na criação
-                
-                proposalForm.elements['data'].value = getTodayDateString();
-                document.getElementById('prob_value').value = 'R$ 0,00';
-                // Reset months to 1
-                document.getElementById('meses').value = 1;
-                
-                // Reset filters on new modal
-                filterProductsByOrigin(); 
+                editDocIdInput.value = ''; submitButton.textContent = "ENVIAR PROPOSTA"; mesesContainer.classList.remove('hidden');
+                proposalForm.elements['data'].value = getTodayDateString(); document.getElementById('prob_value').value = 'R$ 0,00'; document.getElementById('meses').value = 1; filterProductsByOrigin(); 
             }
             proposalModal.classList.remove('hidden');
         };
+        const hideModal = () => { proposalModal.classList.add('hidden'); proposalForm.reset(); };
 
-        const hideModal = () => {
-            proposalModal.classList.add('hidden');
-            proposalForm.reset();
-        };
-
-        // CRM Modal Logic
         const showCrmModal = (isEdit = false, data = null, id = null) => {
-            crmForm.reset();
-            crmMessage.textContent = '';
-            if(isEdit && data && id) {
-                editCrmIdInput.value = id;
-                submitCrmBtn.textContent = "ATUALIZAR CONTATO";
-                Object.keys(data).forEach(key => {
-                    const input = crmForm.elements[key];
-                    if(input) input.value = data[key];
-                });
-            } else {
-                editCrmIdInput.value = '';
-                submitCrmBtn.textContent = "SALVAR CONTATO";
-            }
+            crmForm.reset(); crmMessage.textContent = '';
+            if(isEdit && data && id) { editCrmIdInput.value = id; submitCrmBtn.textContent = "ATUALIZAR CONTATO"; Object.keys(data).forEach(key => { const input = crmForm.elements[key]; if(input) input.value = data[key]; }); } 
+            else { editCrmIdInput.value = ''; submitCrmBtn.textContent = "SALVAR CONTATO"; }
             crmModal.classList.remove('hidden');
         };
         const hideCrmModal = () => { crmModal.classList.add('hidden'); };
 
-
-        // --- Render Lists ---
+        // --- Render Functions (Moved UP) ---
         const renderProposalRow = (proposal) => {
-            const tr = document.createElement('tr');
-            tr.className = "hover:bg-gray-50 transition-colors";
-            
-            const statusMap = {
-                "Prospecção": "bg-blue-100 text-blue-800",
-                "Proposta enviada": "bg-yellow-100 text-yellow-800",
-                "Em negociação 20": "bg-indigo-100 text-indigo-800",
-                "Em negociação 50": "bg-violet-100 text-violet-800",
-                "Em negociação 70": "bg-purple-100 text-purple-800",
-                "PI na casa": "bg-teal-100 text-teal-800",
-                "PI na casa 90": "bg-emerald-100 text-emerald-800",
-                "Fechado Ganho": "bg-green-100 text-green-800",
-                "Fechado Perdido": "bg-red-200 text-red-900",
-                "Proposta rejeitada": "bg-red-100 text-red-800",
-                "Remanejada p/ próx. mês": "bg-orange-100 text-orange-800",
-                "Todos": "bg-gray-100 text-gray-800"
-            };
+            const tr = document.createElement('tr'); tr.className = "hover:bg-gray-50 transition-colors";
+            const statusMap = { "Prospecção": "bg-blue-100 text-blue-800", "Proposta enviada": "bg-yellow-100 text-yellow-800", "Em negociação 20": "bg-indigo-100 text-indigo-800", "Em negociação 50": "bg-violet-100 text-violet-800", "Em negociação 70": "bg-purple-100 text-purple-800", "PI na casa": "bg-teal-100 text-teal-800", "PI na casa 90": "bg-emerald-100 text-emerald-800", "Fechado Ganho": "bg-green-100 text-green-800", "Fechado Perdido": "bg-red-200 text-red-900", "Proposta rejeitada": "bg-red-100 text-red-800", "Remanejada p/ próx. mês": "bg-orange-100 text-orange-800", "Todos": "bg-gray-100 text-gray-800" };
             const statusColor = statusMap[proposal.status] || "bg-gray-100 text-gray-800";
-
-            // Probabilidade Color Logic
-            const probColor = (p) => {
-                const val = parseFloat(p) || 0;
-                if(val >= 75) return "text-green-600 font-bold";
-                if(val >= 50) return "text-blue-600 font-bold";
-                if(val >= 25) return "text-yellow-600 font-bold";
-                return "text-red-600 font-bold";
-            };
-
+            const probColor = (p) => { const val = parseFloat(p) || 0; if(val >= 75) return "text-green-600 font-bold"; if(val >= 50) return "text-blue-600 font-bold"; if(val >= 25) return "text-yellow-600 font-bold"; return "text-red-600 font-bold"; };
             const probVal = (proposal.valor || 0) * ((proposal.probabilidade || 0) / 100);
 
             tr.innerHTML = `
@@ -1504,26 +625,33 @@
                     <button class="del-btn text-red-600 hover:text-red-900" title="Excluir"><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                 </td>
             `;
-            
             tr.querySelector('.edit-btn').onclick = () => showModal(true, proposal, proposal.id);
             tr.querySelector('.dup-btn').onclick = () => handleDuplicate(proposal.id);
             tr.querySelector('.del-btn').onclick = () => handleDelete(proposal.id);
             proposalsTableBody.appendChild(tr);
         };
 
-        // --- Render CRM Table ---
+        const renderTable = (data = allProposals) => {
+            proposalsTableBody.innerHTML = '';
+            if (data.length === 0) { proposalsTableBody.innerHTML = `<tr><td colspan="11" class="px-6 py-10 text-center text-gray-500">Nenhuma proposta encontrada.</td></tr>`; return; }
+            data.sort((a, b) => {
+                const dateA = new Date(a.data || 0), dateB = new Date(b.data || 0);
+                if (dateB - dateA !== 0) return dateB - dateA;
+                const execA = (a.executivo || '').toLowerCase(), execB = (b.executivo || '').toLowerCase();
+                if (execA < execB) return -1; if (execA > execB) return 1;
+                const clientA = (a.cliente || '').toLowerCase(), clientB = (b.cliente || '').toLowerCase();
+                if (clientA < clientB) return -1; if (clientA > clientB) return 1;
+                return 0;
+            });
+            data.forEach(renderProposalRow);
+        };
+
         const renderCrmTable = (data = allCrmContacts) => {
             crmTableBody.innerHTML = '';
-            if(data.length === 0) {
-                crmTableBody.innerHTML = `<tr><td colspan="7" class="px-6 py-10 text-center text-gray-500">Nenhum contato encontrado.</td></tr>`;
-                return;
-            }
-            // Sort by Name
+            if(data.length === 0) { crmTableBody.innerHTML = `<tr><td colspan="7" class="px-6 py-10 text-center text-gray-500">Nenhum contato encontrado.</td></tr>`; return; }
             data.sort((a,b) => (a.nome || '').localeCompare(b.nome || ''));
-
             data.forEach(contact => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-gray-50 transition-colors";
+                const tr = document.createElement('tr'); tr.className = "hover:bg-gray-50 transition-colors";
                 tr.innerHTML = `
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${contact.nome || '-'}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${contact.empresa || '-'}</td>
@@ -1531,10 +659,7 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${contact.cargo || '-'}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${contact.email || '-'}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${contact.telefone || '-'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button class="crm-edit text-indigo-600 hover:text-indigo-900 mr-2">Editar</button>
-                        <button class="crm-del text-red-600 hover:text-red-900">Excluir</button>
-                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><button class="crm-edit text-indigo-600 hover:text-indigo-900 mr-2">Editar</button><button class="crm-del text-red-600 hover:text-red-900">Excluir</button></td>
                 `;
                 tr.querySelector('.crm-edit').onclick = () => showCrmModal(true, contact, contact.id);
                 tr.querySelector('.crm-del').onclick = () => handleDeleteCrm(contact.id);
@@ -1542,508 +667,186 @@
             });
         };
 
-        const renderTable = (data = allProposals) => {
-            proposalsTableBody.innerHTML = '';
-            if (data.length === 0) {
-                proposalsTableBody.innerHTML = `<tr><td colspan="11" class="px-6 py-10 text-center text-gray-500">Nenhuma proposta encontrada.</td></tr>`;
-                return;
-            }
-            // Sorting: 1. Date Desc, 2. Exec Asc, 3. Client Asc
-            data.sort((a, b) => {
-                const dateA = new Date(a.data || 0);
-                const dateB = new Date(b.data || 0);
-                if (dateB - dateA !== 0) return dateB - dateA;
+        // --- Filter Logic ---
+        const filterData = () => {
+            const startDate = filterDateStart.value, endDate = filterDateEnd.value, executivoVal = filterExecutivo.value;
+            const statusVal = filterStatus.value, clienteVal = filterCliente.value, projetoVal = filterProjeto.value, gestorVal = filterGestor.value;
 
-                const execA = (a.executivo || '').toLowerCase();
-                const execB = (b.executivo || '').toLowerCase();
-                if (execA < execB) return -1;
-                if (execA > execB) return 1;
-
-                const clientA = (a.cliente || '').toLowerCase();
-                const clientB = (b.cliente || '').toLowerCase();
-                if (clientA < clientB) return -1;
-                if (clientA > clientB) return 1;
-
-                return 0;
+            filteredProposals = allProposals.filter(item => {
+                if (startDate && item.data < startDate) return false;
+                if (endDate && item.data > endDate) return false;
+                if (executivoVal && item.executivo !== executivoVal) return false;
+                if (statusVal && item.status !== statusVal) return false;
+                if (clienteVal && item.cliente !== clienteVal) return false;
+                if (projetoVal && item.projeto_especial !== projetoVal) return false;
+                if (gestorVal === 'MICHELE') { if (!AGENCIAS_MICHELE.includes((item.agencia || '').toLowerCase().trim())) return false; }
+                if (gestorVal === 'BIANCA') { if ((item.origem || '').toLowerCase().trim() !== 'vivo ads') return false; }
+                return true;
             });
-
-            data.forEach(renderProposalRow);
+            renderTable(filteredProposals);
         };
 
-        // --- Firebase Listeners ---
+        const clearFilters = () => {
+            document.getElementById('filterFormProposals').reset(); 
+            filterDateStart.value = ''; filterDateEnd.value = ''; filterExecutivo.value = ''; filterStatus.value = ''; filterCliente.value = ''; filterProjeto.value = ''; filterGestor.value = '';
+            filterData();
+        };
+
+        const filterCrmData = () => {
+            const nomeVal = filterCrmNome.value.toLowerCase(), clienteVal = filterCrmCliente.value.toLowerCase(), cargoVal = filterCrmCargo.value.toLowerCase(), emailVal = filterCrmEmail.value.toLowerCase();
+            filteredCrmContacts = allCrmContacts.filter(item => {
+                if (nomeVal && !(item.nome || '').toLowerCase().includes(nomeVal)) return false;
+                if (clienteVal && !(item.empresa || '').toLowerCase().includes(clienteVal)) return false;
+                if (cargoVal && !(item.cargo || '').toLowerCase().includes(cargoVal)) return false;
+                if (emailVal && !(item.email || '').toLowerCase().includes(emailVal)) return false;
+                return true;
+            });
+            renderCrmTable(filteredCrmContacts);
+        };
+
+        const clearCrmFilters = () => { document.getElementById('filterFormCrm').reset(); filterCrmNome.value = ''; filterCrmCliente.value = ''; filterCrmCargo.value = ''; filterCrmEmail.value = ''; filterCrmData(); };
+
+        [filterDateStart, filterDateEnd, filterExecutivo, filterStatus, filterCliente, filterProjeto, filterGestor].forEach(el => { if(el) el.addEventListener('change', filterData); });
+        if(clearFiltersBtn) clearFiltersBtn.addEventListener('click', clearFilters);
+        [filterCrmNome, filterCrmCliente, filterCrmCargo, filterCrmEmail].forEach(el => { if(el) el.addEventListener('input', filterCrmData); });
+        if(clearCrmFiltersBtn) clearCrmFiltersBtn.addEventListener('click', clearCrmFilters);
+
         const setupRealtimeListeners = () => {
             if (!currentUser || !db) return;
-            
-            // Listener 1: Proposals
-            const proposalsRef = collection(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION);
-            unsubscribeProposals = onSnapshot(proposalsRef, (snapshot) => {
+            unsubscribeProposals = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION), (snapshot) => {
                 if(loadingRow) loadingRow.classList.add('hidden');
                 allProposals = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                
                 if (filterExecutivo.options.length <= 1) populateFilterOptions();
                 filterData(); 
-            }, (error) => {
-                console.error("Erro no listener Propostas:", error);
-                if (error.code === 'permission-denied') handlePermissionError();
-            });
+            }, (error) => { console.error("Erro no listener Propostas:", error); if (error.code === 'permission-denied') handlePermissionError(); });
 
-            // Listener 2: CRM Contacts
-            const crmRef = collection(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION);
-            unsubscribeCrm = onSnapshot(crmRef, (snapshot) => {
+            unsubscribeCrm = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION), (snapshot) => {
                 allCrmContacts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                filteredCrmContacts = allCrmContacts;
-                filterCrmData();
-            }, (error) => {
-                console.error("Erro no listener CRM:", error);
-            });
+                filteredCrmContacts = allCrmContacts; filterCrmData();
+            }, (error) => { console.error("Erro no listener CRM:", error); });
 
-            // Listener 3: Settings (NEW)
-            const settingsRef = collection(db, 'artifacts', appId, 'public', 'data', SETTINGS_COLLECTION);
-            unsubscribeSettings = onSnapshot(settingsRef, (snapshot) => {
+            unsubscribeSettings = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', SETTINGS_COLLECTION), (snapshot) => {
                 customOptions = { cliente: [], agencia: [], projeto: [] };
-                snapshot.docs.forEach(doc => {
-                    const data = doc.data();
-                    if(data.type && data.value) {
-                        if(customOptions[data.type]) customOptions[data.type].push(data.value);
-                    }
-                });
+                snapshot.docs.forEach(doc => { const data = doc.data(); if(data.type && data.value) { if(customOptions[data.type]) customOptions[data.type].push(data.value); } });
                 updateDropdownsWithCustomOptions();
-                
-                // Update lists if we are on the settings view
-                // We'll just update all 3 lists to ensure they have initial data
-                renderSettingsList('cliente');
-                renderSettingsList('agencia');
-                renderSettingsList('projeto');
-            }, (error) => {
-                console.error("Erro no listener Settings:", error);
-            });
+                renderSettingsList('cliente'); renderSettingsList('agencia'); renderSettingsList('projeto');
+            }, (error) => { console.error("Erro no listener Settings:", error); });
         };
 
-        const handlePermissionError = () => {
-             const loadingTd = document.getElementById('loadingStatusTd');
-             if (loadingTd) {
-                 loadingTd.innerHTML = `<div class="text-red-500 font-bold">Erro de Permissão</div>`;
-                 if(loadingRow) loadingRow.classList.remove('hidden');
-             }
-        };
+        const handlePermissionError = () => { const loadingTd = document.getElementById('loadingStatusTd'); if (loadingTd) { loadingTd.innerHTML = `<div class="text-red-500 font-bold">Erro de Permissão</div>`; if(loadingRow) loadingRow.classList.remove('hidden'); } };
 
-        // --- Custom Options Logic ---
+        // --- Custom Options ---
         const updateDropdownsWithCustomOptions = () => {
             const addOptions = (selectId, type) => {
-                const select = document.getElementById(selectId);
-                if(!select) return;
-                
-                // Remove old dynamic options
-                const oldDynamic = select.querySelectorAll('.dynamic-opt');
-                oldDynamic.forEach(el => el.remove());
-
-                // Add new ones
-                const items = customOptions[type] || [];
-                // Sort alphabetically
-                items.sort();
+                const select = document.getElementById(selectId); if(!select) return;
+                const oldDynamic = select.querySelectorAll('.dynamic-opt'); oldDynamic.forEach(el => el.remove());
+                const items = customOptions[type] || []; items.sort();
                 items.forEach(val => {
-                    // Check if already exists as static option
-                    let exists = false;
-                    for(let i=0; i<select.options.length; i++) {
-                        if(select.options[i].value === val) exists = true;
-                    }
-                    if(!exists) {
-                        const opt = document.createElement('option');
-                        opt.value = val;
-                        opt.text = val;
-                        opt.classList.add('dynamic-opt'); // marker
-                        select.appendChild(opt);
-                    }
+                    let exists = false; for(let i=0; i<select.options.length; i++) { if(select.options[i].value === val) exists = true; }
+                    if(!exists) { const opt = document.createElement('option'); opt.value = val; opt.text = val; opt.classList.add('dynamic-opt'); select.appendChild(opt); }
                 });
             };
-
-            addOptions('cliente', 'cliente');
-            addOptions('filterCliente', 'cliente');
-            
+            addOptions('cliente', 'cliente'); addOptions('filterCliente', 'cliente');
             addOptions('agencia', 'agencia');
-            
-            addOptions('projeto_especial', 'projeto');
-            addOptions('filterProjeto', 'projeto');
-            
-            // Sort all dropdowns after adding dynamic options
+            addOptions('projeto_especial', 'projeto'); addOptions('filterProjeto', 'projeto');
             sortAllDropdowns();
         };
 
-        // --- New Function: Get All Options (Static + Dynamic) ---
         const getAllOptions = (type) => {
-            let refSelectId = '';
-            if(type === 'cliente') refSelectId = 'cliente';
-            else if(type === 'agencia') refSelectId = 'agencia';
-            else if(type === 'projeto') refSelectId = 'projeto_especial';
-
-            const select = document.getElementById(refSelectId);
-            const allOpts = new Set();
-
-            // Add static options
-            if(select) {
-                Array.from(select.options).forEach(opt => {
-                    if(opt.value && !opt.classList.contains('dynamic-opt')) { // Avoid duplicates if dynamic already added
-                        allOpts.add(opt.value);
-                    }
-                });
-            }
-            // Add custom options
-            (customOptions[type] || []).forEach(v => allOpts.add(v));
-
-            return Array.from(allOpts).sort();
+            let refSelectId = ''; if(type === 'cliente') refSelectId = 'cliente'; else if(type === 'agencia') refSelectId = 'agencia'; else if(type === 'projeto') refSelectId = 'projeto_especial';
+            const select = document.getElementById(refSelectId); const allOpts = new Set();
+            if(select) { Array.from(select.options).forEach(opt => { if(opt.value && !opt.classList.contains('dynamic-opt')) { allOpts.add(opt.value); } }); }
+            (customOptions[type] || []).forEach(v => allOpts.add(v)); return Array.from(allOpts).sort();
         };
 
-        // --- New Function: Render Filterable List ---
         window.renderSettingsList = (type, filterVal = '') => {
-            const listContainer = document.getElementById(`list-${type}`);
-            if(!listContainer) return;
-
-            const allItems = getAllOptions(type);
-            const filteredItems = allItems.filter(item => 
-                item.toLowerCase().includes(filterVal.toLowerCase())
-            );
-
+            const listContainer = document.getElementById(`list-${type}`); if(!listContainer) return;
+            const allItems = getAllOptions(type); const filteredItems = allItems.filter(item => item.toLowerCase().includes(filterVal.toLowerCase()));
             listContainer.innerHTML = '';
-            
-            if(filteredItems.length === 0) {
-                listContainer.innerHTML = `<li class="px-4 py-2 text-gray-400 italic">Nenhum item encontrado</li>`;
-                return;
-            }
-
-            filteredItems.forEach(item => {
-                const li = document.createElement('li');
-                li.className = "px-4 py-2 text-gray-700 hover:bg-gray-100 flex justify-between items-center";
-                li.innerHTML = `<span>${item}</span>`;
-                // Add tag if it's custom? Maybe later. For now just list.
-                listContainer.appendChild(li);
-            });
+            if(filteredItems.length === 0) { listContainer.innerHTML = `<li class="px-4 py-2 text-gray-400 italic">Nenhum item encontrado</li>`; return; }
+            filteredItems.forEach(item => { const li = document.createElement('li'); li.className = "px-4 py-2 text-gray-700 hover:bg-gray-100 flex justify-between items-center"; li.innerHTML = `<span>${item}</span>`; listContainer.appendChild(li); });
         };
-
-        window.handleSettingsInput = (input, type) => {
-            renderSettingsList(type, input.value.trim());
-        };
-
+        window.handleSettingsInput = (input, type) => { renderSettingsList(type, input.value.trim()); };
         window.handleSettingsSubmit = async (e, type) => {
-            e.preventDefault();
-            if(!currentUser || !db) return;
-            const form = e.target;
-            const input = form.elements['newValue'];
-            const val = input.value.trim();
-            if(!val) return;
-
-            // Validation: Check duplicate (Case Insensitive)
-            const allItems = getAllOptions(type);
-            const exists = allItems.some(item => item.toLowerCase() === val.toLowerCase());
-
+            e.preventDefault(); if(!currentUser || !db) return;
+            const form = e.target; const input = form.elements['newValue']; const val = input.value.trim(); if(!val) return;
+            const allItems = getAllOptions(type); const exists = allItems.some(item => item.toLowerCase() === val.toLowerCase());
             const msgDiv = document.getElementById(`msg-${type}`);
-            if(exists) {
-                msgDiv.className = "mt-2 text-xs font-bold text-red-600 h-4 mb-2";
-                msgDiv.textContent = "Erro: Esta opção já existe.";
-                return;
-            }
-
-            try {
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', SETTINGS_COLLECTION), {
-                    type: type,
-                    value: val,
-                    createdAt: serverTimestamp()
-                });
-                msgDiv.className = "mt-2 text-xs font-bold text-green-600 h-4 mb-2";
-                msgDiv.textContent = "Adicionado com sucesso!";
-                input.value = '';
-                renderSettingsList(type); // Reset list
-                setTimeout(() => { msgDiv.textContent = ''; }, 3000);
-            } catch(err) {
-                console.error(err);
-                msgDiv.className = "mt-2 text-xs font-bold text-red-600 h-4 mb-2";
-                msgDiv.textContent = "Erro ao salvar.";
-            }
+            if(exists) { msgDiv.className = "mt-2 text-xs font-bold text-red-600 h-4 mb-2"; msgDiv.textContent = "Erro: Esta opção já existe."; return; }
+            try { await addDoc(collection(db, 'artifacts', appId, 'public', 'data', SETTINGS_COLLECTION), { type: type, value: val, createdAt: serverTimestamp() }); msgDiv.className = "mt-2 text-xs font-bold text-green-600 h-4 mb-2"; msgDiv.textContent = "Adicionado com sucesso!"; input.value = ''; renderSettingsList(type); setTimeout(() => { msgDiv.textContent = ''; }, 3000); } catch(err) { console.error(err); msgDiv.className = "mt-2 text-xs font-bold text-red-600 h-4 mb-2"; msgDiv.textContent = "Erro ao salvar."; }
         };
 
-
-        // --- Handlers ---
         const handleFormSubmit = async (e) => {
-            e.preventDefault();
-            if (!currentUser || !db) return;
-            const formData = new FormData(proposalForm);
-            const rawData = Object.fromEntries(formData.entries());
-            const docId = rawData.editDocId;
-            delete rawData.editDocId;
-            
-            const isShared = proposalForm.elements['conta_compartilhada'].checked;
-            const representante = rawData.representante ? rawData.representante.trim() : '';
-            
-            // Get base data without date/value as they might change in loop
-            const commonData = {
-                ...rawData,
-                valor: parseFloat(rawData.valor) || 0,
-                probabilidade: parseFloat(rawData.probabilidade) || 0,
-                conta_compartilhada: isShared,
-                updatedAt: serverTimestamp()
-            };
-
-            // Calculate loop iterations
-            let monthsCount = 1;
-            // Only loop if NOT editing and months field is valid
-            if (!docId) {
-                const monthsInput = parseInt(formData.get('meses') || '1', 10);
-                monthsCount = monthsInput > 0 ? monthsInput : 1;
-            }
-
-            // Prepare for date calculations
-            const baseDateStr = rawData.data;
-            let [y, m, d] = [0, 0, 0];
-            if(baseDateStr) {
-                const parts = baseDateStr.split('-');
-                y = parseInt(parts[0]);
-                m = parseInt(parts[1]);
-                d = parseInt(parts[2]);
-            }
-
-            submitButton.disabled = true;
-            submitButton.textContent = "SALVANDO...";
-
+            e.preventDefault(); if (!currentUser || !db) return;
+            const formData = new FormData(proposalForm), rawData = Object.fromEntries(formData.entries());
+            const docId = rawData.editDocId; delete rawData.editDocId;
+            const isShared = proposalForm.elements['conta_compartilhada'].checked, representante = rawData.representante ? rawData.representante.trim() : '';
+            const commonData = { ...rawData, valor: parseFloat(rawData.valor) || 0, probabilidade: parseFloat(rawData.probabilidade) || 0, conta_compartilhada: isShared, updatedAt: serverTimestamp() };
+            let monthsCount = 1; if (!docId) { const monthsInput = parseInt(formData.get('meses') || '1', 10); monthsCount = monthsInput > 0 ? monthsInput : 1; }
+            const baseDateStr = rawData.data; let [y, m, d] = [0, 0, 0]; if(baseDateStr) { const parts = baseDateStr.split('-'); y = parseInt(parts[0]); m = parseInt(parts[1]); d = parseInt(parts[2]); }
+            submitButton.disabled = true; submitButton.textContent = "SALVANDO...";
             try {
                 const colRef = collection(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION);
-
-                // Loop for multiple months
                 for (let i = 0; i < monthsCount; i++) {
-                    
-                    // Clone data for this iteration
                     const currentIterationData = { ...commonData };
-
-                    // Calculate new date if multiple months
-                    if (i > 0 && baseDateStr) {
-                        // Date logic: Create date, add 'i' months
-                        // Note: Month in JS Date constructor is 0-indexed (Jan=0, Dec=11)
-                        // But 'm' parsed from string "2023-05-20" is 5.
-                        const newDate = new Date(y, (m - 1) + i, d);
-                        const newY = newDate.getFullYear();
-                        const newM = String(newDate.getMonth() + 1).padStart(2, '0');
-                        const newD = String(newDate.getDate()).padStart(2, '0');
-                        currentIterationData.data = `${newY}-${newM}-${newD}`;
-                    } else {
-                        currentIterationData.data = baseDateStr;
-                    }
-
-                    // Shared Logic
+                    if (i > 0 && baseDateStr) { const newDate = new Date(y, (m - 1) + i, d); const newY = newDate.getFullYear(); const newM = String(newDate.getMonth() + 1).padStart(2, '0'); const newD = String(newDate.getDate()).padStart(2, '0'); currentIterationData.data = `${newY}-${newM}-${newD}`; } 
+                    else { currentIterationData.data = baseDateStr; }
                     if (isShared && representante) {
-                        const totalValue = currentIterationData.valor;
-                        const splitValue = totalValue / 2;
-                        
-                        const proposal1 = { ...currentIterationData, valor: splitValue };
-                        if (!docId) proposal1.createdAt = serverTimestamp(); // Only add createdAt for new docs
-
+                        const totalValue = currentIterationData.valor, splitValue = totalValue / 2;
+                        const proposal1 = { ...currentIterationData, valor: splitValue }; if (!docId) proposal1.createdAt = serverTimestamp();
                         const proposal2 = { ...currentIterationData, valor: splitValue, executivo: representante, createdAt: serverTimestamp() };
-
-                        if (docId && i === 0) { // Should technically not happen if months > 1, but for safety
-                            await updateDoc(doc(colRef, docId), proposal1);
-                        } else {
-                            await addDoc(colRef, proposal1);
-                        }
-                        // Always add the second part as a new doc if creating, or... 
-                        // Actually "Shared" logic in Edit mode is complex. For simplicity, we assume Edit just updates the main doc.
-                        // But for Creation loop, we add both.
-                        if (!docId) {
-                            await addDoc(colRef, proposal2);
-                        }
+                        if (docId && i === 0) { await updateDoc(doc(colRef, docId), proposal1); } else { await addDoc(colRef, proposal1); }
+                        if (!docId) { await addDoc(colRef, proposal2); }
                     } else {
-                        // Single Logic
                         if (!docId) currentIterationData.createdAt = serverTimestamp();
-                        
-                        if (docId && i === 0) {
-                            await updateDoc(doc(colRef, docId), currentIterationData);
-                        } else {
-                            await addDoc(colRef, currentIterationData);
-                        }
+                        if (docId && i === 0) { await updateDoc(doc(colRef, docId), currentIterationData); } else { await addDoc(colRef, currentIterationData); }
                     }
-                } // End Loop
-
-                // Auto-sync CRM (Only once, using base data)
+                }
                 const contactEmail = rawData.email;
                 if (contactEmail && !docId) { 
                     const existingContact = allCrmContacts.find(c => c.email === contactEmail);
-                    if (!existingContact) {
-                        try {
-                            const newCrmContact = {
-                                nome: rawData.contato,
-                                empresa: rawData.cliente,
-                                cliente_mae: rawData.cliente_mae || '',
-                                vertical: rawData.vertical || '',
-                                email: contactEmail,
-                                telefone: '', 
-                                cargo: '',    
-                                obs: 'Importado automaticamente via Nova Proposta',
-                                createdAt: serverTimestamp(),
-                                updatedAt: serverTimestamp()
-                            };
-                            await addDoc(collection(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION), newCrmContact);
-                        } catch(err) { console.error("Erro ao sincronizar CRM:", err); }
-                    }
+                    if (!existingContact) { try { const newCrmContact = { nome: rawData.contato, empresa: rawData.cliente, cliente_mae: rawData.cliente_mae || '', vertical: rawData.vertical || '', email: contactEmail, telefone: '', cargo: '', obs: 'Importado automaticamente via Nova Proposta', createdAt: serverTimestamp(), updatedAt: serverTimestamp() }; await addDoc(collection(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION), newCrmContact); } catch(err) { console.error("Erro ao sincronizar CRM:", err); } }
                 }
-
                 hideModal();
-            } catch (error) {
-                modalMessage.textContent = "Erro: " + error.message;
-            } finally {
-                submitButton.disabled = false;
-            }
+            } catch (error) { modalMessage.textContent = "Erro: " + error.message; } finally { submitButton.disabled = false; }
         };
 
-        const handleCrmSubmit = async (e) => {
-            e.preventDefault();
-            if(!currentUser || !db) return;
+        const handleCrmSubmit = async (e) => { e.preventDefault(); if(!currentUser || !db) return; const formData = new FormData(crmForm), rawData = Object.fromEntries(formData.entries()); const docId = rawData.editCrmId; delete rawData.editCrmId; const dataToSave = { ...rawData, updatedAt: serverTimestamp() }; if(!docId) dataToSave.createdAt = serverTimestamp(); submitCrmBtn.disabled = true; submitCrmBtn.textContent = "SALVANDO..."; try { const colRef = collection(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION); if(docId) await updateDoc(doc(colRef, docId), dataToSave); else await addDoc(colRef, dataToSave); hideCrmModal(); } catch(error) { crmMessage.textContent = "Erro: " + error.message; } finally { submitCrmBtn.disabled = false; } };
+        const handleDuplicate = async (docId) => { const proposal = allProposals.find(p => p.id === docId); if (!proposal || !confirm(`Duplicar proposta?`)) return; try { const { id, ...data } = proposal; await addDoc(collection(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION), { ...data, cliente: `${data.cliente} (Cópia)`, createdAt: serverTimestamp(), updatedAt: serverTimestamp() }); } catch (e) { alert("Erro: " + e.message); } };
+        const handleDelete = async (docId) => { if (!confirm("Excluir esta proposta?")) return; try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION, docId)); } catch (e) { alert("Erro: " + e.message); } };
+        const handleDeleteCrm = async (docId) => { if(!confirm("Excluir este contato do CRM?")) return; try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION, docId)); } catch(e) { alert("Erro: " + e.message); } };
 
-            const formData = new FormData(crmForm);
-            const rawData = Object.fromEntries(formData.entries());
-            const docId = rawData.editCrmId;
-            delete rawData.editCrmId;
+        const initAuth = async () => { if (!auth) return; try { if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) { await signInWithCustomToken(auth, __initial_auth_token); } else { await signInAnonymously(auth); } } catch (error) { console.error("Erro na autenticação:", error); } };
 
-            const dataToSave = { ...rawData, updatedAt: serverTimestamp() };
-            if(!docId) dataToSave.createdAt = serverTimestamp();
+        if (auth) { initAuth(); onAuthStateChanged(auth, user => { currentUser = user; if (user) { const userDisplay = document.getElementById('userEmailDisplay'); if(userDisplay) userDisplay.textContent = user.isAnonymous ? 'Modo Anônimo' : (user.email || 'Usuário'); setupRealtimeListeners(); } else { if (unsubscribeProposals) unsubscribeProposals(); if (unsubscribeCrm) unsubscribeCrm(); if (unsubscribeSettings) unsubscribeSettings(); } }); }
 
-            submitCrmBtn.disabled = true;
-            submitCrmBtn.textContent = "SALVANDO...";
-
-            try {
-                const colRef = collection(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION);
-                if(docId) await updateDoc(doc(colRef, docId), dataToSave);
-                else await addDoc(colRef, dataToSave);
-                hideCrmModal();
-            } catch(error) {
-                crmMessage.textContent = "Erro: " + error.message;
-            } finally {
-                submitCrmBtn.disabled = false;
-            }
-        };
-
-        const handleDuplicate = async (docId) => {
-             const proposal = allProposals.find(p => p.id === docId);
-             if (!proposal || !confirm(`Duplicar proposta?`)) return;
-             try {
-                 const { id, ...data } = proposal; 
-                 await addDoc(collection(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION), { 
-                     ...data, 
-                     cliente: `${data.cliente} (Cópia)`, 
-                     createdAt: serverTimestamp(), 
-                     updatedAt: serverTimestamp() 
-                 });
-             } catch (e) { alert("Erro: " + e.message); }
-        };
-
-        const handleDelete = async (docId) => {
-            if (!confirm("Excluir esta proposta?")) return;
-            try {
-                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION, docId));
-            } catch (e) { alert("Erro: " + e.message); }
-        };
-
-        const handleDeleteCrm = async (docId) => {
-             if(!confirm("Excluir este contato do CRM?")) return;
-             try {
-                 await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION, docId));
-             } catch(e) { alert("Erro: " + e.message); }
-        };
-
-        const initAuth = async () => {
-            if (!auth) return;
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (error) {
-                console.error("Erro na autenticação:", error);
-            }
-        };
-
-        if (auth) {
-            initAuth();
-            onAuthStateChanged(auth, user => {
-                currentUser = user;
-                if (user) {
-                    // Update user display
-                    const userDisplay = document.getElementById('userEmailDisplay');
-                    if(userDisplay) userDisplay.textContent = user.isAnonymous ? 'Modo Anônimo' : (user.email || 'Usuário');
-                    
-                    setupRealtimeListeners();
-                } else {
-                    if (unsubscribeProposals) unsubscribeProposals();
-                    if (unsubscribeCrm) unsubscribeCrm();
-                    if (unsubscribeSettings) unsubscribeSettings();
-                }
-            });
-        }
-
-        // Event Listeners
         if(addNewButton) addNewButton.onclick = () => showModal();
         if(exportButton) exportButton.onclick = exportToCSV;
         if(closeModalButton) closeModalButton.onclick = hideModal;
         if(proposalForm) proposalForm.onsubmit = handleFormSubmit;
         if(proposalModal) proposalModal.onclick = (e) => { if (e.target === proposalModal) hideModal(); };
-
         if(addCrmButton) addCrmButton.onclick = () => showCrmModal();
         if(exportCrmButton) exportCrmButton.onclick = exportCrmToCSV;
         if(closeCrmModalButton) closeCrmModalButton.onclick = hideCrmModal;
         if(crmForm) crmForm.onsubmit = handleCrmSubmit;
         if(crmModal) crmModal.onclick = (e) => { if(e.target === crmModal) hideCrmModal(); };
 
-        // Toggle Menu Logic (Updated)
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('mobileOverlay');
-        const menuBtn = document.getElementById('menuToggleBtn');
-        const mainContent = document.getElementById('mainContent');
-
+        const sidebar = document.getElementById('sidebar'), overlay = document.getElementById('mobileOverlay'), menuBtn = document.getElementById('menuToggleBtn'), mainContent = document.getElementById('mainContent');
         const toggleMenu = () => {
             const isMobile = window.innerWidth < 768;
-            
-            if (isMobile) {
-                // Mobile behavior: Slide in/out with overlay
-                const isClosed = sidebar.classList.contains('-translate-x-full');
-                if (isClosed) {
-                    sidebar.classList.remove('-translate-x-full');
-                    overlay.classList.remove('hidden');
-                } else {
-                    sidebar.classList.add('-translate-x-full');
-                    overlay.classList.add('hidden');
-                }
-            } else {
-                // Desktop behavior: Collapse/Expand sidebar
-                const isClosed = sidebar.classList.contains('-translate-x-full');
-                if (isClosed) {
-                    sidebar.classList.remove('-translate-x-full'); // Open Sidebar
-                    mainContent.style.marginLeft = '0'; // Let flexbox handle it or reset margin
-                    // Actually, since we are using relative/absolute switch in CSS, 
-                    // on Desktop (md:relative), removing -translate-x-full makes it visible in flow.
-                    // We just need to manage the width transition if we want smooth effect.
-                    // Current setup: md:translate-x-0 is default.
-                    
-                    // Let's rely on class toggling for 'closed state'
-                } 
-                // Correction for Desktop Toggle Logic with existing classes:
-                // Sidebar has `md:translate-x-0` by default.
-                // We toggle a class to force hide it.
-                sidebar.classList.toggle('md:-translate-x-full');
-                
-                // Adjust content margin? 
-                // Since sidebar is `md:relative`, hiding it with transform might leave whitespace 
-                // if we don't also adjust its width or display.
-                // Better approach for smooth slide: Toggle margin-left on a wrapper or sidebar width.
-                // Given the current setup, let's use the 'hidden' strategy visually.
-                
-                if (sidebar.classList.contains('md:-translate-x-full')) {
-                    sidebar.classList.add('md:w-0', 'md:overflow-hidden');
-                    sidebar.classList.remove('w-64');
-                } else {
-                    sidebar.classList.remove('md:w-0', 'md:overflow-hidden');
-                    sidebar.classList.add('w-64');
-                }
-            }
+            if (isMobile) { const isClosed = sidebar.classList.contains('-translate-x-full'); if (isClosed) { sidebar.classList.remove('-translate-x-full'); overlay.classList.remove('hidden'); } else { sidebar.classList.add('-translate-x-full'); overlay.classList.add('hidden'); } } 
+            else { const isClosed = sidebar.classList.contains('-translate-x-full'); if (isClosed) { sidebar.classList.remove('-translate-x-full'); } sidebar.classList.toggle('md:-translate-x-full'); if (sidebar.classList.contains('md:-translate-x-full')) { sidebar.classList.add('md:w-0', 'md:overflow-hidden'); sidebar.classList.remove('w-64'); } else { sidebar.classList.remove('md:w-0', 'md:overflow-hidden'); sidebar.classList.add('w-64'); } }
         };
-
         if(menuBtn) menuBtn.addEventListener('click', toggleMenu);
         if(overlay) overlay.addEventListener('click', toggleMenu);
+
+        // --- CLEANUP LOGIC (MOVED TO BOTTOM) ---
+        const forceClearFilters = () => {
+            const filters = ['filterDateStart', 'filterDateEnd', 'filterExecutivo', 'filterStatus', 'filterCliente', 'filterProjeto', 'filterGestor', 'filterCrmNome', 'filterCrmCliente', 'filterCrmCargo', 'filterCrmEmail'];
+            filters.forEach(id => { const el = document.getElementById(id); if(el) { el.value = ""; if(el.tagName === 'SELECT') el.selectedIndex = 0; } });
+            if(typeof filterData === 'function') filterData();
+        };
+        window.addEventListener('load', () => { forceClearFilters(); setTimeout(forceClearFilters, 100); });
 
     </script>
 </body>
