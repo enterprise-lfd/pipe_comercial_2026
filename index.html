@@ -44,6 +44,11 @@
         #sidebar, #mainContent {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        
+        /* Badge removido visualmente, mantendo classe caso precise no futuro */
+        .badge-soon {
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 h-screen flex flex-col overflow-hidden">
@@ -73,34 +78,64 @@
     <div class="flex flex-1 overflow-hidden relative">
         
         <!-- 2. MENU LATERAL (SIDEBAR) RETRÁTIL -->
-        <!-- Posicionado relativo ao container flex, mas com comportamento absolute em mobile -->
         <aside id="sidebar" class="absolute md:relative inset-y-0 left-0 z-40 w-64 bg-gray-900 text-white flex flex-col transform -translate-x-full md:translate-x-0 shadow-xl h-full">
             
             <!-- Conteúdo do Menu -->
             <nav class="flex-1 overflow-y-auto py-6">
-                <ul class="space-y-2 px-3">
+                
+                <!-- SESSÃO COMERCIAL -->
+                <div class="px-4 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Comercial</div>
+                <ul class="space-y-1 px-3 mb-6">
                     <li>
-                        <button onclick="switchView('view-pipeline')" id="nav-pipeline" class="nav-item active w-full flex items-center p-3 rounded-lg transition-colors duration-200">
+                        <button onclick="switchView('view-pipeline')" id="nav-pipeline" class="nav-item active w-full flex items-center p-2 rounded-lg transition-colors duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                             </svg>
-                            <span class="font-medium whitespace-nowrap">Pipeline de Propostas</span>
+                            <span class="font-medium whitespace-nowrap text-sm">Pipeline de Propostas</span>
                         </button>
                     </li>
                     <li>
-                        <button onclick="switchView('view-crm')" id="nav-crm" class="nav-item w-full flex items-center p-3 rounded-lg transition-colors duration-200 text-gray-300">
+                        <button onclick="switchView('view-crm')" id="nav-crm" class="nav-item w-full flex items-center p-2 rounded-lg transition-colors duration-200 text-gray-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
-                            <span class="font-medium whitespace-nowrap">Cadastro CRM</span>
+                            <span class="font-medium whitespace-nowrap text-sm">Cadastro CRM</span>
                         </button>
                     </li>
                     <li>
-                        <button onclick="switchView('view-settings')" id="nav-settings" class="nav-item w-full flex items-center p-3 rounded-lg transition-colors duration-200 text-gray-300">
+                        <button onclick="switchView('view-settings')" id="nav-settings" class="nav-item w-full flex items-center p-2 rounded-lg transition-colors duration-200 text-gray-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                             </svg>
-                            <span class="font-medium whitespace-nowrap">Novos Cadastros</span>
+                            <span class="font-medium whitespace-nowrap text-sm">Novos Cadastros</span>
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- SESSÃO OPERACIONAL -->
+                <div class="px-4 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Operacional</div>
+                <ul class="space-y-1 px-3 mb-6">
+                    <li>
+                        <button onclick="switchView('view-operations')" id="nav-operations" class="nav-item w-full flex items-center p-2 rounded-lg transition-colors duration-200 text-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                            </svg>
+                            <span class="font-medium whitespace-nowrap text-sm">Pipeline de Campanhas</span>
+                            <!-- BADGE REMOVIDO -->
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- SESSÃO FINANCEIRA -->
+                <div class="px-4 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Financeira</div>
+                <ul class="space-y-1 px-3 mb-6">
+                    <li>
+                        <button onclick="switchView('view-financial')" id="nav-financial" class="nav-item w-full flex items-center p-2 rounded-lg transition-colors duration-200 text-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span class="font-medium whitespace-nowrap text-sm">Pipeline Financeiro</span>
+                            <!-- BADGE REMOVIDO -->
                         </button>
                     </li>
                 </ul>
@@ -117,7 +152,7 @@
         <!-- 3. ÁREA PRINCIPAL DE CONTEÚDO -->
         <main id="mainContent" class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 md:p-8 w-full">
 
-            <!-- VIEW 1: PIPELINE DE PROPOSTAS -->
+            <!-- VIEW 1: PIPELINE DE PROPOSTAS (COMERCIAL) -->
             <div id="view-pipeline" class="view-section">
                 <header class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                     <h2 class="text-2xl font-bold text-gray-800">Pipeline de Propostas</h2>
@@ -147,7 +182,6 @@
                 <!-- BARRA DE FILTROS -->
                 <div class="bg-white p-4 rounded-lg shadow mb-6 border border-gray-200">
                     <div class="text-xs font-semibold text-gray-500 uppercase mb-2">Filtrar por</div>
-                    <!-- Ajustei o grid para acomodar mais um filtro -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-3">
                         
                         <!-- Filtro de Data (Início e Fim) -->
@@ -188,10 +222,10 @@
                             </select>
                         </div>
 
-                        <!-- Filtro Especial Gestor (MOVIDO PARA CÁ) -->
+                        <!-- Filtro Especial Gestor -->
                         <div class="bg-indigo-50 p-1 rounded">
                             <select id="filterGestor" class="w-full border-indigo-200 bg-indigo-50 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-indigo-900" autocomplete="off">
-                                <option value="">Apoi (Todos)</option>
+                                <option value="">Apoio (Todos)</option>
                                 <option value="MICHELE">MICHELE</option>
                                 <option value="BIANCA">BIANCA</option>
                             </select>
@@ -233,7 +267,7 @@
                 </div>
             </div>
 
-            <!-- VIEW 2: CADASTRO CRM -->
+            <!-- VIEW 2: CADASTRO CRM (COMERCIAL) -->
             <div id="view-crm" class="view-section hidden">
                 <header class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                     <h2 class="text-2xl font-bold text-gray-800">Cadastro CRM</h2>
@@ -301,7 +335,7 @@
                 </div>
             </div>
 
-            <!-- VIEW 3: NOVOS CADASTROS -->
+            <!-- VIEW 3: NOVOS CADASTROS (COMERCIAL) -->
             <div id="view-settings" class="view-section hidden">
                 <header class="mb-6"><h2 class="text-2xl font-bold text-gray-800">Gerenciar Listas Suspensas</h2></header>
                 
@@ -431,6 +465,106 @@
                 </div>
             </div>
 
+            <!-- VIEW 4: PIPELINE DE CAMPANHAS (OPERACIONAL) -->
+            <div id="view-operations" class="view-section hidden">
+                <header class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Pipeline de Campanhas</h2>
+                    <div class="flex gap-2 w-full md:w-auto">
+                        <button id="exportCampaignButton" class="flex-1 md:flex-none bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                            </svg>
+                            Exportar
+                        </button>
+                        <button id="addCampaignButton" class="flex-1 md:flex-none bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300">
+                            + Nova Campanha
+                        </button>
+                    </div>
+                </header>
+
+                <div class="bg-white rounded-lg shadow-lg overflow-x-auto border border-gray-200">
+                    <table class="min-w-full w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">RG</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Nome</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Mês</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">PI Agência</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Campanha</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Produto</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Vertical</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Receita</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">V. Bruto</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Desc.</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">V. Líquido</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Executivo</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Rep. Coml</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Agência</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Status</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Faturar</th>
+                                <th class="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="campaignsTableBody" class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td colspan="17" class="px-6 py-10 text-center text-gray-500">
+                                    <div class="flex justify-center items-center flex-col">
+                                        <div class="spinner mb-3"></div>
+                                        <span>Carregando campanhas...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW 5: PIPELINE FINANCEIRO (FINANCEIRA) -->
+            <div id="view-financial" class="view-section hidden">
+                <header class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Pipeline Financeiro</h2>
+                    <div class="flex gap-2 w-full md:w-auto">
+                         <button id="exportFinancialButton" class="flex-1 md:flex-none bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                            </svg>
+                            Exportar Relatório
+                        </button>
+                    </div>
+                </header>
+
+                <div class="bg-white rounded-lg shadow-lg overflow-x-auto border border-gray-200">
+                    <table class="min-w-full w-full divide-y divide-gray-200">
+                         <!-- CABEÇALHO IGUAL AO PIPELINE DE PROPOSTAS, SEM AÇÕES -->
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RG</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Executivo</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agência</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produto</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prob (%)</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prob Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="financialTableBody" class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td colspan="10" class="px-6 py-10 text-center text-gray-500">
+                                    <div class="flex justify-center items-center flex-col">
+                                        <span>Carregando dados financeiros...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -487,9 +621,6 @@
                             <option value="18 Comunicação">18 Comunicação</option>
                             <option value="2Mídia">2Mídia</option>
                             <option value="A Definir">A Definir</option>
-
-                            <!-- INSERIR AQUI -->
-
                             <option value="Zambra MKT">Zambra MKT</option>
                             <option value="zetabé">zetabé</option>
                             <option value="Zygon">Zygon</option>
@@ -509,9 +640,6 @@
                             <option value="96Bet">96Bet</option>
                             <option value="99 Taxi">99 Taxi</option>
                             <option value="123 Milhas">123 Milhas</option>
-
-                            <!-- INSERIR AQUI -->
-
                             <option value="zurich seguros">zurich seguros</option>
                             <option value="Zynga">Zynga</option>
                         </select>
@@ -558,100 +686,8 @@
                             <option value="">Selecione</option>
                             <option value="Black Friday">Black Friday</option>
                             <option value="Carnaval 2025">Carnaval 2025</option>
-                            <option value="Evento Body">Evento Body</option>
-                            <option value="Mente em Dia">Mente em Dia</option>
-                            <option value="Meu Pé de Meia">Meu Pé de Meia</option>
-                            <option value="Mobilidade">Mobilidade</option>
-                            <option value="Natal">Natal</option>
-                            <option value="Outubro Rosa">Outubro Rosa</option>
-                            <option value="Parada">Parada</option>
-                            <option value="Projeto Verão">Projeto Verão</option>
-                            <option value="Retail Media">Retail Media</option>
-                            <option value="Temporada Geek">Temporada Geek</option>
-                            <option value="Terraiá">Terraiá</option>
-                            <option value="Meu Pé de Meia">Meu Pé de Meia</option>
-                            <option value="Carnaval 2025">Carnaval 2025</option>
-                            <option value="Projeto Verão">Projeto Verão</option>
-                            <option value="Parada">Parada</option>
-                            <option value="Terraiá">Terraiá</option>
-                            <option value="Retail Media">Retail Media</option>
-                            <option value="Outubro Rosa">Outubro Rosa</option>
-                            <option value="Mobilidade">Mobilidade</option>
-                            <option value="Temporada Geek">Temporada Geek</option>
-                            <option value="Black Friday">Black Friday</option>
-                            <option value="Natal">Natal</option>
-                            <option value="Evento Body">Evento Body</option>
-                            <option value="Mente em Dia">Mente em Dia</option>
-                            <option value="Olimpiadas">Olimpiadas</option>
-                            <option value="Esportes 2023">Esportes 2023</option>
-                            <option value="Oscar">Oscar</option>
-                            <option value="Mês da Mulher">Mês da Mulher</option>
-                            <option value="Páscoa">Páscoa</option>
-                            <option value="Agrishow">Agrishow</option>
-                            <option value="Vertical Educação">Vertical Educação</option>
-                            <option value="Dia das Mães">Dia das Mães</option>
-                            <option value="Women On Top">Women On Top</option>
-                            <option value="Dia dos Namorados">Dia dos Namorados</option>
-                            <option value="Festa Junina">Festa Junina</option>
-                            <option value="Perifacon">Perifacon</option>
-                            <option value="+Qpretas">+Qpretas</option>
-                            <option value="Inverno">Inverno</option>
-                            <option value="Cantaí Summit">Cantaí Summit</option>
-                            <option value="Dia dos Pais">Dia dos Pais</option>
-                            <option value="Ponto Futuro">Ponto Futuro</option>
-                            <option value="Mês do Consumidor">Mês do Consumidor</option>
-                            <option value="Nós na Maturidade">Nós na Maturidade</option>
-                            <option value="BGS">BGS</option>
-                            <option value="Prêmio Nós">Prêmio Nós</option>
-                            <option value="Campus Party">Campus Party</option>
-                            <option value="Terra Musica ao Vivo">Terra Musica ao Vivo</option>
-                            <option value="CCXP">CCXP</option>
-                            <option value="Vertical Terra Vc">Vertical Terra Vc</option>
-                            <option value="BBB">BBB</option>
-                            <option value="Game On">Game On</option>
-                            <option value="Nós">Nós</option>
-                            <option value="Visão do Corre">Visão do Corre</option>
-                            <option value="Terra Byte">Terra Byte</option>
-                            <option value="Degusta">Degusta</option>
-                            <option value="Entretelas">Entretelas</option>
-                            <option value="Dinheiros">Dinheiros</option>
-                            <option value="Entretê">Entretê</option>
-                            <option value="Arena ITU">Arena ITU</option>
-                            <option value="Planeta">Planeta</option>
+                            <!-- ... outros projetos ... -->
                             <option value="CUSTOMIZADO">CUSTOMIZADO</option>
-                            <option value="OUTRO">OUTRO</option>
-                            <option value="natal 2028">natal 2028</option>
-                            <option value="feira preta">feira preta</option>
-                            <option value="terra do orgulho">terra do orgulho</option>
-                            <option value="vida nos 30">vida nos 30</option>
-                            <option value="monks">monks</option>
-                            <option value="cop 30">cop 30</option>
-                            <option value="tempo de mulher">tempo de mulher</option>
-                            <option value="esportes 2025">esportes 2025</option>
-                            <option value="mês das mães">mês das mães</option>
-                            <option value="educar">educar</option>
-                            <option value="castro festival">castro festival</option>
-                            <option value="surfe">surfe</option>
-                            <option value="terra futebol">terra futebol</option>
-                            <option value="cobertura festivais">cobertura festivais</option>
-                            <option value="the earthshot prize">the earthshot prize</option>
-                            <option value="rodeio de itu">rodeio de itu</option>
-                            <option value="social boost">social boost</option>
-                            <option value="brasil afora">brasil afora</option>
-                            <option value="the lotter - editorial">the lotter - editorial</option>
-                            <option value="the town">the town</option>
-                            <option value="terra agora">terra agora</option>
-                            <option value="rede mulher empreendedora - rme">rede mulher empreendedora - rme</option>
-                            <option value="partiu correr">partiu correr</option>
-                            <option value="halloween da pabllo">halloween da pabllo</option>
-                            <option value="vivo ads track">vivo ads track</option>
-                            <option value="salão do automóvel">salão do automóvel</option>
-                            <option value="cobertura de corridas">cobertura de corridas</option>
-                            <option value="fórmula 1">fórmula 1</option>
-                            <option value="natal luz gramado">natal luz gramado</option>
-                            <option value="carnaval 2026">carnaval 2026</option>
-                            <option value="velvet">velvet</option>
-                            <option value="copa 2026">copa 2026</option>
                         </select>
                     </div>
                     <div>
@@ -744,7 +780,7 @@
         </div>
     </div>
 
-    <!-- NOVO MODAL CRM (ATUALIZADO) -->
+    <!-- MODAL CRM -->
     <div id="crmModal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl flex flex-col">
             <div class="flex justify-between items-center border-b p-4 md:p-5">
@@ -773,7 +809,7 @@
                     </div>
                     <div>
                         <label for="crm_vertical" class="block mb-2 text-sm font-medium text-gray-900">Vertical</label>
-                        <input type="text" id="crm_vertical" name="vertical" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+                        <input type="text" id="crm_vertical" name="vertical" class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5">
                     </div>
                     <div>
                         <label for="crm_cargo" class="block mb-2 text-sm font-medium text-gray-900">Cargo</label>
@@ -802,6 +838,150 @@
         </div>
     </div>
 
+    <!-- NOVO MODAL DE CAMPANHAS (Atualizado) -->
+    <div id="campaignModal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col">
+            <!-- Cabeçalho -->
+            <div class="flex justify-between items-center border-b p-4 md:p-5">
+                <h3 class="text-xl font-semibold text-gray-900">Nova Campanha</h3>
+                <button id="closeCampaignModalBtn" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex items-center justify-center">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <form id="campaignForm" class="modal-body overflow-y-auto px-6 py-6 flex-1">
+                <input type="hidden" id="editCampaignId" name="editCampaignId">
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <!-- Linha 1 -->
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">RG</label>
+                        <input type="text" name="rg" id="camp_rg" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Nome (Gerado Automaticamente)</label>
+                        <input type="text" name="nome" id="camp_nome" class="w-full bg-gray-100 border border-gray-300 text-sm rounded p-2 font-semibold text-gray-600" readonly>
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Mês</label>
+                        <select name="mes" id="camp_mes" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                            <option value="">Selecione</option>
+                            <!-- Gerado via JS: jan-25, fev-25 etc -->
+                        </select>
+                    </div>
+
+                    <!-- Linha 2 -->
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Nº PI Agência</label>
+                        <input type="text" name="pi_agencia" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Campanha</label>
+                        <input type="text" name="campanha" id="camp_campanha" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2" required>
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Produto</label>
+                        <input type="text" name="produto" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+
+                    <!-- Linha 3 -->
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Vertical</label>
+                        <input type="text" name="vertical" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Receita (R$)</label>
+                        <!-- ALTERADO PARA TEXTO -->
+                        <input type="text" name="receita" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Valor Bruto (R$)</label>
+                        <input type="number" step="0.01" name="valor_bruto" id="camp_valor_bruto" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Desc. Agência (%)</label>
+                        <input type="number" step="0.01" name="desc_agencia" id="camp_desc_agencia" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+
+                    <!-- Linha 4 -->
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Valor Líquido (R$)</label>
+                        <!-- CALCULO AUTOMATICO -->
+                        <input type="number" step="0.01" name="valor_liquido" id="camp_valor_liquido" class="w-full bg-gray-100 border border-gray-300 text-sm rounded p-2" readonly>
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Executivo</label>
+                        <input type="text" name="executivo" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Agenciador/Rep.</label>
+                        <input type="text" name="agenciador" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Atendimento</label>
+                        <input type="text" name="atendimento" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+
+                    <!-- Linha 5 -->
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Anunciante</label>
+                        <input type="text" name="anunciante" id="camp_anunciante" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Agência</label>
+                        <input type="text" name="agencia" id="camp_agencia" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Segmento</label>
+                        <input type="text" name="segmento" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Projeto</label>
+                        <input type="text" name="projeto" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+
+                    <!-- Linha 6 -->
+                    <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Nº ID - Faturamento</label>
+                        <input type="text" name="id_faturamento" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+                    <div class="md:col-span-3">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">OBS</label>
+                        <input type="text" name="obs" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+
+                    <!-- Novos selects (antes checkboxes) -->
+                    <div class="md:col-span-2">
+                         <label class="block mb-1 text-xs font-medium text-gray-700">Status da Campanha</label>
+                         <select name="finalizada" id="camp_finalizada" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                            <option value="Pendente">Pendente</option>
+                            <option value="Em Andamento">Em Andamento</option>
+                            <option value="Finalizada">Finalizada</option>
+                            <option value="Finalizada c/ Under">Finalizada c/ Under</option>
+                            <option value="Cancelada">Cancelada</option>
+                         </select>
+                    </div>
+                    <div class="md:col-span-2">
+                         <label class="block mb-1 text-xs font-medium text-gray-700">Faturar?</label>
+                         <select name="faturar" id="camp_faturar" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                            <option value="Não">Não</option>
+                            <option value="Sim">Sim</option>
+                         </select>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex justify-end border-t pt-4">
+                    <button type="submit" id="submitCampaignBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-colors">
+                        SALVAR CAMPANHA
+                    </button>
+                </div>
+                <div id="campaignMessage" class="mt-2 text-center text-red-600 text-sm font-bold"></div>
+            </form>
+        </div>
+    </div>
+
     <!-- Script Firebase -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
@@ -816,7 +996,7 @@
             firebaseConfig = JSON.parse(__firebase_config);
             appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         } else {
-            // --- USO EXTERNO ---
+            // --- USO EXTERNO (fallback) ---
             firebaseConfig = {
                 apiKey: "AIzaSyABUSXzV1r2Ri7gkZaE8i01dCpwoDF1YEA",
                 authDomain: "trr-prd-pipe-comercial-26.firebaseapp.com",
@@ -844,17 +1024,20 @@
         
         const PROPOSALS_COLLECTION = 'proposals';
         const CRM_COLLECTION = 'crm_contacts'; 
-        const SETTINGS_COLLECTION = 'system_settings'; // NOVA COLEÇÃO
+        const SETTINGS_COLLECTION = 'system_settings';
+        const CAMPAIGNS_COLLECTION = 'campaigns_pipeline';
 
         let allProposals = [];
         let filteredProposals = [];
         let allCrmContacts = [];
         let filteredCrmContacts = [];
-        let customOptions = { cliente: [], agencia: [], projeto: [] }; // Cache para opções customizadas
+        let allCampaigns = []; 
+        let customOptions = { cliente: [], agencia: [], projeto: [] };
         let currentUser = null;
         let unsubscribeProposals = null;
         let unsubscribeCrm = null;
         let unsubscribeSettings = null;
+        let unsubscribeCampaigns = null;
 
         // Seletores Propostas
         const addNewButton = document.getElementById('addNewButton');
@@ -868,12 +1051,11 @@
         const modalMessage = document.getElementById('modalMessage');
         const editDocIdInput = document.getElementById('editDocId');
         
-        // Novos seletores para autocomplete de contato e filtros
         const proposalClienteSelect = document.getElementById('cliente');
         const proposalContactInput = document.getElementById('contato');
         const proposalEmailInput = document.getElementById('email');
-        const proposalOrigemSelect = document.getElementById('origem'); // Novo seletor
-        const proposalProdutoSelect = document.getElementById('produto'); // Novo seletor
+        const proposalOrigemSelect = document.getElementById('origem'); 
+        const proposalProdutoSelect = document.getElementById('produto'); 
         const contactDatalist = document.getElementById('contactOptions');
         const emailDatalist = document.getElementById('emailOptions');
 
@@ -888,6 +1070,33 @@
         const crmMessage = document.getElementById('crmMessage');
         const editCrmIdInput = document.getElementById('editCrmId');
 
+        // Seletores Campanhas
+        const addCampaignButton = document.getElementById('addCampaignButton');
+        const exportCampaignButton = document.getElementById('exportCampaignButton'); // NOVO
+        const campaignModal = document.getElementById('campaignModal');
+        const closeCampaignModalBtn = document.getElementById('closeCampaignModalBtn');
+        const campaignForm = document.getElementById('campaignForm');
+        const submitCampaignBtn = document.getElementById('submitCampaignBtn');
+        const campaignMessage = document.getElementById('campaignMessage');
+        const editCampaignIdInput = document.getElementById('editCampaignId');
+        const campaignsTableBody = document.getElementById('campaignsTableBody');
+
+        // Seletor Financeiro
+        const financialTableBody = document.getElementById('financialTableBody');
+        const exportFinancialButton = document.getElementById('exportFinancialButton');
+
+        // Novos seletores de Campanha para automações
+        const campRgInput = document.getElementById('camp_rg');
+        const campNomeInput = document.getElementById('camp_nome');
+        const campMesSelect = document.getElementById('camp_mes');
+        const campAgenciaInput = document.getElementById('camp_agencia');
+        const campAnuncianteInput = document.getElementById('camp_anunciante');
+        const campCampanhaInput = document.getElementById('camp_campanha');
+        
+        const campValorBruto = document.getElementById('camp_valor_bruto');
+        const campDescAgencia = document.getElementById('camp_desc_agencia');
+        const campValorLiquido = document.getElementById('camp_valor_liquido');
+
         // Selectors Import
         const btnImportCsv = document.getElementById('btnImportCsv');
         const importFile = document.getElementById('importFile');
@@ -901,7 +1110,7 @@
         const filterStatus = document.getElementById('filterStatus');
         const filterCliente = document.getElementById('filterCliente');
         const filterProjeto = document.getElementById('filterProjeto');
-        const filterGestor = document.getElementById('filterGestor'); // NOVO
+        const filterGestor = document.getElementById('filterGestor');
         const clearFiltersBtn = document.getElementById('clearFilters');
 
         // Filter Selectors CRM
@@ -911,7 +1120,7 @@
         const filterCrmEmail = document.getElementById('filterCrmEmail');
         const clearCrmFiltersBtn = document.getElementById('clearCrmFilters');
         
-        // --- LIMPEZA DE FILTROS AO CARREGAR (Correção do Cache) ---
+        // --- LIMPEZA DE FILTROS ---
         window.addEventListener('load', () => {
             const filterIds = [
                 'filterDateStart', 'filterDateEnd', 'filterExecutivo', 'filterStatus', 
@@ -922,11 +1131,65 @@
                 const el = document.getElementById(id);
                 if(el) el.value = '';
             });
-            // Re-aplicar filtro limpo
-            if(typeof filterData === 'function') filterData();
+
+            // POPULAR MESES NA CAMPANHA
+            populateCampaignMonths();
         });
 
-        // --- CONSTANTES DE REGRA DE NEGOCIO ---
+        // --- LÓGICA DE MESES ---
+        function populateCampaignMonths() {
+            const select = document.getElementById('camp_mes');
+            if(!select) return;
+            select.innerHTML = '<option value="">Selecione</option>';
+            
+            const months = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+            // Gerar para 2024, 2025, 2026
+            const years = [24, 25, 26];
+
+            years.forEach(year => {
+                months.forEach(month => {
+                    const val = `${month}-${year}`; // ex: jan-24
+                    const opt = document.createElement('option');
+                    opt.value = val;
+                    opt.text = val;
+                    select.appendChild(opt);
+                });
+            });
+        }
+
+        // --- LÓGICA DE AUTOMATIZAÇÃO CAMPANHA (NOME E VALOR) ---
+        function updateCampaignName() {
+            const rg = campRgInput.value.trim();
+            const agencia = campAgenciaInput.value.trim();
+            const anunciante = campAnuncianteInput.value.trim();
+            const campanha = campCampanhaInput.value.trim();
+            const mes = campMesSelect.value; 
+            
+            const parts = [rg, agencia, anunciante, campanha, mes];
+            const validParts = parts.filter(p => p !== "");
+            
+            campNomeInput.value = validParts.join('_');
+        }
+
+        function updateCampaignLiquidValue() {
+            const bruto = parseFloat(campValorBruto.value) || 0;
+            const desc = parseFloat(campDescAgencia.value) || 0;
+            const liquido = bruto * (1 - (desc / 100));
+            campValorLiquido.value = liquido.toFixed(2); 
+        }
+
+        // Listeners para Nome
+        if(campRgInput) campRgInput.addEventListener('input', updateCampaignName);
+        if(campAgenciaInput) campAgenciaInput.addEventListener('input', updateCampaignName);
+        if(campAnuncianteInput) campAnuncianteInput.addEventListener('input', updateCampaignName);
+        if(campCampanhaInput) campCampanhaInput.addEventListener('input', updateCampaignName);
+        if(campMesSelect) campMesSelect.addEventListener('change', updateCampaignName);
+
+        // Listeners para Valor
+        if(campValorBruto) campValorBruto.addEventListener('input', updateCampaignLiquidValue);
+        if(campDescAgencia) campDescAgencia.addEventListener('input', updateCampaignLiquidValue);
+
+
         const AGENCIAS_MICHELE = [
             "accenture", "africa", "africa asia", "almap", "almap/bbdo", "almap bbdo", 
             "artplan", "artplan convert", "artplan pullse", "babel", "betc", "betc havas", 
@@ -941,8 +1204,29 @@
             "siprocal | lepub", "wms", "wpp", "zetabe", "zetabé"
         ];
 
+        // --- SISTEMA DE SENHAS ---
+        const viewPasswords = {
+            'view-pipeline': 'Comercial-26-teste',
+            'view-operations': 'Campanhas-26-teste'
+        };
+        const viewAuth = { 
+            'view-pipeline': false, 
+            'view-operations': false 
+        };
+
         // --- Navegação ---
         window.switchView = (viewId) => {
+            // VERIFICAR SENHA
+            if (viewPasswords[viewId] && !viewAuth[viewId]) {
+                const pass = prompt("Por favor, insira a senha de acesso:");
+                if (pass === viewPasswords[viewId]) {
+                    viewAuth[viewId] = true;
+                } else {
+                    alert("Senha incorreta!");
+                    return; // Bloqueia a navegação
+                }
+            }
+
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.nav-item').forEach(el => {
                 el.classList.remove('active', 'text-white');
@@ -955,36 +1239,31 @@
                 activeNav.classList.add('active', 'text-white');
                 activeNav.classList.remove('text-gray-300');
             }
-            // Em mobile, fechar o menu após clicar
             if(window.innerWidth < 768) toggleMenu();
+
+            // Renderizar tabela financeira se for a view financeira
+            if(viewId === 'view-financial') {
+                renderFinancialTable();
+            }
         };
 
-        // --- Helper Functions for Sorting ---
-        // Add this new function to sort dropdowns
         const sortSelectOptions = (selectId) => {
             const select = document.getElementById(selectId);
             if (!select) return;
-            
             const options = Array.from(select.options);
-            // Keep the first option if it is a placeholder (value="")
             const placeholder = options[0].value === "" ? options.shift() : null;
-
             options.sort((a, b) => a.text.localeCompare(b.text));
-
             select.innerHTML = '';
             if (placeholder) select.appendChild(placeholder);
             options.forEach(opt => select.appendChild(opt));
         };
 
-        // Function to sort all relevant dropdowns
         const sortAllDropdowns = () => {
             ['executivo', 'agencia', 'cliente', 'origem', 'tipo_venda', 'produto', 
              'projeto_especial', 'vertical', 'status', 'representante',
              'filterExecutivo', 'filterStatus', 'filterCliente', 'filterProjeto'].forEach(id => sortSelectOptions(id));
         };
 
-
-        // --- Helper para preencher filtros ---
         const populateFilterOptions = () => {
             const copyOptions = (sourceId, targetId, defaultText) => {
                 const sourceSelect = document.getElementById(sourceId);
@@ -992,9 +1271,6 @@
                 if (!sourceSelect || !targetSelect) return;
 
                 targetSelect.innerHTML = `<option value="">${defaultText}</option>`;
-                // Sort source before copying or sort after?
-                // Let's rely on our new sortSelectOptions to handle final order.
-                // But we need to copy first.
                 Array.from(sourceSelect.options).forEach(opt => {
                     if (opt.value) {
                          const newOpt = document.createElement('option');
@@ -1009,8 +1285,6 @@
             copyOptions('status', 'filterStatus', 'Status (Todos)');
             copyOptions('cliente', 'filterCliente', 'Cliente (Todos)');
             copyOptions('projeto_especial', 'filterProjeto', 'Projeto Especial (Todos)');
-            
-            // Sort all dropdowns after populating filters
             sortAllDropdowns();
         };
 
@@ -1031,8 +1305,6 @@
                 if (statusVal && item.status !== statusVal) return false;
                 if (clienteVal && item.cliente !== clienteVal) return false;
                 if (projetoVal && item.projeto_especial !== projetoVal) return false;
-
-                // Regra de Gestor
                 if (gestorVal === 'MICHELE') {
                     const agenciaNorm = (item.agencia || '').toLowerCase().trim();
                     if (!AGENCIAS_MICHELE.includes(agenciaNorm)) return false;
@@ -1041,11 +1313,15 @@
                     const origemNorm = (item.origem || '').toLowerCase().trim();
                     if (origemNorm !== 'vivo ads') return false;
                 }
-
                 return true;
             });
-
             renderTable(filteredProposals);
+            // Se a aba financeira estiver aberta, atualiza ela também?
+            // O pedido diz "apenas consulta". Vamos atualizar a tabela financeira apenas quando a aba for aberta
+            // ou se estiver aberta agora.
+            if (!document.getElementById('view-financial').classList.contains('hidden')) {
+                renderFinancialTable();
+            }
         };
 
         const clearFilters = () => {
@@ -1078,7 +1354,6 @@
                 if (emailVal && !(item.email || '').toLowerCase().includes(emailVal)) return false;
                 return true;
             });
-
             renderCrmTable(filteredCrmContacts);
         };
 
@@ -1095,7 +1370,6 @@
         });
         if(clearCrmFiltersBtn) clearCrmFiltersBtn.addEventListener('click', clearCrmFilters);
 
-
         // --- Cálculos ---
         window.calculateProbValue = () => {
             const valor = parseFloat(document.getElementById('valor').value) || 0;
@@ -1108,7 +1382,6 @@
             }).format(probValue);
         };
 
-        // --- Helpers ---
         const formatCurrency = (value) => {
             if (typeof value !== 'number') value = parseFloat(value) || 0;
             return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
@@ -1133,9 +1406,10 @@
             return `${year}-${month}-${day}`;
         };
 
+        // --- EXPORTAÇÕES ---
+
         const exportToCSV = () => {
             const dataToExport = filteredProposals.length > 0 || (filterExecutivo.value || filterStatus.value) ? filteredProposals : allProposals;
-
             if (dataToExport.length === 0) { alert("Sem dados para exportar."); return; }
             
             const headers = [
@@ -1163,9 +1437,40 @@
             document.body.removeChild(link);
         };
 
+        const exportCampaignsToCSV = () => {
+            if (allCampaigns.length === 0) { alert("Sem dados para exportar."); return; }
+            
+            const headers = [
+                "RG", "Nome", "Mês", "PI Agência", "Campanha", "Produto", 
+                "Vertical", "Receita", "Valor Bruto", "Desc Agência", 
+                "Valor Líquido", "Executivo", "Agenciador", "Atendimento",
+                "Anunciante", "Agência", "Segmento", "Projeto", "Faturamento ID",
+                "OBS", "Status", "Faturar"
+            ];
+
+            const csvRows = allCampaigns.map(c => {
+                return [
+                    c.rg, c.nome, c.mes, c.pi_agencia, c.campanha, c.produto,
+                    c.vertical, c.receita, c.valor_bruto, c.desc_agencia,
+                    c.valor_liquido, c.executivo, c.agenciador, c.atendimento,
+                    c.anunciante, c.agencia, c.segmento, c.projeto, c.id_faturamento,
+                    c.obs, c.finalizada, c.faturar
+                ].map(field => `"${String(field || '').replace(/"/g, '""')}"`).join(',');
+            });
+            
+            const csvContent = [headers.join(','), ...csvRows].join('\n');
+            const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `campanhas_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+
         const exportCrmToCSV = () => {
             const dataToExport = filteredCrmContacts.length > 0 || (filterCrmNome.value || filterCrmCliente.value || filterCrmCargo.value || filterCrmEmail.value) ? filteredCrmContacts : allCrmContacts;
-
             if (dataToExport.length === 0) { alert("Sem dados para exportar."); return; }
             
             const headers = [
@@ -1194,11 +1499,7 @@
             btnImportCsv.addEventListener('click', () => {
                 const file = importFile.files[0];
                 const collectionType = importTarget.value;
-                
-                if (!file) {
-                    alert("Por favor, selecione um arquivo CSV.");
-                    return;
-                }
+                if (!file) { alert("Por favor, selecione um arquivo CSV."); return; }
 
                 importStatus.textContent = "Processando arquivo...";
                 importStatus.className = "mt-3 text-sm font-semibold text-blue-600";
@@ -1221,32 +1522,20 @@
                         const targetCollectionName = collectionType === 'proposals' ? PROPOSALS_COLLECTION : CRM_COLLECTION;
                         const colRef = collection(db, 'artifacts', appId, 'public', 'data', targetCollectionName);
 
-                        // Simple loop for insertion
                         for (let row of data) {
                             try {
-                                // Add timestamps
                                 const docData = { ...row, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
-                                
-                                // Basic cleanup/transforms if needed
-                                if(collectionType === 'proposals' && row.valor) {
-                                    docData.valor = parseFloat(row.valor) || 0;
-                                }
-                                if(collectionType === 'proposals' && row.probabilidade) {
-                                    docData.probabilidade = parseFloat(row.probabilidade) || 0;
-                                }
-
+                                if(collectionType === 'proposals' && row.valor) docData.valor = parseFloat(row.valor) || 0;
+                                if(collectionType === 'proposals' && row.probabilidade) docData.probabilidade = parseFloat(row.probabilidade) || 0;
                                 await addDoc(colRef, docData);
                                 successCount++;
-                            } catch (err) {
-                                console.error("Erro ao importar linha", row, err);
-                                errorCount++;
-                            }
+                            } catch (err) { console.error("Erro import:", err); errorCount++; }
                         }
 
                         importStatus.textContent = `Concluído! ${successCount} registros importados. ${errorCount > 0 ? errorCount + ' erros.' : ''}`;
                         importStatus.className = "mt-3 text-sm font-semibold text-green-600";
                         btnImportCsv.disabled = false;
-                        importFile.value = ''; // Reset input
+                        importFile.value = '';
                     },
                     error: function(err) {
                         console.error("Erro no PapaParse:", err);
@@ -1258,31 +1547,16 @@
             });
         }
 
-
         // --- AUTOCOMPLETE LOGIC FOR PROPOSAL FORM ---
         const updateContactSuggestions = () => {
             const clientName = proposalClienteSelect.value;
             contactDatalist.innerHTML = '';
             emailDatalist.innerHTML = '';
-
             if (!clientName) return;
-
-            // Filter CRM contacts matching this client
-            const relevantContacts = allCrmContacts.filter(c => 
-                (c.empresa || '').toLowerCase() === clientName.toLowerCase()
-            );
-
+            const relevantContacts = allCrmContacts.filter(c => (c.empresa || '').toLowerCase() === clientName.toLowerCase());
             relevantContacts.forEach(contact => {
-                if(contact.nome) {
-                    const opt = document.createElement('option');
-                    opt.value = contact.nome;
-                    contactDatalist.appendChild(opt);
-                }
-                if(contact.email) {
-                    const opt = document.createElement('option');
-                    opt.value = contact.email;
-                    emailDatalist.appendChild(opt);
-                }
+                if(contact.nome) { const opt = document.createElement('option'); opt.value = contact.nome; contactDatalist.appendChild(opt); }
+                if(contact.email) { const opt = document.createElement('option'); opt.value = contact.email; emailDatalist.appendChild(opt); }
             });
         };
 
@@ -1290,71 +1564,36 @@
             const clientName = proposalClienteSelect.value;
             const currentContactVal = proposalContactInput.value;
             const currentEmailVal = proposalEmailInput.value;
-
-            // Only attempt autofill if we have a client selected
             if (!clientName) return;
-
-            const relevantContacts = allCrmContacts.filter(c => 
-                (c.empresa || '').toLowerCase() === clientName.toLowerCase()
-            );
-
+            const relevantContacts = allCrmContacts.filter(c => (c.empresa || '').toLowerCase() === clientName.toLowerCase());
             if (trigger === 'name') {
                 const match = relevantContacts.find(c => c.nome === currentContactVal);
-                if (match && match.email) {
-                    proposalEmailInput.value = match.email;
-                }
+                if (match && match.email) proposalEmailInput.value = match.email;
             } else if (trigger === 'email') {
                 const match = relevantContacts.find(c => c.email === currentEmailVal);
-                if (match && match.nome) {
-                    proposalContactInput.value = match.nome;
-                }
+                if (match && match.nome) proposalContactInput.value = match.nome;
             }
         };
 
-        // --- FILTER PRODUCTS BY ORIGIN LOGIC ---
         const filterProductsByOrigin = () => {
             const origem = proposalOrigemSelect.value;
             const options = Array.from(proposalProdutoSelect.options);
-            
             options.forEach(opt => {
-                if (opt.value === "") return; // Pula placeholder
-
+                if (opt.value === "") return;
                 const text = opt.text.toLowerCase();
                 const isVivoProd = text.includes('vivo');
                 const isTerraProd = text.includes('terra');
-                const isSpecial = text === 'projeto especial'; // Sempre mostra projeto especial
-
                 let shouldShow = true;
-
-                if (origem === 'Terra') {
-                    // Se for Terra, esconde Vivo (exceto se for especial, que é comum)
-                    if (isVivoProd) shouldShow = false;
-                } else if (origem === 'Vivo Ads') {
-                    // Se for Vivo Ads, esconde Terra
-                    if (isTerraProd) shouldShow = false;
-                }
-                // Se origem for vazio, mostra tudo (shouldShow continua true)
-
-                // Aplica a visibilidade
-                if (shouldShow) {
-                    opt.hidden = false;
-                    opt.style.display = ''; // Fallback para compatibilidade
-                    opt.disabled = false;
-                } else {
-                    opt.hidden = true;
-                    opt.style.display = 'none';
-                    opt.disabled = true; // Garante que não seja selecionável
-                }
+                if (origem === 'Terra' && isVivoProd) shouldShow = false;
+                else if (origem === 'Vivo Ads' && isTerraProd) shouldShow = false;
+                
+                if (shouldShow) { opt.hidden = false; opt.style.display = ''; opt.disabled = false; } 
+                else { opt.hidden = true; opt.style.display = 'none'; opt.disabled = true; }
             });
-
-            // Se a opção selecionada atualmente ficar oculta, reseta o select
             const currentSelected = proposalProdutoSelect.selectedOptions[0];
-            if (currentSelected && (currentSelected.hidden || currentSelected.disabled) && currentSelected.value !== "") {
-                proposalProdutoSelect.value = "";
-            }
+            if (currentSelected && (currentSelected.hidden || currentSelected.disabled) && currentSelected.value !== "") proposalProdutoSelect.value = "";
         };
 
-        // Auto-fill Probability based on Status
         const statusSelect = document.getElementById('status');
         if(statusSelect) {
             statusSelect.addEventListener('change', () => {
@@ -1365,43 +1604,28 @@
                 else if (val === 'Em negociação 70') prob = 70;
                 else if (val === 'Em negociação 50') prob = 50;
                 else if (val === 'Em negociação 20') prob = 20;
-                else if (['Prospecção', 'Proposta enviada', 'Proposta rejeitada', 'Remanejada p/ próx. mês'].includes(val)) prob = 0;
-                
-                // Update UI
                 document.getElementById('probabilidade').value = prob;
                 calculateProbValue();
             });
         }
 
-        if(proposalClienteSelect) {
-            proposalClienteSelect.addEventListener('change', updateContactSuggestions);
-        }
-        if(proposalContactInput) {
-            proposalContactInput.addEventListener('input', () => autoFillContactData('name'));
-        }
-        if(proposalEmailInput) {
-            proposalEmailInput.addEventListener('input', () => autoFillContactData('email'));
-        }
-        if(proposalOrigemSelect) {
-            proposalOrigemSelect.addEventListener('change', filterProductsByOrigin);
-        }
+        if(proposalClienteSelect) proposalClienteSelect.addEventListener('change', updateContactSuggestions);
+        if(proposalContactInput) proposalContactInput.addEventListener('input', () => autoFillContactData('name'));
+        if(proposalEmailInput) proposalEmailInput.addEventListener('input', () => autoFillContactData('email'));
+        if(proposalOrigemSelect) proposalOrigemSelect.addEventListener('change', filterProductsByOrigin);
 
 
         // --- Modais ---
         const showModal = (isEdit = false, proposalData = null, docId = null) => {
             proposalForm.reset();
             modalMessage.textContent = '';
-            contactDatalist.innerHTML = ''; // Clear suggestions
+            contactDatalist.innerHTML = '';
             emailDatalist.innerHTML = '';
-            
-            // Controle de visibilidade do campo de meses
             const mesesContainer = document.getElementById('meses').parentNode;
-            
             if (isEdit && proposalData && docId) {
                 editDocIdInput.value = docId;
                 submitButton.textContent = "SALVAR ALTERAÇÕES";
-                mesesContainer.classList.add('hidden'); // Oculta na edição
-                
+                mesesContainer.classList.add('hidden');
                 Object.keys(proposalData).forEach(key => {
                     const input = proposalForm.elements[key];
                     if (input) {
@@ -1410,32 +1634,21 @@
                     }
                 });
                 calculateProbValue(); 
-                // Populate suggestions for editing based on existing client value
                 updateContactSuggestions();
-                // Filter products based on existing origin value
                 filterProductsByOrigin();
             } else {
                 editDocIdInput.value = ''; 
                 submitButton.textContent = "ENVIAR PROPOSTA";
-                mesesContainer.classList.remove('hidden'); // Exibe na criação
-                
+                mesesContainer.classList.remove('hidden');
                 proposalForm.elements['data'].value = getTodayDateString();
                 document.getElementById('prob_value').value = 'R$ 0,00';
-                // Reset months to 1
                 document.getElementById('meses').value = 1;
-                
-                // Reset filters on new modal
                 filterProductsByOrigin(); 
             }
             proposalModal.classList.remove('hidden');
         };
+        const hideModal = () => { proposalModal.classList.add('hidden'); proposalForm.reset(); };
 
-        const hideModal = () => {
-            proposalModal.classList.add('hidden');
-            proposalForm.reset();
-        };
-
-        // CRM Modal Logic
         const showCrmModal = (isEdit = false, data = null, id = null) => {
             crmForm.reset();
             crmMessage.textContent = '';
@@ -1446,13 +1659,35 @@
                     const input = crmForm.elements[key];
                     if(input) input.value = data[key];
                 });
-            } else {
-                editCrmIdInput.value = '';
-                submitCrmBtn.textContent = "SALVAR CONTATO";
-            }
+            } else { editCrmIdInput.value = ''; submitCrmBtn.textContent = "SALVAR CONTATO"; }
             crmModal.classList.remove('hidden');
         };
         const hideCrmModal = () => { crmModal.classList.add('hidden'); };
+
+        // --- Lógica Modal Campanhas (Atualizada) ---
+        const showCampaignModal = (isEdit = false, data = null, id = null) => {
+            campaignForm.reset();
+            campaignMessage.textContent = '';
+            
+            // Garantir que os dropdowns carregaram
+            if(campMesSelect && campMesSelect.options.length <= 1) populateCampaignMonths();
+
+            if(isEdit && data && id) {
+                editCampaignIdInput.value = id;
+                submitCampaignBtn.textContent = "ATUALIZAR CAMPANHA";
+                Object.keys(data).forEach(key => {
+                    const input = campaignForm.elements[key];
+                    if(input) {
+                         input.value = data[key];
+                    }
+                });
+            } else {
+                editCampaignIdInput.value = '';
+                submitCampaignBtn.textContent = "SALVAR CAMPANHA";
+            }
+            campaignModal.classList.remove('hidden');
+        };
+        const hideCampaignModal = () => { campaignModal.classList.add('hidden'); };
 
 
         // --- Render Lists ---
@@ -1475,8 +1710,6 @@
                 "Todos": "bg-gray-100 text-gray-800"
             };
             const statusColor = statusMap[proposal.status] || "bg-gray-100 text-gray-800";
-
-            // Probabilidade Color Logic
             const probColor = (p) => {
                 const val = parseFloat(p) || 0;
                 if(val >= 75) return "text-green-600 font-bold";
@@ -1484,7 +1717,6 @@
                 if(val >= 25) return "text-yellow-600 font-bold";
                 return "text-red-600 font-bold";
             };
-
             const probVal = (proposal.valor || 0) * ((proposal.probabilidade || 0) / 100);
 
             tr.innerHTML = `
@@ -1504,23 +1736,82 @@
                     <button class="del-btn text-red-600 hover:text-red-900" title="Excluir"><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                 </td>
             `;
-            
             tr.querySelector('.edit-btn').onclick = () => showModal(true, proposal, proposal.id);
             tr.querySelector('.dup-btn').onclick = () => handleDuplicate(proposal.id);
             tr.querySelector('.del-btn').onclick = () => handleDelete(proposal.id);
             proposalsTableBody.appendChild(tr);
         };
 
-        // --- Render CRM Table ---
+        const renderFinancialRow = (proposal) => {
+            const tr = document.createElement('tr');
+            tr.className = "hover:bg-gray-50 transition-colors";
+            
+            const statusMap = {
+                "Prospecção": "bg-blue-100 text-blue-800",
+                "Proposta enviada": "bg-yellow-100 text-yellow-800",
+                "Em negociação 20": "bg-indigo-100 text-indigo-800",
+                "Em negociação 50": "bg-violet-100 text-violet-800",
+                "Em negociação 70": "bg-purple-100 text-purple-800",
+                "PI na casa": "bg-teal-100 text-teal-800",
+                "PI na casa 90": "bg-emerald-100 text-emerald-800",
+                "Fechado Ganho": "bg-green-100 text-green-800",
+                "Fechado Perdido": "bg-red-200 text-red-900",
+                "Proposta rejeitada": "bg-red-100 text-red-800",
+                "Remanejada p/ próx. mês": "bg-orange-100 text-orange-800",
+                "Todos": "bg-gray-100 text-gray-800"
+            };
+            const statusColor = statusMap[proposal.status] || "bg-gray-100 text-gray-800";
+            const probColor = (p) => {
+                const val = parseFloat(p) || 0;
+                if(val >= 75) return "text-green-600 font-bold";
+                if(val >= 50) return "text-blue-600 font-bold";
+                if(val >= 25) return "text-yellow-600 font-bold";
+                return "text-red-600 font-bold";
+            };
+            const probVal = (proposal.valor || 0) * ((proposal.probabilidade || 0) / 100);
+
+            tr.innerHTML = `
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.numero_rg || '-'}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${formatDate(proposal.data)}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.executivo || 'N/A'}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm font-medium text-gray-900">${proposal.cliente || 'N/A'}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.agencia || '-'}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.produto || '-'}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm font-medium text-gray-900">${formatCurrency(proposal.valor)}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColor}">${proposal.status || 'N/A'}</span></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm ${probColor(proposal.probabilidade)}">${proposal.probabilidade || 0}%</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${formatCurrency(probVal)}</div></td>
+            `;
+            financialTableBody.appendChild(tr);
+        };
+
+        const renderFinancialTable = () => {
+            financialTableBody.innerHTML = '';
+            // Usa as propostas já carregadas (allProposals ou filteredProposals? O pedido disse "mesma visão", então vou usar filteredProposals para manter coerência, mas como não tem filtro na aba financeira, uso allProposals)
+            // Vou usar allProposals para garantir que mostra tudo inicialmente.
+            if (allProposals.length === 0) {
+                financialTableBody.innerHTML = `<tr><td colspan="10" class="px-6 py-10 text-center text-gray-500">Nenhum registro encontrado.</td></tr>`;
+                return;
+            }
+            // Ordenação
+            const sortedData = [...allProposals].sort((a, b) => {
+                const dateA = new Date(a.data || 0);
+                const dateB = new Date(b.data || 0);
+                if (dateB - dateA !== 0) return dateB - dateA;
+                return (a.executivo || '').localeCompare(b.executivo || '');
+            });
+
+            sortedData.forEach(renderFinancialRow);
+        };
+
+
         const renderCrmTable = (data = allCrmContacts) => {
             crmTableBody.innerHTML = '';
             if(data.length === 0) {
                 crmTableBody.innerHTML = `<tr><td colspan="7" class="px-6 py-10 text-center text-gray-500">Nenhum contato encontrado.</td></tr>`;
                 return;
             }
-            // Sort by Name
             data.sort((a,b) => (a.nome || '').localeCompare(b.nome || ''));
-
             data.forEach(contact => {
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-gray-50 transition-colors";
@@ -1548,220 +1839,181 @@
                 proposalsTableBody.innerHTML = `<tr><td colspan="11" class="px-6 py-10 text-center text-gray-500">Nenhuma proposta encontrada.</td></tr>`;
                 return;
             }
-            // Sorting: 1. Date Desc, 2. Exec Asc, 3. Client Asc
             data.sort((a, b) => {
                 const dateA = new Date(a.data || 0);
                 const dateB = new Date(b.data || 0);
                 if (dateB - dateA !== 0) return dateB - dateA;
-
-                const execA = (a.executivo || '').toLowerCase();
-                const execB = (b.executivo || '').toLowerCase();
-                if (execA < execB) return -1;
-                if (execA > execB) return 1;
-
-                const clientA = (a.cliente || '').toLowerCase();
-                const clientB = (b.cliente || '').toLowerCase();
-                if (clientA < clientB) return -1;
-                if (clientA > clientB) return 1;
-
-                return 0;
+                return (a.executivo || '').localeCompare(b.executivo || '');
             });
-
             data.forEach(renderProposalRow);
+        };
+
+        // --- Render Campanhas (NOVO) ---
+        const renderCampaignsTable = (data = allCampaigns) => {
+            campaignsTableBody.innerHTML = '';
+            if(data.length === 0) {
+                campaignsTableBody.innerHTML = `<tr><td colspan="17" class="px-6 py-10 text-center text-gray-500">Nenhuma campanha registrada.</td></tr>`;
+                return;
+            }
+            
+            data.forEach(camp => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition-colors";
+                
+                // Tratar exibição de "Finalizada" (agora String)
+                let finalizadaDisplay = '';
+                if(typeof camp.finalizada === 'boolean') {
+                    finalizadaDisplay = camp.finalizada ? '✅' : '❌';
+                } else {
+                    finalizadaDisplay = camp.finalizada || '-';
+                }
+
+                // Tratar exibição de "Faturar"
+                let faturarDisplay = camp.faturar || '-';
+
+                tr.innerHTML = `
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.rg || '-'}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900">${camp.nome || '-'}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.mes || '-'}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.pi_agencia || '-'}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.campanha || '-'}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.produto || '-'}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.vertical || '-'}</td>
+                    <!-- Receita agora é Texto -->
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.receita || '-'}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${formatCurrency(camp.valor_bruto)}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.desc_agencia || 0}%</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700 font-medium">${formatCurrency(camp.valor_liquido)}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.executivo || '-'}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.agenciador || '-'}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.agencia || '-'}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-center font-bold text-gray-600">${finalizadaDisplay}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-sm text-center">${faturarDisplay}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-right text-sm font-medium">
+                         <button class="camp-edit text-indigo-600 hover:text-indigo-900 mr-2">Editar</button>
+                         <button class="camp-del text-red-600 hover:text-red-900">Excluir</button>
+                    </td>
+                `;
+                tr.querySelector('.camp-edit').onclick = () => showCampaignModal(true, camp, camp.id);
+                tr.querySelector('.camp-del').onclick = () => handleDeleteCampaign(camp.id);
+                campaignsTableBody.appendChild(tr);
+            });
         };
 
         // --- Firebase Listeners ---
         const setupRealtimeListeners = () => {
             if (!currentUser || !db) return;
             
-            // Listener 1: Proposals
-            const proposalsRef = collection(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION);
-            unsubscribeProposals = onSnapshot(proposalsRef, (snapshot) => {
+            // Proposals
+            unsubscribeProposals = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION), (snapshot) => {
                 if(loadingRow) loadingRow.classList.add('hidden');
                 allProposals = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                
                 if (filterExecutivo.options.length <= 1) populateFilterOptions();
                 filterData(); 
-            }, (error) => {
-                console.error("Erro no listener Propostas:", error);
-                if (error.code === 'permission-denied') handlePermissionError();
-            });
+            }, handlePermissionError);
 
-            // Listener 2: CRM Contacts
-            const crmRef = collection(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION);
-            unsubscribeCrm = onSnapshot(crmRef, (snapshot) => {
+            // CRM
+            unsubscribeCrm = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION), (snapshot) => {
                 allCrmContacts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 filteredCrmContacts = allCrmContacts;
                 filterCrmData();
-            }, (error) => {
-                console.error("Erro no listener CRM:", error);
             });
 
-            // Listener 3: Settings (NEW)
-            const settingsRef = collection(db, 'artifacts', appId, 'public', 'data', SETTINGS_COLLECTION);
-            unsubscribeSettings = onSnapshot(settingsRef, (snapshot) => {
+            // Settings
+            unsubscribeSettings = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', SETTINGS_COLLECTION), (snapshot) => {
                 customOptions = { cliente: [], agencia: [], projeto: [] };
                 snapshot.docs.forEach(doc => {
                     const data = doc.data();
-                    if(data.type && data.value) {
-                        if(customOptions[data.type]) customOptions[data.type].push(data.value);
-                    }
+                    if(data.type && data.value) if(customOptions[data.type]) customOptions[data.type].push(data.value);
                 });
                 updateDropdownsWithCustomOptions();
-                
-                // Update lists if we are on the settings view
-                // We'll just update all 3 lists to ensure they have initial data
-                renderSettingsList('cliente');
-                renderSettingsList('agencia');
-                renderSettingsList('projeto');
-            }, (error) => {
-                console.error("Erro no listener Settings:", error);
+                renderSettingsList('cliente'); renderSettingsList('agencia'); renderSettingsList('projeto');
             });
+
+            // Campanhas (NOVO)
+            unsubscribeCampaigns = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', CAMPAIGNS_COLLECTION), (snapshot) => {
+                 allCampaigns = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                 renderCampaignsTable();
+            }, (error) => console.error("Erro listener campanhas:", error));
         };
 
-        const handlePermissionError = () => {
+        const handlePermissionError = (error) => {
              const loadingTd = document.getElementById('loadingStatusTd');
-             if (loadingTd) {
+             if (loadingTd && error.code === 'permission-denied') {
                  loadingTd.innerHTML = `<div class="text-red-500 font-bold">Erro de Permissão</div>`;
                  if(loadingRow) loadingRow.classList.remove('hidden');
              }
         };
 
-        // --- Custom Options Logic ---
         const updateDropdownsWithCustomOptions = () => {
             const addOptions = (selectId, type) => {
                 const select = document.getElementById(selectId);
                 if(!select) return;
-                
-                // Remove old dynamic options
-                const oldDynamic = select.querySelectorAll('.dynamic-opt');
-                oldDynamic.forEach(el => el.remove());
-
-                // Add new ones
+                select.querySelectorAll('.dynamic-opt').forEach(el => el.remove());
                 const items = customOptions[type] || [];
-                // Sort alphabetically
                 items.sort();
                 items.forEach(val => {
-                    // Check if already exists as static option
                     let exists = false;
-                    for(let i=0; i<select.options.length; i++) {
-                        if(select.options[i].value === val) exists = true;
-                    }
+                    for(let i=0; i<select.options.length; i++) if(select.options[i].value === val) exists = true;
                     if(!exists) {
-                        const opt = document.createElement('option');
-                        opt.value = val;
-                        opt.text = val;
-                        opt.classList.add('dynamic-opt'); // marker
+                        const opt = document.createElement('option'); opt.value = val; opt.text = val; opt.classList.add('dynamic-opt');
                         select.appendChild(opt);
                     }
                 });
             };
-
-            addOptions('cliente', 'cliente');
-            addOptions('filterCliente', 'cliente');
-            
+            addOptions('cliente', 'cliente'); addOptions('filterCliente', 'cliente');
             addOptions('agencia', 'agencia');
-            
-            addOptions('projeto_especial', 'projeto');
-            addOptions('filterProjeto', 'projeto');
-            
-            // Sort all dropdowns after adding dynamic options
+            addOptions('projeto_especial', 'projeto'); addOptions('filterProjeto', 'projeto');
             sortAllDropdowns();
         };
 
-        // --- New Function: Get All Options (Static + Dynamic) ---
         const getAllOptions = (type) => {
             let refSelectId = '';
             if(type === 'cliente') refSelectId = 'cliente';
             else if(type === 'agencia') refSelectId = 'agencia';
             else if(type === 'projeto') refSelectId = 'projeto_especial';
-
             const select = document.getElementById(refSelectId);
             const allOpts = new Set();
-
-            // Add static options
-            if(select) {
-                Array.from(select.options).forEach(opt => {
-                    if(opt.value && !opt.classList.contains('dynamic-opt')) { // Avoid duplicates if dynamic already added
-                        allOpts.add(opt.value);
-                    }
-                });
-            }
-            // Add custom options
+            if(select) Array.from(select.options).forEach(opt => { if(opt.value && !opt.classList.contains('dynamic-opt')) allOpts.add(opt.value); });
             (customOptions[type] || []).forEach(v => allOpts.add(v));
-
             return Array.from(allOpts).sort();
         };
 
-        // --- New Function: Render Filterable List ---
         window.renderSettingsList = (type, filterVal = '') => {
             const listContainer = document.getElementById(`list-${type}`);
             if(!listContainer) return;
-
             const allItems = getAllOptions(type);
-            const filteredItems = allItems.filter(item => 
-                item.toLowerCase().includes(filterVal.toLowerCase())
-            );
-
+            const filteredItems = allItems.filter(item => item.toLowerCase().includes(filterVal.toLowerCase()));
             listContainer.innerHTML = '';
-            
-            if(filteredItems.length === 0) {
-                listContainer.innerHTML = `<li class="px-4 py-2 text-gray-400 italic">Nenhum item encontrado</li>`;
-                return;
-            }
-
+            if(filteredItems.length === 0) { listContainer.innerHTML = `<li class="px-4 py-2 text-gray-400 italic">Nenhum item encontrado</li>`; return; }
             filteredItems.forEach(item => {
                 const li = document.createElement('li');
                 li.className = "px-4 py-2 text-gray-700 hover:bg-gray-100 flex justify-between items-center";
                 li.innerHTML = `<span>${item}</span>`;
-                // Add tag if it's custom? Maybe later. For now just list.
                 listContainer.appendChild(li);
             });
         };
 
-        window.handleSettingsInput = (input, type) => {
-            renderSettingsList(type, input.value.trim());
-        };
+        window.handleSettingsInput = (input, type) => renderSettingsList(type, input.value.trim());
 
         window.handleSettingsSubmit = async (e, type) => {
             e.preventDefault();
             if(!currentUser || !db) return;
-            const form = e.target;
-            const input = form.elements['newValue'];
+            const input = e.target.elements['newValue'];
             const val = input.value.trim();
             if(!val) return;
-
-            // Validation: Check duplicate (Case Insensitive)
             const allItems = getAllOptions(type);
             const exists = allItems.some(item => item.toLowerCase() === val.toLowerCase());
-
             const msgDiv = document.getElementById(`msg-${type}`);
-            if(exists) {
-                msgDiv.className = "mt-2 text-xs font-bold text-red-600 h-4 mb-2";
-                msgDiv.textContent = "Erro: Esta opção já existe.";
-                return;
-            }
-
+            if(exists) { msgDiv.textContent = "Erro: Esta opção já existe."; msgDiv.className = "mt-2 text-xs font-bold text-red-600 h-4 mb-2"; return; }
             try {
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', SETTINGS_COLLECTION), {
-                    type: type,
-                    value: val,
-                    createdAt: serverTimestamp()
-                });
-                msgDiv.className = "mt-2 text-xs font-bold text-green-600 h-4 mb-2";
-                msgDiv.textContent = "Adicionado com sucesso!";
-                input.value = '';
-                renderSettingsList(type); // Reset list
-                setTimeout(() => { msgDiv.textContent = ''; }, 3000);
-            } catch(err) {
-                console.error(err);
-                msgDiv.className = "mt-2 text-xs font-bold text-red-600 h-4 mb-2";
-                msgDiv.textContent = "Erro ao salvar.";
-            }
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', SETTINGS_COLLECTION), { type, value: val, createdAt: serverTimestamp() });
+                msgDiv.textContent = "Adicionado!"; msgDiv.className = "mt-2 text-xs font-bold text-green-600 h-4 mb-2";
+                input.value = ''; renderSettingsList(type); setTimeout(() => { msgDiv.textContent = ''; }, 3000);
+            } catch(err) { console.error(err); msgDiv.textContent = "Erro ao salvar."; }
         };
 
-
-        // --- Handlers ---
+        // --- Handlers PROPOSTAS ---
         const handleFormSubmit = async (e) => {
             e.preventDefault();
             if (!currentUser || !db) return;
@@ -1772,148 +2024,95 @@
             
             const isShared = proposalForm.elements['conta_compartilhada'].checked;
             const representante = rawData.representante ? rawData.representante.trim() : '';
-            
-            // Get base data without date/value as they might change in loop
-            const commonData = {
-                ...rawData,
-                valor: parseFloat(rawData.valor) || 0,
-                probabilidade: parseFloat(rawData.probabilidade) || 0,
-                conta_compartilhada: isShared,
-                updatedAt: serverTimestamp()
-            };
+            const commonData = { ...rawData, valor: parseFloat(rawData.valor) || 0, probabilidade: parseFloat(rawData.probabilidade) || 0, conta_compartilhada: isShared, updatedAt: serverTimestamp() };
 
-            // Calculate loop iterations
             let monthsCount = 1;
-            // Only loop if NOT editing and months field is valid
-            if (!docId) {
-                const monthsInput = parseInt(formData.get('meses') || '1', 10);
-                monthsCount = monthsInput > 0 ? monthsInput : 1;
-            }
-
-            // Prepare for date calculations
+            if (!docId) monthsCount = parseInt(formData.get('meses') || '1', 10) || 1;
             const baseDateStr = rawData.data;
-            let [y, m, d] = [0, 0, 0];
-            if(baseDateStr) {
-                const parts = baseDateStr.split('-');
-                y = parseInt(parts[0]);
-                m = parseInt(parts[1]);
-                d = parseInt(parts[2]);
-            }
+            let [y, m, d] = baseDateStr ? baseDateStr.split('-').map(Number) : [0,0,0];
 
-            submitButton.disabled = true;
-            submitButton.textContent = "SALVANDO...";
-
+            submitButton.disabled = true; submitButton.textContent = "SALVANDO...";
             try {
                 const colRef = collection(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION);
-
-                // Loop for multiple months
                 for (let i = 0; i < monthsCount; i++) {
-                    
-                    // Clone data for this iteration
-                    const currentIterationData = { ...commonData };
-
-                    // Calculate new date if multiple months
+                    const currentData = { ...commonData };
                     if (i > 0 && baseDateStr) {
-                        // Date logic: Create date, add 'i' months
-                        // Note: Month in JS Date constructor is 0-indexed (Jan=0, Dec=11)
-                        // But 'm' parsed from string "2023-05-20" is 5.
                         const newDate = new Date(y, (m - 1) + i, d);
-                        const newY = newDate.getFullYear();
-                        const newM = String(newDate.getMonth() + 1).padStart(2, '0');
-                        const newD = String(newDate.getDate()).padStart(2, '0');
-                        currentIterationData.data = `${newY}-${newM}-${newD}`;
-                    } else {
-                        currentIterationData.data = baseDateStr;
-                    }
+                        currentData.data = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1).padStart(2, '0')}-${String(newDate.getDate()).padStart(2, '0')}`;
+                    } else currentData.data = baseDateStr;
 
-                    // Shared Logic
                     if (isShared && representante) {
-                        const totalValue = currentIterationData.valor;
-                        const splitValue = totalValue / 2;
-                        
-                        const proposal1 = { ...currentIterationData, valor: splitValue };
-                        if (!docId) proposal1.createdAt = serverTimestamp(); // Only add createdAt for new docs
-
-                        const proposal2 = { ...currentIterationData, valor: splitValue, executivo: representante, createdAt: serverTimestamp() };
-
-                        if (docId && i === 0) { // Should technically not happen if months > 1, but for safety
-                            await updateDoc(doc(colRef, docId), proposal1);
-                        } else {
-                            await addDoc(colRef, proposal1);
-                        }
-                        // Always add the second part as a new doc if creating, or... 
-                        // Actually "Shared" logic in Edit mode is complex. For simplicity, we assume Edit just updates the main doc.
-                        // But for Creation loop, we add both.
-                        if (!docId) {
-                            await addDoc(colRef, proposal2);
-                        }
+                        const splitValue = currentData.valor / 2;
+                        const p1 = { ...currentData, valor: splitValue };
+                        if(!docId) p1.createdAt = serverTimestamp();
+                        const p2 = { ...currentData, valor: splitValue, executivo: representante, createdAt: serverTimestamp() };
+                        if (docId && i === 0) await updateDoc(doc(colRef, docId), p1);
+                        else { await addDoc(colRef, p1); if(!docId) await addDoc(colRef, p2); }
                     } else {
-                        // Single Logic
-                        if (!docId) currentIterationData.createdAt = serverTimestamp();
-                        
-                        if (docId && i === 0) {
-                            await updateDoc(doc(colRef, docId), currentIterationData);
-                        } else {
-                            await addDoc(colRef, currentIterationData);
-                        }
-                    }
-                } // End Loop
-
-                // Auto-sync CRM (Only once, using base data)
-                const contactEmail = rawData.email;
-                if (contactEmail && !docId) { 
-                    const existingContact = allCrmContacts.find(c => c.email === contactEmail);
-                    if (!existingContact) {
-                        try {
-                            const newCrmContact = {
-                                nome: rawData.contato,
-                                empresa: rawData.cliente,
-                                cliente_mae: rawData.cliente_mae || '',
-                                vertical: rawData.vertical || '',
-                                email: contactEmail,
-                                telefone: '', 
-                                cargo: '',    
-                                obs: 'Importado automaticamente via Nova Proposta',
-                                createdAt: serverTimestamp(),
-                                updatedAt: serverTimestamp()
-                            };
-                            await addDoc(collection(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION), newCrmContact);
-                        } catch(err) { console.error("Erro ao sincronizar CRM:", err); }
+                        if (!docId) currentData.createdAt = serverTimestamp();
+                        if (docId && i === 0) await updateDoc(doc(colRef, docId), currentData);
+                        else await addDoc(colRef, currentData);
                     }
                 }
-
+                // Auto-sync CRM
+                if (rawData.email && !docId) { 
+                    const existing = allCrmContacts.find(c => c.email === rawData.email);
+                    if (!existing) await addDoc(collection(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION), { nome: rawData.contato, empresa: rawData.cliente, email: rawData.email, obs: 'Importado via Proposta', createdAt: serverTimestamp() });
+                }
                 hideModal();
-            } catch (error) {
-                modalMessage.textContent = "Erro: " + error.message;
-            } finally {
-                submitButton.disabled = false;
-            }
+            } catch (error) { modalMessage.textContent = "Erro: " + error.message; } finally { submitButton.disabled = false; }
         };
 
         const handleCrmSubmit = async (e) => {
             e.preventDefault();
             if(!currentUser || !db) return;
-
             const formData = new FormData(crmForm);
             const rawData = Object.fromEntries(formData.entries());
             const docId = rawData.editCrmId;
             delete rawData.editCrmId;
-
             const dataToSave = { ...rawData, updatedAt: serverTimestamp() };
             if(!docId) dataToSave.createdAt = serverTimestamp();
-
-            submitCrmBtn.disabled = true;
-            submitCrmBtn.textContent = "SALVANDO...";
-
+            submitCrmBtn.disabled = true; submitCrmBtn.textContent = "SALVANDO...";
             try {
                 const colRef = collection(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION);
                 if(docId) await updateDoc(doc(colRef, docId), dataToSave);
                 else await addDoc(colRef, dataToSave);
                 hideCrmModal();
+            } catch(error) { crmMessage.textContent = "Erro: " + error.message; } finally { submitCrmBtn.disabled = false; }
+        };
+
+        // --- Handler CAMPANHAS (Atualizado) ---
+        const handleCampaignSubmit = async (e) => {
+            e.preventDefault();
+            if(!currentUser || !db) return;
+            
+            const formData = new FormData(campaignForm);
+            const rawData = Object.fromEntries(formData.entries());
+            const docId = rawData.editCampaignId;
+            delete rawData.editCampaignId;
+
+            const dataToSave = {
+                ...rawData,
+                valor_bruto: parseFloat(rawData.valor_bruto) || 0,
+                desc_agencia: parseFloat(rawData.desc_agencia) || 0,
+                valor_liquido: parseFloat(rawData.valor_liquido) || 0,
+                updatedAt: serverTimestamp()
+            };
+
+            if(!docId) dataToSave.createdAt = serverTimestamp();
+
+            submitCampaignBtn.disabled = true;
+            submitCampaignBtn.textContent = "SALVANDO...";
+
+            try {
+                const colRef = collection(db, 'artifacts', appId, 'public', 'data', CAMPAIGNS_COLLECTION);
+                if(docId) await updateDoc(doc(colRef, docId), dataToSave);
+                else await addDoc(colRef, dataToSave);
+                hideCampaignModal();
             } catch(error) {
-                crmMessage.textContent = "Erro: " + error.message;
+                campaignMessage.textContent = "Erro: " + error.message;
             } finally {
-                submitCrmBtn.disabled = false;
+                submitCampaignBtn.disabled = false;
             }
         };
 
@@ -1922,40 +2121,29 @@
              if (!proposal || !confirm(`Duplicar proposta?`)) return;
              try {
                  const { id, ...data } = proposal; 
-                 await addDoc(collection(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION), { 
-                     ...data, 
-                     cliente: `${data.cliente} (Cópia)`, 
-                     createdAt: serverTimestamp(), 
-                     updatedAt: serverTimestamp() 
-                 });
+                 await addDoc(collection(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION), { ...data, cliente: `${data.cliente} (Cópia)`, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
              } catch (e) { alert("Erro: " + e.message); }
         };
 
         const handleDelete = async (docId) => {
             if (!confirm("Excluir esta proposta?")) return;
-            try {
-                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION, docId));
-            } catch (e) { alert("Erro: " + e.message); }
+            try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION, docId)); } catch (e) { alert("Erro: " + e.message); }
         };
-
         const handleDeleteCrm = async (docId) => {
-             if(!confirm("Excluir este contato do CRM?")) return;
-             try {
-                 await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION, docId));
-             } catch(e) { alert("Erro: " + e.message); }
+             if(!confirm("Excluir este contato?")) return;
+             try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION, docId)); } catch(e) { alert("Erro: " + e.message); }
+        };
+        const handleDeleteCampaign = async (docId) => {
+             if(!confirm("Excluir esta campanha?")) return;
+             try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', CAMPAIGNS_COLLECTION, docId)); } catch(e) { alert("Erro: " + e.message); }
         };
 
         const initAuth = async () => {
             if (!auth) return;
             try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (error) {
-                console.error("Erro na autenticação:", error);
-            }
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) await signInWithCustomToken(auth, __initial_auth_token);
+                else await signInAnonymously(auth);
+            } catch (error) { console.error("Erro auth:", error); }
         };
 
         if (auth) {
@@ -1963,20 +2151,18 @@
             onAuthStateChanged(auth, user => {
                 currentUser = user;
                 if (user) {
-                    // Update user display
                     const userDisplay = document.getElementById('userEmailDisplay');
                     if(userDisplay) userDisplay.textContent = user.isAnonymous ? 'Modo Anônimo' : (user.email || 'Usuário');
-                    
                     setupRealtimeListeners();
                 } else {
                     if (unsubscribeProposals) unsubscribeProposals();
                     if (unsubscribeCrm) unsubscribeCrm();
                     if (unsubscribeSettings) unsubscribeSettings();
+                    if (unsubscribeCampaigns) unsubscribeCampaigns();
                 }
             });
         }
 
-        // Event Listeners
         if(addNewButton) addNewButton.onclick = () => showModal();
         if(exportButton) exportButton.onclick = exportToCSV;
         if(closeModalButton) closeModalButton.onclick = hideModal;
@@ -1989,7 +2175,16 @@
         if(crmForm) crmForm.onsubmit = handleCrmSubmit;
         if(crmModal) crmModal.onclick = (e) => { if(e.target === crmModal) hideCrmModal(); };
 
-        // Toggle Menu Logic (Updated)
+        // Listeners Campanhas (NOVO)
+        if(addCampaignButton) addCampaignButton.onclick = () => showCampaignModal();
+        if(exportCampaignButton) exportCampaignButton.onclick = exportCampaignsToCSV; // NOVO listener
+        if(closeCampaignModalBtn) closeCampaignModalBtn.onclick = hideCampaignModal;
+        if(campaignForm) campaignForm.onsubmit = handleCampaignSubmit;
+        if(campaignModal) campaignModal.onclick = (e) => { if(e.target === campaignModal) hideCampaignModal(); };
+
+        // Listeners Financeiro (NOVO)
+        if(exportFinancialButton) exportFinancialButton.onclick = exportToCSV; // Reusa exportação de propostas
+
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('mobileOverlay');
         const menuBtn = document.getElementById('menuToggleBtn');
@@ -1997,54 +2192,21 @@
 
         const toggleMenu = () => {
             const isMobile = window.innerWidth < 768;
-            
             if (isMobile) {
-                // Mobile behavior: Slide in/out with overlay
                 const isClosed = sidebar.classList.contains('-translate-x-full');
-                if (isClosed) {
-                    sidebar.classList.remove('-translate-x-full');
-                    overlay.classList.remove('hidden');
-                } else {
-                    sidebar.classList.add('-translate-x-full');
-                    overlay.classList.add('hidden');
-                }
+                if (isClosed) { sidebar.classList.remove('-translate-x-full'); overlay.classList.remove('hidden'); } 
+                else { sidebar.classList.add('-translate-x-full'); overlay.classList.add('hidden'); }
             } else {
-                // Desktop behavior: Collapse/Expand sidebar
                 const isClosed = sidebar.classList.contains('-translate-x-full');
-                if (isClosed) {
-                    sidebar.classList.remove('-translate-x-full'); // Open Sidebar
-                    mainContent.style.marginLeft = '0'; // Let flexbox handle it or reset margin
-                    // Actually, since we are using relative/absolute switch in CSS, 
-                    // on Desktop (md:relative), removing -translate-x-full makes it visible in flow.
-                    // We just need to manage the width transition if we want smooth effect.
-                    // Current setup: md:translate-x-0 is default.
-                    
-                    // Let's rely on class toggling for 'closed state'
-                } 
-                // Correction for Desktop Toggle Logic with existing classes:
-                // Sidebar has `md:translate-x-0` by default.
-                // We toggle a class to force hide it.
+                if (isClosed) { sidebar.classList.remove('-translate-x-full'); mainContent.style.marginLeft = '0'; } 
                 sidebar.classList.toggle('md:-translate-x-full');
-                
-                // Adjust content margin? 
-                // Since sidebar is `md:relative`, hiding it with transform might leave whitespace 
-                // if we don't also adjust its width or display.
-                // Better approach for smooth slide: Toggle margin-left on a wrapper or sidebar width.
-                // Given the current setup, let's use the 'hidden' strategy visually.
-                
-                if (sidebar.classList.contains('md:-translate-x-full')) {
-                    sidebar.classList.add('md:w-0', 'md:overflow-hidden');
-                    sidebar.classList.remove('w-64');
-                } else {
-                    sidebar.classList.remove('md:w-0', 'md:overflow-hidden');
-                    sidebar.classList.add('w-64');
-                }
+                if (sidebar.classList.contains('md:-translate-x-full')) { sidebar.classList.add('md:w-0', 'md:overflow-hidden'); sidebar.classList.remove('w-64'); } 
+                else { sidebar.classList.remove('md:w-0', 'md:overflow-hidden'); sidebar.classList.add('w-64'); }
             }
         };
 
         if(menuBtn) menuBtn.addEventListener('click', toggleMenu);
         if(overlay) overlay.addEventListener('click', toggleMenu);
-
     </script>
 </body>
 </html>
