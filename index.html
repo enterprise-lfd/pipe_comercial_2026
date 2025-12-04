@@ -83,11 +83,23 @@
             <!-- Conteúdo do Menu -->
             <nav class="flex-1 overflow-y-auto py-6">
                 
+                <!-- HOME -->
+                <ul class="space-y-1 px-3 mb-6">
+                    <li>
+                        <button onclick="switchView('view-home')" id="nav-home" class="nav-item active w-full flex items-center p-2 rounded-lg transition-colors duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                            <span class="font-medium whitespace-nowrap text-sm">Início</span>
+                        </button>
+                    </li>
+                </ul>
+
                 <!-- SESSÃO COMERCIAL -->
                 <div class="px-4 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Comercial</div>
                 <ul class="space-y-1 px-3 mb-6">
                     <li>
-                        <button onclick="switchView('view-pipeline')" id="nav-pipeline" class="nav-item active w-full flex items-center p-2 rounded-lg transition-colors duration-200">
+                        <button onclick="switchView('view-pipeline')" id="nav-pipeline" class="nav-item w-full flex items-center p-2 rounded-lg transition-colors duration-200 text-gray-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                             </svg>
@@ -152,8 +164,53 @@
         <!-- 3. ÁREA PRINCIPAL DE CONTEÚDO -->
         <main id="mainContent" class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 md:p-8 w-full">
 
+            <!-- VIEW 0: HOME / BOAS-VINDAS (DEFAULT) -->
+            <div id="view-home" class="view-section h-full flex flex-col justify-center items-center text-center">
+                <div class="bg-white p-10 rounded-2xl shadow-xl max-w-4xl w-full">
+                    <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-indigo-100 text-indigo-600 mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h1 class="text-4xl font-extrabold text-gray-800 mb-4 tracking-tight">Bem-vindo ao <span class="text-indigo-600">TERRASALES</span></h1>
+                    <p class="text-gray-500 text-lg mb-8">
+                        Seu sistema centralizado para gestão comercial, operacional e financeira.<br>
+                        Selecione uma opção no menu lateral para começar.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                        <!-- Pipeline Propostas -->
+                        <div onclick="switchView('view-pipeline')" class="cursor-pointer p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow hover:border-indigo-300 group">
+                            <h3 class="font-bold text-gray-800 group-hover:text-indigo-600 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                                Pipeline de Propostas
+                            </h3>
+                            <p class="text-sm text-gray-500 mt-1">Gerencie leads e status de negociações.</p>
+                        </div>
+                        
+                        <!-- Pipeline Campanhas -->
+                        <div onclick="switchView('view-operations')" class="cursor-pointer p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow hover:border-indigo-300 group">
+                            <h3 class="font-bold text-gray-800 group-hover:text-indigo-600 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                                Pipeline de Campanhas
+                            </h3>
+                            <p class="text-sm text-gray-500 mt-1">Gestão operacional de campanhas.</p>
+                        </div>
+
+                        <!-- Pipeline Financeiro -->
+                        <div onclick="switchView('view-financial')" class="cursor-pointer p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow hover:border-indigo-300 group">
+                            <h3 class="font-bold text-gray-800 group-hover:text-indigo-600 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                Pipeline Financeiro
+                            </h3>
+                            <p class="text-sm text-gray-500 mt-1">Acompanhamento de faturamento.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- VIEW 1: PIPELINE DE PROPOSTAS (COMERCIAL) -->
-            <div id="view-pipeline" class="view-section">
+            <div id="view-pipeline" class="view-section hidden">
                 <header class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                     <h2 class="text-2xl font-bold text-gray-800">Pipeline de Propostas</h2>
                     
@@ -535,26 +592,69 @@
                     </div>
                 </header>
 
+                <!-- BARRA DE FILTROS FINANCEIROS -->
+                <div class="bg-white p-4 rounded-lg shadow mb-6 border border-gray-200">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-xs font-semibold text-gray-500 uppercase">Filtrar Dados Financeiros</div>
+                        <button id="clearFinancialFilters" class="text-xs text-indigo-600 hover:text-indigo-800 font-medium">Limpar</button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                        <!-- Filtro de Data -->
+                        <div class="flex gap-1">
+                            <input type="date" id="finFilterDataIni" class="w-1/2 border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="De">
+                            <input type="date" id="finFilterDataFim" class="w-1/2 border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Até">
+                        </div>
+                        <!-- RG -->
+                        <div><input type="text" id="finFilterRG" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="RG"></div>
+                        <!-- Executivo -->
+                        <div><input type="text" id="finFilterExecutivo" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Executivo"></div>
+                        <!-- Cliente -->
+                        <div><input type="text" id="finFilterCliente" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Cliente"></div>
+                        <!-- Agencia -->
+                        <div><input type="text" id="finFilterAgencia" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Agência"></div>
+                        
+                        <!-- Linha 2 -->
+                        <!-- Produto -->
+                        <div><input type="text" id="finFilterProduto" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Produto"></div>
+                        <!-- Status -->
+                        <div><input type="text" id="finFilterStatus" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Status"></div>
+                        <!-- Origem -->
+                        <div><input type="text" id="finFilterOrigem" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Origem"></div>
+                        <!-- Tipo Venda -->
+                        <div><input type="text" id="finFilterTipoVenda" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Tipo Venda"></div>
+                        <!-- Projeto Especial -->
+                        <div><input type="text" id="finFilterProjeto" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Projeto Especial"></div>
+                    </div>
+                </div>
+
                 <div class="bg-white rounded-lg shadow-lg overflow-x-auto border border-gray-200">
                     <table class="min-w-full w-full divide-y divide-gray-200">
-                         <!-- CABEÇALHO IGUAL AO PIPELINE DE PROPOSTAS, SEM AÇÕES -->
                         <thead class="bg-gray-50">
                             <tr>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RG</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Executivo</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agência</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produto</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prob (%)</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prob Value</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">RG</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Data</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Executivo</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Agência</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Cliente Mãe</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Cliente</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Origem</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Tipo Venda</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Produto</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Proj. Especial</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Status</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Prob (%)</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Valor</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Contato</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Email</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Obs</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Representante</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Compartilhada</th>
                             </tr>
                         </thead>
                         <tbody id="financialTableBody" class="bg-white divide-y divide-gray-200">
                             <tr>
-                                <td colspan="10" class="px-6 py-10 text-center text-gray-500">
+                                <td colspan="18" class="px-6 py-10 text-center text-gray-500">
                                     <div class="flex justify-center items-center flex-col">
                                         <span>Carregando dados financeiros...</span>
                                     </div>
@@ -1119,13 +1219,30 @@
         const filterCrmCargo = document.getElementById('filterCrmCargo');
         const filterCrmEmail = document.getElementById('filterCrmEmail');
         const clearCrmFiltersBtn = document.getElementById('clearCrmFilters');
+
+        // Filter Selectors Financial (NOVOS)
+        const finFilterDataIni = document.getElementById('finFilterDataIni');
+        const finFilterDataFim = document.getElementById('finFilterDataFim');
+        const finFilterRG = document.getElementById('finFilterRG');
+        const finFilterExecutivo = document.getElementById('finFilterExecutivo');
+        const finFilterCliente = document.getElementById('finFilterCliente');
+        const finFilterAgencia = document.getElementById('finFilterAgencia');
+        const finFilterProduto = document.getElementById('finFilterProduto');
+        const finFilterStatus = document.getElementById('finFilterStatus');
+        const finFilterOrigem = document.getElementById('finFilterOrigem');
+        const finFilterTipoVenda = document.getElementById('finFilterTipoVenda');
+        const finFilterProjeto = document.getElementById('finFilterProjeto');
+        const clearFinancialFilters = document.getElementById('clearFinancialFilters');
         
         // --- LIMPEZA DE FILTROS ---
         window.addEventListener('load', () => {
             const filterIds = [
                 'filterDateStart', 'filterDateEnd', 'filterExecutivo', 'filterStatus', 
                 'filterCliente', 'filterProjeto', 'filterGestor',
-                'filterCrmNome', 'filterCrmCliente', 'filterCrmCargo', 'filterCrmEmail'
+                'filterCrmNome', 'filterCrmCliente', 'filterCrmCargo', 'filterCrmEmail',
+                'finFilterDataIni', 'finFilterDataFim', 'finFilterRG', 'finFilterExecutivo', 
+                'finFilterCliente', 'finFilterAgencia', 'finFilterProduto', 'finFilterStatus', 
+                'finFilterOrigem', 'finFilterTipoVenda', 'finFilterProjeto'
             ];
             filterIds.forEach(id => {
                 const el = document.getElementById(id);
@@ -1134,6 +1251,7 @@
 
             // POPULAR MESES NA CAMPANHA
             populateCampaignMonths();
+            // A visão inicial é Home, então nenhuma tabela carrega imediatamente, mas a gente já roda os listeners
         });
 
         // --- LÓGICA DE MESES ---
@@ -1207,11 +1325,13 @@
         // --- SISTEMA DE SENHAS ---
         const viewPasswords = {
             'view-pipeline': 'Comercial-26-teste',
-            'view-operations': 'Campanhas-26-teste'
+            'view-operations': 'Campanhas-26-teste',
+            'view-financial': 'Financeiro-26-teste' // Nova senha adicionada
         };
         const viewAuth = { 
             'view-pipeline': false, 
-            'view-operations': false 
+            'view-operations': false,
+            'view-financial': false 
         };
 
         // --- Navegação ---
@@ -1243,7 +1363,7 @@
 
             // Renderizar tabela financeira se for a view financeira
             if(viewId === 'view-financial') {
-                renderFinancialTable();
+                filterFinancialData(); // Chama filtro para renderizar inicial
             }
         };
 
@@ -1288,7 +1408,7 @@
             sortAllDropdowns();
         };
 
-        // --- Lógica de Filtro Proposals ---
+        // --- Lógica de Filtro Proposals (Pipeline Comercial) ---
         const filterData = () => {
             const startDate = filterDateStart.value;
             const endDate = filterDateEnd.value;
@@ -1316,12 +1436,6 @@
                 return true;
             });
             renderTable(filteredProposals);
-            // Se a aba financeira estiver aberta, atualiza ela também?
-            // O pedido diz "apenas consulta". Vamos atualizar a tabela financeira apenas quando a aba for aberta
-            // ou se estiver aberta agora.
-            if (!document.getElementById('view-financial').classList.contains('hidden')) {
-                renderFinancialTable();
-            }
         };
 
         const clearFilters = () => {
@@ -1339,6 +1453,52 @@
             if(el) el.addEventListener('change', filterData);
         });
         if(clearFiltersBtn) clearFiltersBtn.addEventListener('click', clearFilters);
+
+
+        // --- Lógica de Filtro e Renderização FINANCEIRO (NOVO) ---
+        const filterFinancialData = () => {
+            const startDate = finFilterDataIni.value;
+            const endDate = finFilterDataFim.value;
+            const rgVal = finFilterRG.value.toLowerCase();
+            const execVal = finFilterExecutivo.value.toLowerCase();
+            const cliVal = finFilterCliente.value.toLowerCase();
+            const ageVal = finFilterAgencia.value.toLowerCase();
+            const prodVal = finFilterProduto.value.toLowerCase();
+            const stVal = finFilterStatus.value.toLowerCase();
+            const oriVal = finFilterOrigem.value.toLowerCase();
+            const tipoVal = finFilterTipoVenda.value.toLowerCase();
+            const projVal = finFilterProjeto.value.toLowerCase();
+
+            const financialFiltered = allProposals.filter(item => {
+                if (startDate && item.data < startDate) return false;
+                if (endDate && item.data > endDate) return false;
+                if (rgVal && !(item.numero_rg || '').toLowerCase().includes(rgVal)) return false;
+                if (execVal && !(item.executivo || '').toLowerCase().includes(execVal)) return false;
+                if (cliVal && !(item.cliente || '').toLowerCase().includes(cliVal)) return false;
+                if (ageVal && !(item.agencia || '').toLowerCase().includes(ageVal)) return false;
+                if (prodVal && !(item.produto || '').toLowerCase().includes(prodVal)) return false;
+                if (stVal && !(item.status || '').toLowerCase().includes(stVal)) return false;
+                if (oriVal && !(item.origem || '').toLowerCase().includes(oriVal)) return false;
+                if (tipoVal && !(item.tipo_venda || '').toLowerCase().includes(tipoVal)) return false;
+                if (projVal && !(item.projeto_especial || '').toLowerCase().includes(projVal)) return false;
+                return true;
+            });
+            renderFinancialTable(financialFiltered);
+        };
+
+        const clearFinancialFiltersFn = () => {
+             finFilterDataIni.value = ''; finFilterDataFim.value = ''; finFilterRG.value = '';
+             finFilterExecutivo.value = ''; finFilterCliente.value = ''; finFilterAgencia.value = '';
+             finFilterProduto.value = ''; finFilterStatus.value = ''; finFilterOrigem.value = '';
+             finFilterTipoVenda.value = ''; finFilterProjeto.value = '';
+             filterFinancialData();
+        };
+
+        [finFilterDataIni, finFilterDataFim, finFilterRG, finFilterExecutivo, finFilterCliente, finFilterAgencia, finFilterProduto, finFilterStatus, finFilterOrigem, finFilterTipoVenda, finFilterProjeto].forEach(el => {
+            if(el) el.addEventListener('input', filterFinancialData);
+        });
+        if(clearFinancialFilters) clearFinancialFilters.addEventListener('click', clearFinancialFiltersFn);
+
 
         // --- Lógica de Filtro CRM ---
         const filterCrmData = () => {
@@ -1761,40 +1921,39 @@
                 "Todos": "bg-gray-100 text-gray-800"
             };
             const statusColor = statusMap[proposal.status] || "bg-gray-100 text-gray-800";
-            const probColor = (p) => {
-                const val = parseFloat(p) || 0;
-                if(val >= 75) return "text-green-600 font-bold";
-                if(val >= 50) return "text-blue-600 font-bold";
-                if(val >= 25) return "text-yellow-600 font-bold";
-                return "text-red-600 font-bold";
-            };
-            const probVal = (proposal.valor || 0) * ((proposal.probabilidade || 0) / 100);
 
             tr.innerHTML = `
                 <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.numero_rg || '-'}</div></td>
                 <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${formatDate(proposal.data)}</div></td>
                 <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.executivo || 'N/A'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm font-medium text-gray-900">${proposal.cliente || 'N/A'}</div></td>
                 <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.agencia || '-'}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.cliente_mae || '-'}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm font-medium text-gray-900">${proposal.cliente || 'N/A'}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.origem || '-'}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.tipo_venda || '-'}</div></td>
                 <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.produto || '-'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm font-medium text-gray-900">${formatCurrency(proposal.valor)}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.projeto_especial || '-'}</div></td>
                 <td class="px-4 py-4 whitespace-nowrap"><span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColor}">${proposal.status || 'N/A'}</span></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm ${probColor(proposal.probabilidade)}">${proposal.probabilidade || 0}%</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${formatCurrency(probVal)}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-600 font-bold">${proposal.probabilidade || 0}%</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm font-medium text-gray-900">${formatCurrency(proposal.valor)}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.contato || '-'}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700 text-xs">${proposal.email || '-'}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700 max-w-xs truncate" title="${proposal.observacao || ''}">${proposal.observacao || '-'}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.representante || '-'}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap text-center"><div class="text-sm text-gray-700">${proposal.conta_compartilhada ? 'Sim' : 'Não'}</div></td>
             `;
             financialTableBody.appendChild(tr);
         };
 
-        const renderFinancialTable = () => {
+        const renderFinancialTable = (data = allProposals) => {
             financialTableBody.innerHTML = '';
-            // Usa as propostas já carregadas (allProposals ou filteredProposals? O pedido disse "mesma visão", então vou usar filteredProposals para manter coerência, mas como não tem filtro na aba financeira, uso allProposals)
-            // Vou usar allProposals para garantir que mostra tudo inicialmente.
-            if (allProposals.length === 0) {
-                financialTableBody.innerHTML = `<tr><td colspan="10" class="px-6 py-10 text-center text-gray-500">Nenhum registro encontrado.</td></tr>`;
+            
+            if (data.length === 0) {
+                financialTableBody.innerHTML = `<tr><td colspan="18" class="px-6 py-10 text-center text-gray-500">Nenhum registro encontrado.</td></tr>`;
                 return;
             }
             // Ordenação
-            const sortedData = [...allProposals].sort((a, b) => {
+            const sortedData = [...data].sort((a, b) => {
                 const dateA = new Date(a.data || 0);
                 const dateB = new Date(b.data || 0);
                 if (dateB - dateA !== 0) return dateB - dateA;
@@ -1909,7 +2068,7 @@
                 if(loadingRow) loadingRow.classList.add('hidden');
                 allProposals = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 if (filterExecutivo.options.length <= 1) populateFilterOptions();
-                filterData(); 
+                filterData(); // Render inicial comercial
             }, handlePermissionError);
 
             // CRM
