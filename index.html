@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Vendas (Firebase)</title>
+    <title>Sistema de Vendas</title>
     <!-- Carregando Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Carregando PapaParse para Importação de CSV -->
@@ -31,44 +31,34 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Estilo para item de menu ativo */
         .nav-item.active {
-            background-color: #4f46e5; /* Indigo 600 */
+            background-color: #4f46e5;
             color: white;
         }
         .nav-item:hover:not(.active) {
-            background-color: #374151; /* Gray 700 */
+            background-color: #374151;
         }
 
-        /* Transições suaves para o layout */
         #sidebar, #mainContent {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        /* Badge removido visualmente, mantendo classe caso precise no futuro */
-        .badge-soon {
-            display: none;
         }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 h-screen flex flex-col overflow-hidden">
 
-    <!-- 1. CABEÇALHO FIXO (HEADER) -->
+    <!-- 1. CABEÇALHO FIXO -->
     <header class="h-16 bg-white shadow-md flex items-center justify-between px-4 z-[50] relative shrink-0">
         <div class="flex items-center">
-            <!-- Botão Hambúrguer (Funciona Desktop e Mobile) -->
             <button id="menuToggleBtn" class="text-gray-600 focus:outline-none p-2 rounded hover:bg-gray-100 mr-4">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </button>
-            <!-- Logo no Cabeçalho -->
-            <h1 class="text-xl font-bold text-gray-800 tracking-wider">TERRA<span class="text-indigo-600">SALES</span></h1>
+            <h1 class="text-xl font-bold text-gray-800 tracking-wider">TERRA<span class="text-indigo-600">SALES</span> <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded ml-2">Firebase</span></h1>
         </div>
         
-        <!-- Opcional: Info do Usuário ou Ações de Topo -->
         <div class="flex items-center gap-3">
-            <span id="userEmailDisplay" class="text-xs text-gray-500 hidden md:block"></span>
+            <span id="userEmailDisplay" class="text-xs text-gray-500 hidden md:block">Conectado via API</span>
             <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-sm">
                 TS
             </div>
@@ -77,12 +67,9 @@
 
     <div class="flex flex-1 overflow-hidden relative">
         
-        <!-- 2. MENU LATERAL (SIDEBAR) RETRÁTIL -->
+        <!-- 2. MENU LATERAL -->
         <aside id="sidebar" class="absolute md:relative inset-y-0 left-0 z-40 w-64 bg-gray-900 text-white flex flex-col transform -translate-x-full md:translate-x-0 shadow-xl h-full">
-            
-            <!-- Conteúdo do Menu -->
             <nav class="flex-1 overflow-y-auto py-6">
-                
                 <!-- HOME -->
                 <ul class="space-y-1 px-3 mb-6">
                     <li>
@@ -95,7 +82,7 @@
                     </li>
                 </ul>
 
-                <!-- SESSÃO COMERCIAL -->
+                <!-- COMERCIAL -->
                 <div class="px-4 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Comercial</div>
                 <ul class="space-y-1 px-3 mb-6">
                     <li>
@@ -124,7 +111,7 @@
                     </li>
                 </ul>
 
-                <!-- SESSÃO OPERACIONAL -->
+                <!-- OPERACIONAL -->
                 <div class="px-4 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Operacional</div>
                 <ul class="space-y-1 px-3 mb-6">
                     <li>
@@ -133,21 +120,19 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                             </svg>
                             <span class="font-medium whitespace-nowrap text-sm">Pipeline de Campanhas</span>
-                            <!-- BADGE REMOVIDO -->
                         </button>
                     </li>
                 </ul>
 
-                <!-- SESSÃO FINANCEIRA -->
-                <div class="px-4 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Financeira</div>
+                <!-- PROJETOS -->
+                <div class="px-4 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Projetos</div>
                 <ul class="space-y-1 px-3 mb-6">
                     <li>
-                        <button onclick="switchView('view-financial')" id="nav-financial" class="nav-item w-full flex items-center p-2 rounded-lg transition-colors duration-200 text-gray-300">
+                        <button onclick="switchView('view-projects')" id="nav-projects" class="nav-item w-full flex items-center p-2 rounded-lg transition-colors duration-200 text-gray-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                             </svg>
-                            <span class="font-medium whitespace-nowrap text-sm">Pipeline Financeiro</span>
-                            <!-- BADGE REMOVIDO -->
+                            <span class="font-medium whitespace-nowrap text-sm">Pipeline de Projetos</span>
                         </button>
                     </li>
                 </ul>
@@ -158,13 +143,13 @@
             </div>
         </aside>
 
-        <!-- Overlay para Mobile (Fundo escuro quando menu abre) -->
+        <!-- Overlay para Mobile -->
         <div id="mobileOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden transition-opacity"></div>
 
-        <!-- 3. ÁREA PRINCIPAL DE CONTEÚDO -->
+        <!-- 3. ÁREA PRINCIPAL -->
         <main id="mainContent" class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 md:p-8 w-full">
 
-            <!-- VIEW 0: HOME / BOAS-VINDAS (DEFAULT) -->
+            <!-- VIEW 0: HOME -->
             <div id="view-home" class="view-section h-full flex flex-col justify-center items-center text-center">
                 <div class="bg-white p-10 rounded-2xl shadow-xl max-w-4xl w-full">
                     <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-indigo-100 text-indigo-600 mb-6">
@@ -174,12 +159,11 @@
                     </div>
                     <h1 class="text-4xl font-extrabold text-gray-800 mb-4 tracking-tight">Bem-vindo ao <span class="text-indigo-600">TERRASALES</span></h1>
                     <p class="text-gray-500 text-lg mb-8">
-                        Seu sistema centralizado para gestão comercial, operacional e financeira.<br>
-                        Selecione uma opção no menu lateral para começar.
+                        Sistema conectado ao Firebase.<br>
+                        Selecione uma opção no menu para começar.
                     </p>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
-                        <!-- Pipeline Propostas -->
                         <div onclick="switchView('view-pipeline')" class="cursor-pointer p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow hover:border-indigo-300 group">
                             <h3 class="font-bold text-gray-800 group-hover:text-indigo-600 flex items-center">
                                 <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
@@ -187,8 +171,6 @@
                             </h3>
                             <p class="text-sm text-gray-500 mt-1">Gerencie leads e status de negociações.</p>
                         </div>
-                        
-                        <!-- Pipeline Campanhas -->
                         <div onclick="switchView('view-operations')" class="cursor-pointer p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow hover:border-indigo-300 group">
                             <h3 class="font-bold text-gray-800 group-hover:text-indigo-600 flex items-center">
                                 <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
@@ -196,38 +178,31 @@
                             </h3>
                             <p class="text-sm text-gray-500 mt-1">Gestão operacional de campanhas.</p>
                         </div>
-
-                        <!-- Pipeline Financeiro -->
-                        <div onclick="switchView('view-financial')" class="cursor-pointer p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow hover:border-indigo-300 group">
+                        <div onclick="switchView('view-projects')" class="cursor-pointer p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow hover:border-indigo-300 group">
                             <h3 class="font-bold text-gray-800 group-hover:text-indigo-600 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                Pipeline Financeiro
+                                <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                                </svg>
+                                Pipeline de Projetos
                             </h3>
-                            <p class="text-sm text-gray-500 mt-1">Acompanhamento de faturamento.</p>
+                            <p class="text-sm text-gray-500 mt-1">Acompanhamento e Gestão de Projetos.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- VIEW 1: PIPELINE DE PROPOSTAS (COMERCIAL) -->
+            <!-- VIEW 1: PIPELINE DE PROPOSTAS -->
             <div id="view-pipeline" class="view-section hidden">
                 <header class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                     <h2 class="text-2xl font-bold text-gray-800">Pipeline de Propostas</h2>
                     
                     <div class="flex gap-2 w-full md:w-auto">
-                        <!-- Botão Dashboard -->
-                        <a href="https://lookerstudio.google.com/reporting/82129511-dc0d-449e-91ce-5154699558ca" target="_blank" class="flex-1 md:flex-none bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-4zm-4 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-8zM2 8.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-5z"/>
-                            </svg>
+                        <a href="#" class="flex-1 md:flex-none bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-4zm-4 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-8zM2 8.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-5z"/></svg>
                             Dashboard
                         </a>
-
                         <button id="exportButton" class="flex-1 md:flex-none bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
                             Exportar
                         </button>
                         <button id="addNewButton" class="flex-1 md:flex-none bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300">
@@ -236,78 +211,44 @@
                     </div>
                 </header>
 
-                <!-- BARRA DE FILTROS -->
+                <!-- FILTROS PROPOSTAS -->
                 <div class="bg-white p-4 rounded-lg shadow mb-6 border border-gray-200">
                     <div class="text-xs font-semibold text-gray-500 uppercase mb-2">Filtrar por</div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-3">
-                        
-                        <!-- Filtro de Data (Início e Fim) -->
                         <div class="lg:col-span-2 flex gap-2">
-                            <div class="flex-1">
-                                <input type="date" id="filterDateStart" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="De" autocomplete="off">
-                            </div>
-                            <div class="flex-1">
-                                <input type="date" id="filterDateEnd" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Até" autocomplete="off">
-                            </div>
+                            <div class="flex-1"><input type="date" id="filterDateStart" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="De"></div>
+                            <div class="flex-1"><input type="date" id="filterDateEnd" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Até"></div>
                         </div>
-                        <!-- Filtro Executivo -->
-                        <div>
-                            <select id="filterExecutivo" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" autocomplete="off">
-                                <option value="">Executivo (Todos)</option>
-                                <!-- Preenchido via JS -->
-                            </select>
-                        </div>
-                        <!-- Filtro Status -->
-                        <div>
-                            <select id="filterStatus" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" autocomplete="off">
-                                <option value="">Status (Todos)</option>
-                                <!-- Preenchido via JS -->
-                            </select>
-                        </div>
-                        <!-- Filtro Cliente -->
-                        <div>
-                            <select id="filterCliente" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" autocomplete="off">
-                                <option value="">Cliente (Todos)</option>
-                                <!-- Preenchido via JS -->
-                            </select>
-                        </div>
-                        <!-- Filtro Projeto Especial -->
-                        <div>
-                            <select id="filterProjeto" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" autocomplete="off">
-                                <option value="">Projeto Especial (Todos)</option>
-                                <!-- Preenchido via JS -->
-                            </select>
-                        </div>
-
-                        <!-- Filtro Especial Gestor -->
+                        <div><select id="filterExecutivo" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"><option value="">Executivo (Todos)</option></select></div>
+                        <div><select id="filterStatus" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"><option value="">Status (Todos)</option></select></div>
+                        <div><select id="filterCliente" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"><option value="">Cliente (Todos)</option></select></div>
+                        <div><select id="filterProjeto" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500"><option value="">Projeto Especial (Todos)</option></select></div>
                         <div class="bg-indigo-50 p-1 rounded">
-                            <select id="filterGestor" class="w-full border-indigo-200 bg-indigo-50 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-indigo-900" autocomplete="off">
+                            <select id="filterGestor" class="w-full border-indigo-200 bg-indigo-50 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-indigo-900">
                                 <option value="">Apoio (Todos)</option>
                                 <option value="MICHELE">MICHELE</option>
                                 <option value="BIANCA">BIANCA</option>
                             </select>
                         </div>
                     </div>
-                    <div class="mt-3 flex justify-end">
-                         <button id="clearFilters" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">Limpar Filtros</button>
-                    </div>
+                    <div class="mt-3 flex justify-end"><button id="clearFilters" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">Limpar Filtros</button></div>
                 </div>
 
                 <div class="bg-white rounded-lg shadow-lg overflow-x-auto border border-gray-200">
                     <table class="min-w-full w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RG</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Executivo</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agência</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produto</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prob (%)</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prob Value</th>
-                                <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">RG</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Executivo</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cliente</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Agência</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Produto</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Valor</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Prob (%)</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Prob Value</th>
+                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Ações</th>
                             </tr>
                         </thead>
                         <tbody id="proposalsTableBody" class="bg-white divide-y divide-gray-200">
@@ -315,7 +256,7 @@
                                 <td id="loadingStatusTd" colspan="11" class="px-6 py-10 text-center text-gray-500">
                                     <div class="flex justify-center items-center flex-col">
                                         <div class="spinner mb-3"></div>
-                                        <span>Conectando ao banco de dados...</span>
+                                        <span>Carregando dados da API...</span>
                                     </div>
                                 </td>
                             </tr>
@@ -324,175 +265,94 @@
                 </div>
             </div>
 
-            <!-- VIEW 2: CADASTRO CRM (COMERCIAL) -->
+            <!-- VIEW 2: CADASTRO CRM -->
             <div id="view-crm" class="view-section hidden">
                 <header class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                     <h2 class="text-2xl font-bold text-gray-800">Cadastro CRM</h2>
-                    
                     <div class="flex gap-2 w-full md:w-auto">
                         <button id="exportCrmButton" class="flex-1 md:flex-none bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
                             Exportar
                         </button>
                         <button id="addCrmButton" class="flex-1 md:flex-none bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300">
-                            + Nova Contato
+                            + Novo Contato
                         </button>
                     </div>
                 </header>
 
-                <!-- BARRA DE FILTROS CRM -->
                 <div class="bg-white p-4 rounded-lg shadow mb-6 border border-gray-200">
                     <div class="text-xs font-semibold text-gray-500 uppercase mb-2">Filtrar Contatos</div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-                        <div>
-                            <input type="text" id="filterCrmNome" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Nome" autocomplete="off">
-                        </div>
-                        <div>
-                            <input type="text" id="filterCrmCliente" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Cliente (Empresa)" autocomplete="off">
-                        </div>
-                        <div>
-                            <input type="text" id="filterCrmCargo" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Cargo" autocomplete="off">
-                        </div>
-                        <div>
-                            <input type="text" id="filterCrmEmail" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Email" autocomplete="off">
-                        </div>
+                        <div><input type="text" id="filterCrmNome" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Nome"></div>
+                        <div><input type="text" id="filterCrmCliente" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Cliente"></div>
+                        <div><input type="text" id="filterCrmCargo" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Cargo"></div>
+                        <div><input type="text" id="filterCrmEmail" class="w-full border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Email"></div>
                     </div>
-                    <div class="mt-3 flex justify-end">
-                         <button id="clearCrmFilters" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">Limpar Filtros</button>
-                    </div>
+                    <div class="mt-3 flex justify-end"><button id="clearCrmFilters" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">Limpar Filtros</button></div>
                 </div>
                 
                 <div class="bg-white rounded-lg shadow-lg overflow-x-auto border border-gray-200">
                     <table class="min-w-full w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Empresa</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vertical</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cargo</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Telefone</th>
-                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nome</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Empresa</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vertical</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cargo</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Telefone</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Ações</th>
                             </tr>
                         </thead>
                         <tbody id="crmTableBody" class="bg-white divide-y divide-gray-200">
-                            <tr>
-                                <td colspan="7" class="px-6 py-10 text-center text-gray-500">
-                                    <div class="flex justify-center items-center flex-col">
-                                        <div class="spinner mb-3"></div>
-                                        <span>Carregando contatos...</span>
-                                    </div>
-                                </td>
-                            </tr>
+                            <tr><td colspan="7" class="px-6 py-10 text-center text-gray-500">Carregando contatos...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- VIEW 3: NOVOS CADASTROS (COMERCIAL) -->
+            <!-- VIEW 3: NOVOS CADASTROS -->
             <div id="view-settings" class="view-section hidden">
                 <header class="mb-6"><h2 class="text-2xl font-bold text-gray-800">Gerenciar Listas Suspensas</h2></header>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    
-                    <!-- Card Cliente -->
+                    <!-- Cliente -->
                     <div class="bg-white rounded-lg shadow p-6 border border-gray-200 flex flex-col">
-                        <div class="flex items-center mb-4 text-indigo-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                            </svg>
-                            <h3 class="text-lg font-bold">Clientes</h3>
-                        </div>
-                        <p class="text-sm text-gray-500 mb-4">Adicione novas opções ao menu de Clientes.</p>
-                        <form onsubmit="handleSettingsSubmit(event, 'cliente')" class="flex gap-2">
-                            <input type="text" name="newValue" oninput="handleSettingsInput(this, 'cliente')" class="flex-1 border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Nome do Cliente" required autocomplete="off">
-                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md px-3 py-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                </svg>
-                            </button>
+                        <h3 class="text-lg font-bold text-indigo-600 mb-4 flex items-center"><svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg> Clientes</h3>
+                        <form onsubmit="handleSettingsSubmit(event, 'cliente')" class="flex gap-2 mb-2">
+                            <input type="text" name="newValue" oninput="handleSettingsInput(this, 'cliente')" class="flex-1 border-gray-300 rounded-md text-sm" placeholder="Novo Cliente" required>
+                            <button type="submit" class="bg-indigo-600 text-white rounded-md px-3 py-2 hover:bg-indigo-700">+</button>
                         </form>
-                        <div id="msg-cliente" class="mt-2 text-xs font-semibold h-4 mb-2"></div>
-                        
-                        <!-- Lista Filtrável -->
-                        <div class="flex-1 min-h-[150px] relative">
-                            <h4 class="text-xs font-bold text-gray-400 uppercase mb-2">Existentes</h4>
-                            <ul id="list-cliente" class="max-h-40 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-100 text-sm bg-gray-50">
-                                <!-- Preenchido via JS -->
-                            </ul>
-                        </div>
+                        <div id="msg-cliente" class="text-xs font-semibold h-4 mb-2"></div>
+                        <ul id="list-cliente" class="max-h-40 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-100 text-sm bg-gray-50"></ul>
                     </div>
-
-                    <!-- Card Agência -->
+                    <!-- Agência -->
                     <div class="bg-white rounded-lg shadow p-6 border border-gray-200 flex flex-col">
-                        <div class="flex items-center mb-4 text-indigo-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                            <h3 class="text-lg font-bold">Agências</h3>
-                        </div>
-                        <p class="text-sm text-gray-500 mb-4">Adicione novas opções ao menu de Agências.</p>
-                        <form onsubmit="handleSettingsSubmit(event, 'agencia')" class="flex gap-2">
-                            <input type="text" name="newValue" oninput="handleSettingsInput(this, 'agencia')" class="flex-1 border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Nome da Agência" required autocomplete="off">
-                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md px-3 py-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                </svg>
-                            </button>
+                        <h3 class="text-lg font-bold text-indigo-600 mb-4 flex items-center"><svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg> Agências</h3>
+                        <form onsubmit="handleSettingsSubmit(event, 'agencia')" class="flex gap-2 mb-2">
+                            <input type="text" name="newValue" oninput="handleSettingsInput(this, 'agencia')" class="flex-1 border-gray-300 rounded-md text-sm" placeholder="Nova Agência" required>
+                            <button type="submit" class="bg-indigo-600 text-white rounded-md px-3 py-2 hover:bg-indigo-700">+</button>
                         </form>
-                        <div id="msg-agencia" class="mt-2 text-xs font-semibold h-4 mb-2"></div>
-
-                        <!-- Lista Filtrável -->
-                        <div class="flex-1 min-h-[150px] relative">
-                            <h4 class="text-xs font-bold text-gray-400 uppercase mb-2">Existentes</h4>
-                            <ul id="list-agencia" class="max-h-40 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-100 text-sm bg-gray-50">
-                                <!-- Preenchido via JS -->
-                            </ul>
-                        </div>
+                        <div id="msg-agencia" class="text-xs font-semibold h-4 mb-2"></div>
+                        <ul id="list-agencia" class="max-h-40 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-100 text-sm bg-gray-50"></ul>
                     </div>
-
-                    <!-- Card Projeto Especial -->
+                    <!-- Projetos -->
                     <div class="bg-white rounded-lg shadow p-6 border border-gray-200 flex flex-col">
-                        <div class="flex items-center mb-4 text-indigo-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                            </svg>
-                            <h3 class="text-lg font-bold">Projetos Especiais</h3>
-                        </div>
-                        <p class="text-sm text-gray-500 mb-4">Adicione novas opções ao menu de Projetos.</p>
-                        <form onsubmit="handleSettingsSubmit(event, 'projeto')" class="flex gap-2">
-                            <input type="text" name="newValue" oninput="handleSettingsInput(this, 'projeto')" class="flex-1 border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Nome do Projeto" required autocomplete="off">
-                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md px-3 py-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                </svg>
-                            </button>
+                        <h3 class="text-lg font-bold text-indigo-600 mb-4 flex items-center"><svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg> Projetos Especiais</h3>
+                        <form onsubmit="handleSettingsSubmit(event, 'projeto')" class="flex gap-2 mb-2">
+                            <input type="text" name="newValue" oninput="handleSettingsInput(this, 'projeto')" class="flex-1 border-gray-300 rounded-md text-sm" placeholder="Novo Projeto" required>
+                            <button type="submit" class="bg-indigo-600 text-white rounded-md px-3 py-2 hover:bg-indigo-700">+</button>
                         </form>
-                        <div id="msg-projeto" class="mt-2 text-xs font-semibold h-4 mb-2"></div>
-
-                        <!-- Lista Filtrável -->
-                        <div class="flex-1 min-h-[150px] relative">
-                            <h4 class="text-xs font-bold text-gray-400 uppercase mb-2">Existentes</h4>
-                            <ul id="list-projeto" class="max-h-40 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-100 text-sm bg-gray-50">
-                                <!-- Preenchido via JS -->
-                            </ul>
-                        </div>
+                        <div id="msg-projeto" class="text-xs font-semibold h-4 mb-2"></div>
+                        <ul id="list-projeto" class="max-h-40 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-100 text-sm bg-gray-50"></ul>
                     </div>
-
                 </div>
 
-                <!-- IMPORTAÇÃO EM MASSA -->
+                <!-- IMPORTAÇÃO -->
                 <div class="bg-slate-100 rounded-lg shadow-inner p-6 border-2 border-dashed border-slate-400 relative">
-                    <div class="absolute -top-3 left-4 bg-slate-600 text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-widest">
-                        Funcionalidade de Desenvolvedor
-                    </div>
+                    <div class="absolute -top-3 left-4 bg-slate-600 text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-widest">Dev Tools</div>
                     <div class="flex items-center mb-4 text-slate-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
+                        <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
                         <h3 class="text-lg font-bold">Importação em Massa (CSV)</h3>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
@@ -505,33 +365,23 @@
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-medium text-gray-900">Arquivo CSV</label>
-                            <input type="file" id="importFile" accept=".csv" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none">
+                            <input type="file" id="importFile" accept=".csv" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white">
                         </div>
                         <div>
-                            <button id="btnImportCsv" class="w-full bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors">
-                                Processar Importação
-                            </button>
+                            <button id="btnImportCsv" class="w-full bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors">Processar Importação</button>
                         </div>
                     </div>
                     <div id="importStatus" class="mt-3 text-sm font-semibold"></div>
-                    <p class="mt-2 text-xs text-gray-500">
-                        * O arquivo deve ser .csv separado por vírgulas. A primeira linha deve conter os cabeçalhos.<br>
-                        Ex. Propostas: <code>data, executivo, cliente, agencia, produto, valor, status</code><br>
-                        Ex. CRM: <code>nome, empresa, email, cargo, telefone</code>
-                    </p>
                 </div>
             </div>
 
-            <!-- VIEW 4: PIPELINE DE CAMPANHAS (OPERACIONAL) -->
+            <!-- VIEW 4: PIPELINE DE CAMPANHAS -->
             <div id="view-operations" class="view-section hidden">
                 <header class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                     <h2 class="text-2xl font-bold text-gray-800">Pipeline de Campanhas</h2>
                     <div class="flex gap-2 w-full md:w-auto">
                         <button id="exportCampaignButton" class="flex-1 md:flex-none bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                            </svg>
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
                             Exportar
                         </button>
                         <button id="addCampaignButton" class="flex-1 md:flex-none bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300">
@@ -544,23 +394,23 @@
                     <table class="min-w-full w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">RG</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Nome</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Mês</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">PI Agência</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Campanha</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Produto</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Vertical</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Receita</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">V. Bruto</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Desc.</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">V. Líquido</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Executivo</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Rep. Coml</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Agência</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Status</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Faturar</th>
-                                <th class="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Ações</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">RG</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">Nome</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">Mês</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">PI Agência</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">Campanha</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">Produto</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">Vertical</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">Receita</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">V. Bruto</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">Desc.</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">V. Líquido</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">Executivo</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">Rep. Coml</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">Agência</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">Status</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">Faturar</th>
+                                <th class="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase whitespace-nowrap">Ações</th>
                             </tr>
                         </thead>
                         <tbody id="campaignsTableBody" class="bg-white divide-y divide-gray-200">
@@ -568,7 +418,7 @@
                                 <td colspan="17" class="px-6 py-10 text-center text-gray-500">
                                     <div class="flex justify-center items-center flex-col">
                                         <div class="spinner mb-3"></div>
-                                        <span>Carregando campanhas...</span>
+                                        <span>Carregando dados da API...</span>
                                     </div>
                                 </td>
                             </tr>
@@ -576,99 +426,29 @@
                     </table>
                 </div>
             </div>
-
-            <!-- VIEW 5: PIPELINE FINANCEIRO (FINANCEIRA) -->
-            <div id="view-financial" class="view-section hidden">
-                <header class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-                    <h2 class="text-2xl font-bold text-gray-800">Pipeline Financeiro</h2>
-                    <div class="flex gap-2 w-full md:w-auto">
-                         <button id="exportFinancialButton" class="flex-1 md:flex-none bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                            </svg>
-                            Exportar Relatório
-                        </button>
+          
+            <!-- VIEW 5: PIPELINE DE PROJETOS -->
+            <div id="view-projects" class="view-section hidden h-full flex flex-col justify-center items-center text-center">
+                <div class="bg-white p-10 rounded-2xl shadow-xl max-w-2xl w-full border border-gray-200">
+                    <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-indigo-50 text-indigo-600 mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
                     </div>
-                </header>
-
-                <!-- BARRA DE FILTROS FINANCEIROS -->
-                <div class="bg-white p-4 rounded-lg shadow mb-6 border border-gray-200">
-                    <div class="flex justify-between items-center mb-2">
-                        <div class="text-xs font-semibold text-gray-500 uppercase">Filtrar Dados Financeiros</div>
-                        <button id="clearFinancialFilters" class="text-xs text-indigo-600 hover:text-indigo-800 font-medium">Limpar</button>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
-                        <!-- Filtro de Data -->
-                        <div class="flex gap-1">
-                            <input type="date" id="finFilterDataIni" class="w-1/2 border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="De">
-                            <input type="date" id="finFilterDataFim" class="w-1/2 border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Até">
-                        </div>
-                        <!-- RG -->
-                        <div><input type="text" id="finFilterRG" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="RG"></div>
-                        <!-- Executivo -->
-                        <div><input type="text" id="finFilterExecutivo" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Executivo"></div>
-                        <!-- Cliente -->
-                        <div><input type="text" id="finFilterCliente" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Cliente"></div>
-                        <!-- Agencia -->
-                        <div><input type="text" id="finFilterAgencia" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Agência"></div>
-                        
-                        <!-- Linha 2 -->
-                        <!-- Produto -->
-                        <div><input type="text" id="finFilterProduto" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Produto"></div>
-                        <!-- Status -->
-                        <div><input type="text" id="finFilterStatus" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Status"></div>
-                        <!-- Origem -->
-                        <div><input type="text" id="finFilterOrigem" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Origem"></div>
-                        <!-- Tipo Venda -->
-                        <div><input type="text" id="finFilterTipoVenda" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Tipo Venda"></div>
-                        <!-- Projeto Especial -->
-                        <div><input type="text" id="finFilterProjeto" class="w-full border-gray-300 rounded text-xs focus:ring-indigo-500" placeholder="Projeto Especial"></div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-lg overflow-x-auto border border-gray-200">
-                    <table class="min-w-full w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">RG</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Data</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Executivo</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Agência</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Cliente Mãe</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Cliente</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Origem</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Tipo Venda</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Produto</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Proj. Especial</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Status</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Prob (%)</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Valor</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Contato</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Email</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Obs</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Representante</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Compartilhada</th>
-                            </tr>
-                        </thead>
-                        <tbody id="financialTableBody" class="bg-white divide-y divide-gray-200">
-                            <tr>
-                                <td colspan="18" class="px-6 py-10 text-center text-gray-500">
-                                    <div class="flex justify-center items-center flex-col">
-                                        <span>Carregando dados financeiros...</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Pipeline de Projetos</h2>
+                    <p class="text-gray-500 text-lg mb-8">
+                        Esta funcionalidade está em desenvolvimento.<br>
+                        Em breve você poderá gerenciar o cronograma e etapas dos seus projetos aqui.
+                    </p>
+                    <button onclick="switchView('view-home')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-colors">
+                        Voltar ao Início
+                    </button>
                 </div>
             </div>
 
         </main>
     </div>
-
-    <!-- MODAL ORIGINAL (PROPOSTAS) -->
+  <!-- MODAL ORIGINAL (PROPOSTAS) -->
     <div id="proposalModal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col">
             <!-- Cabeçalho -->
@@ -786,7 +566,6 @@
                             <option value="">Selecione</option>
                             <option value="Black Friday">Black Friday</option>
                             <option value="Carnaval 2025">Carnaval 2025</option>
-                            <!-- ... outros projetos ... -->
                             <option value="CUSTOMIZADO">CUSTOMIZADO</option>
                         </select>
                     </div>
@@ -882,7 +661,7 @@
 
     <!-- MODAL CRM -->
     <div id="crmModal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl flex flex-col">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
             <div class="flex justify-between items-center border-b p-4 md:p-5">
                 <h3 class="text-xl font-semibold text-gray-900">Novo Contato CRM</h3>
                 <button id="closeCrmModalButton" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex items-center justify-center">
@@ -892,7 +671,7 @@
                 </button>
             </div>
             
-            <form id="crmForm" class="p-6">
+            <form id="crmForm" class="p-6 overflow-y-auto">
                 <input type="hidden" id="editCrmId" name="editCrmId">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="col-span-1 md:col-span-2">
@@ -938,7 +717,7 @@
         </div>
     </div>
 
-    <!-- NOVO MODAL DE CAMPANHAS (Atualizado) -->
+    <!-- MODAL CAMPANHAS (ATUALIZADO COM SOLICITAÇÕES) -->
     <div id="campaignModal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col">
             <!-- Cabeçalho -->
@@ -957,19 +736,28 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <!-- Linha 1 -->
                     <div class="md:col-span-1">
-                        <label class="block mb-1 text-xs font-medium text-gray-700">RG</label>
-                        <input type="text" name="rg" id="camp_rg" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">RG (Sequencial)</label>
+                        <!-- RG agora é somente leitura (gerado automaticamente) -->
+                        <input type="text" name="rg" id="camp_rg" class="w-full bg-gray-100 border border-gray-300 text-sm rounded p-2 text-indigo-700 font-bold" readonly placeholder="Gerado automaticamente">
                     </div>
-                    <div class="md:col-span-2">
-                        <label class="block mb-1 text-xs font-medium text-gray-700">Nome (Gerado Automaticamente)</label>
-                        <input type="text" name="nome" id="camp_nome" class="w-full bg-gray-100 border border-gray-300 text-sm rounded p-2 font-semibold text-gray-600" readonly>
-                    </div>
+                    
                     <div class="md:col-span-1">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Qtd. Meses (Replica)</label>
+                        <input type="number" name="meses" id="camp_meses_replica" min="1" value="1" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                    </div>
+                    
+                    <div class="md:col-span-2">
                         <label class="block mb-1 text-xs font-medium text-gray-700">Mês</label>
                         <select name="mes" id="camp_mes" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
                             <option value="">Selecione</option>
-                            <!-- Gerado via JS: jan-25, fev-25 etc -->
+                            <!-- Gerado via JS -->
                         </select>
+                    </div>
+
+                    <!-- Linha Nova para Nome -->
+                    <div class="md:col-span-4">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Nome (Gerado Automaticamente)</label>
+                        <input type="text" name="nome" id="camp_nome" class="w-full bg-gray-100 border border-gray-300 text-sm rounded p-2 font-semibold text-gray-600" readonly>
                     </div>
 
                     <!-- Linha 2 -->
@@ -981,9 +769,49 @@
                         <label class="block mb-1 text-xs font-medium text-gray-700">Campanha</label>
                         <input type="text" name="campanha" id="camp_campanha" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2" required>
                     </div>
+                    
+                    <!-- CAMPO PRODUTO (Lista Suspensa) -->
                     <div class="md:col-span-1">
                         <label class="block mb-1 text-xs font-medium text-gray-700">Produto</label>
-                        <input type="text" name="produto" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                        <select name="produto" id="camp_produto" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2" required>
+                            <option value="">Selecione</option>
+                            <option value="Terra - Conteúdo Portal - sem mídia">Terra - Conteúdo Portal - sem mídia</option>
+                            <option value="Terra - PROG">Terra - PROG</option>
+                            <option value="Terra - VD">Terra - VD</option>
+                            <option value="Data Rewards Lead">Data Rewards Lead</option>
+                            <option value="Data Rewards Off Site">Data Rewards Off Site</option>
+                            <option value="Data Rewards Video">Data Rewards Video</option>
+                            <option value="Data Rewards Audio">Data Rewards Audio</option>
+                            <option value="Data Rewards AppInstall">Data Rewards AppInstall</option>
+                            <option value="Monitoramento Geo">Monitoramento Geo</option>
+                            <option value="Projeto - sem mídia">Projeto - sem mídia</option>
+                            <option value="OOH-GEO">OOH-GEO</option>
+                            <option value="Push Premium">Push Premium</option>
+                            <option value="Recompensa Celular">Recompensa Celular</option>
+                            <option value="RCS">RCS</option>
+                            <option value="SMS">SMS</option>
+                            <option value="GEO - SMS/MMS">GEO - SMS/MMS</option>
+                            <option value="Vivo Ads e Terra">Vivo Ads e Terra</option>
+                            <option value="Uras/Simcard">Uras/Simcard</option>
+                            <option value="Vivo Ads - Diversos">Vivo Ads - Diversos</option>
+                            <option value="Mídia - Facebook">Mídia - Facebook</option>
+                            <option value="Terra PD/PG">Terra PD/PG</option>
+                            <option value="MMS">MMS</option>
+                            <option value="Data Rewards Enquete">Data Rewards Enquete</option>
+                            <option value="Pesquisa">Pesquisa</option>
+                            <option value="M-Divo">M-Divo</option>
+                            <option value="Vivo Free - Prog">Vivo Free - Prog</option>
+                            <option value="Vivo Pontos - Comissionamento">Vivo Pontos - Comissionamento</option>
+                            <option value="Push Premium - Comissionamento">Push Premium - Comissionamento</option>
+                            <option value="Vivo Free - Data Rewards">Vivo Free - Data Rewards</option>
+                            <option value="Vivo Ads Track">Vivo Ads Track</option>
+                            <option value="DS - Microsoft B2C">DS - Microsoft B2C</option>
+                            <option value="Data Rewards Clique">Data Rewards Clique</option>
+                            <option value="Estudio - Terra">Estudio - Terra</option>
+                            <option value="DS - Creartors">DS - Creartors</option>
+                            <option value="Hands">Hands</option>
+                            <option value="Vivo Adstrack">Vivo Adstrack</option>
+                        </select>
                     </div>
 
                     <!-- Linha 3 -->
@@ -991,11 +819,23 @@
                         <label class="block mb-1 text-xs font-medium text-gray-700">Vertical</label>
                         <input type="text" name="vertical" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
                     </div>
+                    
+                    <!-- CAMPO RECEITA (Lista Suspensa) -->
                     <div class="md:col-span-1">
-                        <label class="block mb-1 text-xs font-medium text-gray-700">Receita (R$)</label>
-                        <!-- ALTERADO PARA TEXTO -->
-                        <input type="text" name="receita" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                        <label class="block mb-1 text-xs font-medium text-gray-700">Receita</label>
+                        <select name="receita" id="camp_receita" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                            <option value="">Selecione</option>
+                            <option value="Ads_Puro">Ads_Puro</option>
+                            <option value="Navegação_Patrocinada">Navegação_Patrocinada</option>
+                            <option value="Agregadores">Agregadores</option>
+                            <option value="Programatico">Programatico</option>
+                            <option value="PA Publicidade">PA Publicidade</option>
+                            <option value="Outros">Outros</option>
+                            <option value="Novos Negócios">Novos Negócios</option>
+                            <option value="Estudio">Estudio</option>
+                        </select>
                     </div>
+                    
                     <div class="md:col-span-1">
                         <label class="block mb-1 text-xs font-medium text-gray-700">Valor Bruto (R$)</label>
                         <input type="number" step="0.01" name="valor_bruto" id="camp_valor_bruto" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
@@ -1011,10 +851,27 @@
                         <!-- CALCULO AUTOMATICO -->
                         <input type="number" step="0.01" name="valor_liquido" id="camp_valor_liquido" class="w-full bg-gray-100 border border-gray-300 text-sm rounded p-2" readonly>
                     </div>
+                    
+                    <!-- CAMPO EXECUTIVO (Lista Suspensa - igual ao comercial) -->
                     <div class="md:col-span-1">
                         <label class="block mb-1 text-xs font-medium text-gray-700">Executivo</label>
-                        <input type="text" name="executivo" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                        <select name="executivo" id="camp_executivo" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                            <!-- Populated via JS to match commercial pipeline -->
+                            <option value="">Selecione</option>
+                            <option value="Barbara">Barbara</option>
+                            <option value="Marcio">Marcio</option>
+                            <option value="Raphael">Raphael</option>
+                            <option value="Fernando">Fernando</option>
+                            <option value="Guilherme">Guilherme</option>
+                            <option value="Leticia">Leticia</option>
+                            <option value="Jessica">Jessica</option>
+                            <option value="Vanessa">Vanessa</option>
+                            <option value="Renan">Renan</option>
+                            <option value="Lilian">Lilian</option>
+                            <option value="Bianca">Bianca</option>
+                        </select>
                     </div>
+                    
                     <div class="md:col-span-1">
                         <label class="block mb-1 text-xs font-medium text-gray-700">Agenciador/Rep.</label>
                         <input type="text" name="agenciador" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
@@ -1033,10 +890,43 @@
                         <label class="block mb-1 text-xs font-medium text-gray-700">Agência</label>
                         <input type="text" name="agencia" id="camp_agencia" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
                     </div>
+                    
+                    <!-- CAMPO SEGMENTO (Lista Suspensa) -->
                     <div class="md:col-span-1">
                         <label class="block mb-1 text-xs font-medium text-gray-700">Segmento</label>
-                        <input type="text" name="segmento" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                        <select name="segmento" id="camp_segmento" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                            <option value="">Selecione</option>
+                            <option value="Autos">Autos</option>
+                            <option value="Mobilidade">Mobilidade</option>
+                            <option value="Energia, Óleo e Gás">Energia, Óleo e Gás</option>
+                            <option value="Beleza">Beleza</option>
+                            <option value="Home Care">Home Care</option>
+                            <option value="CPG">CPG</option>
+                            <option value="Ecommerce">Ecommerce</option>
+                            <option value="Varejo">Varejo</option>
+                            <option value="Governo Federal">Governo Federal</option>
+                            <option value="Governo Estadual">Governo Estadual</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Financeiro">Financeiro</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Industria">Industria</option>
+                            <option value="Mídia e Entreterimento">Mídia e Entreterimento</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Seguradoras">Seguradoras</option>
+                            <option value="corretoras autônomas">corretoras autônomas</option>
+                            <option value="Alimentos e Bebidas">Alimentos e Bebidas</option>
+                            <option value="Long tail">Long tail</option>
+                            <option value="Turismo">Turismo</option>
+                            <option value="Bandeira de Cartão">Bandeira de Cartão</option>
+                            <option value="Fidelidade">Fidelidade</option>
+                            <option value="SVA - Interno">SVA - Interno</option>
+                            <option value="ONG">ONG</option>
+                            <option value="Imobiliario">Imobiliario</option>
+                            <option value="Bet">Bet</option>
+                            <option value="Plataformas">Plataformas</option>
+                        </select>
                     </div>
+                    
                     <div class="md:col-span-1">
                         <label class="block mb-1 text-xs font-medium text-gray-700">Projeto</label>
                         <input type="text" name="projeto" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
@@ -1052,7 +942,6 @@
                         <input type="text" name="obs" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
                     </div>
 
-                    <!-- Novos selects (antes checkboxes) -->
                     <div class="md:col-span-2">
                          <label class="block mb-1 text-xs font-medium text-gray-700">Status da Campanha</label>
                          <select name="finalizada" id="camp_finalizada" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
@@ -1080,9 +969,8 @@
                 <div id="campaignMessage" class="mt-2 text-center text-red-600 text-sm font-bold"></div>
             </form>
         </div>
-    </div>
-
-    <!-- Script Firebase -->
+    </div> 
+  <!-- Script Firebase e Lógica de Aplicação -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
         import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
@@ -1172,7 +1060,7 @@
 
         // Seletores Campanhas
         const addCampaignButton = document.getElementById('addCampaignButton');
-        const exportCampaignButton = document.getElementById('exportCampaignButton'); // NOVO
+        const exportCampaignButton = document.getElementById('exportCampaignButton');
         const campaignModal = document.getElementById('campaignModal');
         const closeCampaignModalBtn = document.getElementById('closeCampaignModalBtn');
         const campaignForm = document.getElementById('campaignForm');
@@ -1180,10 +1068,6 @@
         const campaignMessage = document.getElementById('campaignMessage');
         const editCampaignIdInput = document.getElementById('editCampaignId');
         const campaignsTableBody = document.getElementById('campaignsTableBody');
-
-        // Seletor Financeiro
-        const financialTableBody = document.getElementById('financialTableBody');
-        const exportFinancialButton = document.getElementById('exportFinancialButton');
 
         // Novos seletores de Campanha para automações
         const campRgInput = document.getElementById('camp_rg');
@@ -1219,30 +1103,13 @@
         const filterCrmCargo = document.getElementById('filterCrmCargo');
         const filterCrmEmail = document.getElementById('filterCrmEmail');
         const clearCrmFiltersBtn = document.getElementById('clearCrmFilters');
-
-        // Filter Selectors Financial (NOVOS)
-        const finFilterDataIni = document.getElementById('finFilterDataIni');
-        const finFilterDataFim = document.getElementById('finFilterDataFim');
-        const finFilterRG = document.getElementById('finFilterRG');
-        const finFilterExecutivo = document.getElementById('finFilterExecutivo');
-        const finFilterCliente = document.getElementById('finFilterCliente');
-        const finFilterAgencia = document.getElementById('finFilterAgencia');
-        const finFilterProduto = document.getElementById('finFilterProduto');
-        const finFilterStatus = document.getElementById('finFilterStatus');
-        const finFilterOrigem = document.getElementById('finFilterOrigem');
-        const finFilterTipoVenda = document.getElementById('finFilterTipoVenda');
-        const finFilterProjeto = document.getElementById('finFilterProjeto');
-        const clearFinancialFilters = document.getElementById('clearFinancialFilters');
         
         // --- LIMPEZA DE FILTROS ---
         window.addEventListener('load', () => {
             const filterIds = [
                 'filterDateStart', 'filterDateEnd', 'filterExecutivo', 'filterStatus', 
                 'filterCliente', 'filterProjeto', 'filterGestor',
-                'filterCrmNome', 'filterCrmCliente', 'filterCrmCargo', 'filterCrmEmail',
-                'finFilterDataIni', 'finFilterDataFim', 'finFilterRG', 'finFilterExecutivo', 
-                'finFilterCliente', 'finFilterAgencia', 'finFilterProduto', 'finFilterStatus', 
-                'finFilterOrigem', 'finFilterTipoVenda', 'finFilterProjeto'
+                'filterCrmNome', 'filterCrmCliente', 'filterCrmCargo', 'filterCrmEmail'
             ];
             filterIds.forEach(id => {
                 const el = document.getElementById(id);
@@ -1251,7 +1118,7 @@
 
             // POPULAR MESES NA CAMPANHA
             populateCampaignMonths();
-            // A visão inicial é Home, então nenhuma tabela carrega imediatamente, mas a gente já roda os listeners
+            // A visão inicial é Home, então nenhuma tabela carrega imediatamente
         });
 
         // --- LÓGICA DE MESES ---
@@ -1275,9 +1142,31 @@
             });
         }
 
+        // Função auxiliar para calcular o próximo mês
+        function getNextMonthString(currentMonthStr) {
+            if(!currentMonthStr) return "";
+            const months = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+            const parts = currentMonthStr.split('-');
+            
+            if(parts.length !== 2) return currentMonthStr; // fallback se formato inválido
+
+            let mIndex = months.indexOf(parts[0].toLowerCase());
+            let year = parseInt(parts[1]);
+
+            if(mIndex === -1) return currentMonthStr; // fallback se mês não encontrado
+
+            mIndex++; // Avança um mês
+            if(mIndex > 11) {
+                mIndex = 0;
+                year++;
+            }
+            return `${months[mIndex]}-${year}`;
+        }
+
         // --- LÓGICA DE AUTOMATIZAÇÃO CAMPANHA (NOME E VALOR) ---
         function updateCampaignName() {
-            const rg = campRgInput.value.trim();
+            // RG agora vem do input readonly, mas ainda compõe o nome se tiver valor
+            const rg = campRgInput.value.trim() || "RG-PENDENTE";
             const agencia = campAgenciaInput.value.trim();
             const anunciante = campAnuncianteInput.value.trim();
             const campanha = campCampanhaInput.value.trim();
@@ -1297,7 +1186,7 @@
         }
 
         // Listeners para Nome
-        if(campRgInput) campRgInput.addEventListener('input', updateCampaignName);
+        if(campRgInput) campRgInput.addEventListener('input', updateCampaignName); // Caso mude manualmente (não deve acontecer se for readonly, mas por segurança)
         if(campAgenciaInput) campAgenciaInput.addEventListener('input', updateCampaignName);
         if(campAnuncianteInput) campAnuncianteInput.addEventListener('input', updateCampaignName);
         if(campCampanhaInput) campCampanhaInput.addEventListener('input', updateCampaignName);
@@ -1324,14 +1213,14 @@
 
         // --- SISTEMA DE SENHAS ---
         const viewPasswords = {
-            'view-pipeline': 'Comercial-26-teste',
-            'view-operations': 'Campanhas-26-teste',
-            'view-financial': 'Financeiro-26-teste' // Nova senha adicionada
+            'view-pipeline': '123',
+            'view-operations': '123',
+            'view-projects': '123'
         };
         const viewAuth = { 
             'view-pipeline': false, 
             'view-operations': false,
-            'view-financial': false 
+            'view-projects': false 
         };
 
         // --- Navegação ---
@@ -1360,11 +1249,6 @@
                 activeNav.classList.remove('text-gray-300');
             }
             if(window.innerWidth < 768) toggleMenu();
-
-            // Renderizar tabela financeira se for a view financeira
-            if(viewId === 'view-financial') {
-                filterFinancialData(); // Chama filtro para renderizar inicial
-            }
         };
 
         const sortSelectOptions = (selectId) => {
@@ -1381,7 +1265,7 @@
         const sortAllDropdowns = () => {
             ['executivo', 'agencia', 'cliente', 'origem', 'tipo_venda', 'produto', 
              'projeto_especial', 'vertical', 'status', 'representante',
-             'filterExecutivo', 'filterStatus', 'filterCliente', 'filterProjeto'].forEach(id => sortSelectOptions(id));
+             'filterExecutivo', 'filterStatus', 'filterCliente', 'filterProjeto', 'camp_executivo', 'camp_produto', 'camp_segmento', 'camp_receita'].forEach(id => sortSelectOptions(id));
         };
 
         const populateFilterOptions = () => {
@@ -1453,51 +1337,6 @@
             if(el) el.addEventListener('change', filterData);
         });
         if(clearFiltersBtn) clearFiltersBtn.addEventListener('click', clearFilters);
-
-
-        // --- Lógica de Filtro e Renderização FINANCEIRO (NOVO) ---
-        const filterFinancialData = () => {
-            const startDate = finFilterDataIni.value;
-            const endDate = finFilterDataFim.value;
-            const rgVal = finFilterRG.value.toLowerCase();
-            const execVal = finFilterExecutivo.value.toLowerCase();
-            const cliVal = finFilterCliente.value.toLowerCase();
-            const ageVal = finFilterAgencia.value.toLowerCase();
-            const prodVal = finFilterProduto.value.toLowerCase();
-            const stVal = finFilterStatus.value.toLowerCase();
-            const oriVal = finFilterOrigem.value.toLowerCase();
-            const tipoVal = finFilterTipoVenda.value.toLowerCase();
-            const projVal = finFilterProjeto.value.toLowerCase();
-
-            const financialFiltered = allProposals.filter(item => {
-                if (startDate && item.data < startDate) return false;
-                if (endDate && item.data > endDate) return false;
-                if (rgVal && !(item.numero_rg || '').toLowerCase().includes(rgVal)) return false;
-                if (execVal && !(item.executivo || '').toLowerCase().includes(execVal)) return false;
-                if (cliVal && !(item.cliente || '').toLowerCase().includes(cliVal)) return false;
-                if (ageVal && !(item.agencia || '').toLowerCase().includes(ageVal)) return false;
-                if (prodVal && !(item.produto || '').toLowerCase().includes(prodVal)) return false;
-                if (stVal && !(item.status || '').toLowerCase().includes(stVal)) return false;
-                if (oriVal && !(item.origem || '').toLowerCase().includes(oriVal)) return false;
-                if (tipoVal && !(item.tipo_venda || '').toLowerCase().includes(tipoVal)) return false;
-                if (projVal && !(item.projeto_especial || '').toLowerCase().includes(projVal)) return false;
-                return true;
-            });
-            renderFinancialTable(financialFiltered);
-        };
-
-        const clearFinancialFiltersFn = () => {
-             finFilterDataIni.value = ''; finFilterDataFim.value = ''; finFilterRG.value = '';
-             finFilterExecutivo.value = ''; finFilterCliente.value = ''; finFilterAgencia.value = '';
-             finFilterProduto.value = ''; finFilterStatus.value = ''; finFilterOrigem.value = '';
-             finFilterTipoVenda.value = ''; finFilterProjeto.value = '';
-             filterFinancialData();
-        };
-
-        [finFilterDataIni, finFilterDataFim, finFilterRG, finFilterExecutivo, finFilterCliente, finFilterAgencia, finFilterProduto, finFilterStatus, finFilterOrigem, finFilterTipoVenda, finFilterProjeto].forEach(el => {
-            if(el) el.addEventListener('input', filterFinancialData);
-        });
-        if(clearFinancialFilters) clearFinancialFilters.addEventListener('click', clearFinancialFiltersFn);
 
 
         // --- Lógica de Filtro CRM ---
@@ -1831,19 +1670,38 @@
             
             // Garantir que os dropdowns carregaram
             if(campMesSelect && campMesSelect.options.length <= 1) populateCampaignMonths();
+            
+            // Controle de visibilidade do campo "Replica Meses"
+            const replicaDiv = document.getElementById('camp_meses_replica').parentNode;
 
             if(isEdit && data && id) {
                 editCampaignIdInput.value = id;
                 submitCampaignBtn.textContent = "ATUALIZAR CAMPANHA";
+                
+                // Esconder réplica na edição
+                if(replicaDiv) replicaDiv.classList.add('hidden');
+
                 Object.keys(data).forEach(key => {
                     const input = campaignForm.elements[key];
                     if(input) {
                          input.value = data[key];
                     }
                 });
+                
+                // Forçar o nome para garantir que exibe
+                if(data.nome) campNomeInput.value = data.nome;
+                
             } else {
                 editCampaignIdInput.value = '';
                 submitCampaignBtn.textContent = "SALVAR CAMPANHA";
+                
+                // Mostrar réplica na criação
+                if(replicaDiv) replicaDiv.classList.remove('hidden');
+                
+                // Valor padrão
+                document.getElementById('camp_meses_replica').value = 1;
+                document.getElementById('camp_rg').placeholder = "Gerando novo RG...";
+                
             }
             campaignModal.classList.remove('hidden');
         };
@@ -1902,68 +1760,6 @@
             proposalsTableBody.appendChild(tr);
         };
 
-        const renderFinancialRow = (proposal) => {
-            const tr = document.createElement('tr');
-            tr.className = "hover:bg-gray-50 transition-colors";
-            
-            const statusMap = {
-                "Prospecção": "bg-blue-100 text-blue-800",
-                "Proposta enviada": "bg-yellow-100 text-yellow-800",
-                "Em negociação 20": "bg-indigo-100 text-indigo-800",
-                "Em negociação 50": "bg-violet-100 text-violet-800",
-                "Em negociação 70": "bg-purple-100 text-purple-800",
-                "PI na casa": "bg-teal-100 text-teal-800",
-                "PI na casa 90": "bg-emerald-100 text-emerald-800",
-                "Fechado Ganho": "bg-green-100 text-green-800",
-                "Fechado Perdido": "bg-red-200 text-red-900",
-                "Proposta rejeitada": "bg-red-100 text-red-800",
-                "Remanejada p/ próx. mês": "bg-orange-100 text-orange-800",
-                "Todos": "bg-gray-100 text-gray-800"
-            };
-            const statusColor = statusMap[proposal.status] || "bg-gray-100 text-gray-800";
-
-            tr.innerHTML = `
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.numero_rg || '-'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${formatDate(proposal.data)}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.executivo || 'N/A'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.agencia || '-'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.cliente_mae || '-'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm font-medium text-gray-900">${proposal.cliente || 'N/A'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.origem || '-'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.tipo_venda || '-'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.produto || '-'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.projeto_especial || '-'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColor}">${proposal.status || 'N/A'}</span></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-600 font-bold">${proposal.probabilidade || 0}%</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm font-medium text-gray-900">${formatCurrency(proposal.valor)}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.contato || '-'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700 text-xs">${proposal.email || '-'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700 max-w-xs truncate" title="${proposal.observacao || ''}">${proposal.observacao || '-'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.representante || '-'}</div></td>
-                <td class="px-4 py-4 whitespace-nowrap text-center"><div class="text-sm text-gray-700">${proposal.conta_compartilhada ? 'Sim' : 'Não'}</div></td>
-            `;
-            financialTableBody.appendChild(tr);
-        };
-
-        const renderFinancialTable = (data = allProposals) => {
-            financialTableBody.innerHTML = '';
-            
-            if (data.length === 0) {
-                financialTableBody.innerHTML = `<tr><td colspan="18" class="px-6 py-10 text-center text-gray-500">Nenhum registro encontrado.</td></tr>`;
-                return;
-            }
-            // Ordenação
-            const sortedData = [...data].sort((a, b) => {
-                const dateA = new Date(a.data || 0);
-                const dateB = new Date(b.data || 0);
-                if (dateB - dateA !== 0) return dateB - dateA;
-                return (a.executivo || '').localeCompare(b.executivo || '');
-            });
-
-            sortedData.forEach(renderFinancialRow);
-        };
-
-
         const renderCrmTable = (data = allCrmContacts) => {
             crmTableBody.innerHTML = '';
             if(data.length === 0) {
@@ -2007,7 +1803,7 @@
             data.forEach(renderProposalRow);
         };
 
-        // --- Render Campanhas (NOVO) ---
+        // --- Render Campanhas (ATUALIZADO COM BOTÃO DUPLICAR) ---
         const renderCampaignsTable = (data = allCampaigns) => {
             campaignsTableBody.innerHTML = '';
             if(data.length === 0) {
@@ -2015,19 +1811,19 @@
                 return;
             }
             
+            // Ordenar por mês (simples tentativa de ordenação, já que são strings "jan-25")
+            // Idealmente converter para data, mas aqui vamos manter a ordem de inserção ou alfabética
+            
             data.forEach(camp => {
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-gray-50 transition-colors";
                 
-                // Tratar exibição de "Finalizada" (agora String)
                 let finalizadaDisplay = '';
                 if(typeof camp.finalizada === 'boolean') {
                     finalizadaDisplay = camp.finalizada ? '✅' : '❌';
                 } else {
                     finalizadaDisplay = camp.finalizada || '-';
                 }
-
-                // Tratar exibição de "Faturar"
                 let faturarDisplay = camp.faturar || '-';
 
                 tr.innerHTML = `
@@ -2038,7 +1834,6 @@
                     <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.campanha || '-'}</td>
                     <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.produto || '-'}</td>
                     <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.vertical || '-'}</td>
-                    <!-- Receita agora é Texto -->
                     <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.receita || '-'}</td>
                     <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${formatCurrency(camp.valor_bruto)}</td>
                     <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">${camp.desc_agencia || 0}%</td>
@@ -2049,11 +1844,13 @@
                     <td class="px-3 py-2 whitespace-nowrap text-sm text-center font-bold text-gray-600">${finalizadaDisplay}</td>
                     <td class="px-3 py-2 whitespace-nowrap text-sm text-center">${faturarDisplay}</td>
                     <td class="px-3 py-2 whitespace-nowrap text-right text-sm font-medium">
-                         <button class="camp-edit text-indigo-600 hover:text-indigo-900 mr-2">Editar</button>
-                         <button class="camp-del text-red-600 hover:text-red-900">Excluir</button>
+                         <button class="camp-edit text-indigo-600 hover:text-indigo-900 mr-2" title="Editar"><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></button>
+                         <button class="camp-dup text-green-600 hover:text-green-900 mr-2" title="Duplicar Linha"><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                         <button class="camp-del text-red-600 hover:text-red-900" title="Excluir"><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                     </td>
                 `;
                 tr.querySelector('.camp-edit').onclick = () => showCampaignModal(true, camp, camp.id);
+                tr.querySelector('.camp-dup').onclick = () => handleDuplicateCampaign(camp.id);
                 tr.querySelector('.camp-del').onclick = () => handleDeleteCampaign(camp.id);
                 campaignsTableBody.appendChild(tr);
             });
@@ -2089,7 +1886,7 @@
                 renderSettingsList('cliente'); renderSettingsList('agencia'); renderSettingsList('projeto');
             });
 
-            // Campanhas (NOVO)
+            // Campanhas
             unsubscribeCampaigns = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', CAMPAIGNS_COLLECTION), (snapshot) => {
                  allCampaigns = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                  renderCampaignsTable();
@@ -2240,7 +2037,7 @@
             } catch(error) { crmMessage.textContent = "Erro: " + error.message; } finally { submitCrmBtn.disabled = false; }
         };
 
-        // --- Handler CAMPANHAS (Atualizado) ---
+        // --- Handler CAMPANHAS (ATUALIZADO PARA REPLICAÇÃO E SEQUENCIAL RG) ---
         const handleCampaignSubmit = async (e) => {
             e.preventDefault();
             if(!currentUser || !db) return;
@@ -2249,8 +2046,8 @@
             const rawData = Object.fromEntries(formData.entries());
             const docId = rawData.editCampaignId;
             delete rawData.editCampaignId;
-
-            const dataToSave = {
+            
+            const baseData = {
                 ...rawData,
                 valor_bruto: parseFloat(rawData.valor_bruto) || 0,
                 desc_agencia: parseFloat(rawData.desc_agencia) || 0,
@@ -2258,15 +2055,66 @@
                 updatedAt: serverTimestamp()
             };
 
-            if(!docId) dataToSave.createdAt = serverTimestamp();
+            let monthsCount = 1;
+            if (!docId) {
+                monthsCount = parseInt(document.getElementById('camp_meses_replica').value) || 1;
+            }
+
+            let currentMonth = baseData.mes; 
 
             submitCampaignBtn.disabled = true;
             submitCampaignBtn.textContent = "SALVANDO...";
 
             try {
                 const colRef = collection(db, 'artifacts', appId, 'public', 'data', CAMPAIGNS_COLLECTION);
-                if(docId) await updateDoc(doc(colRef, docId), dataToSave);
-                else await addDoc(colRef, dataToSave);
+                
+                // Buscar último RG para sequenciar, caso seja nova inserção
+                let nextRgCounter = 0;
+
+                // Lógica de RG Sequencial (26-XXXX) apenas se não for edição
+                if (!docId) {
+                    // Filtrar RGs que seguem o padrão "26-"
+                    const pattern = /^26-(\d{4})$/;
+                    const existingRgs = allCampaigns
+                        .map(c => c.rg || "")
+                        .filter(rg => pattern.test(rg))
+                        .map(rg => parseInt(rg.split('-')[1], 10))
+                        .sort((a, b) => a - b);
+                    
+                    const maxRg = existingRgs.length > 0 ? existingRgs[existingRgs.length - 1] : 0;
+                    nextRgCounter = maxRg + 1;
+                }
+
+                for (let i = 0; i < monthsCount; i++) {
+                    const dataToSave = { ...baseData };
+                    dataToSave.mes = currentMonth;
+                    
+                    // Se não for edição, gera o novo RG
+                    if (!docId) {
+                        const suffix = String(nextRgCounter).padStart(4, '0');
+                        dataToSave.rg = `26-${suffix}`;
+                        nextRgCounter++; // Incrementa para a próxima réplica
+                    }
+                    
+                    // Recalcula o nome pois o mês e o RG mudaram
+                    const nameParts = [
+                        dataToSave.rg, 
+                        dataToSave.agencia, 
+                        dataToSave.anunciante, 
+                        dataToSave.campanha, 
+                        dataToSave.mes
+                    ];
+                    dataToSave.nome = nameParts.filter(p => p).join('_');
+
+                    if (docId && i === 0) {
+                        await updateDoc(doc(colRef, docId), dataToSave);
+                    } else {
+                        if (!docId) dataToSave.createdAt = serverTimestamp();
+                        await addDoc(colRef, dataToSave);
+                    }
+                    currentMonth = getNextMonthString(currentMonth);
+                }
+
                 hideCampaignModal();
             } catch(error) {
                 campaignMessage.textContent = "Erro: " + error.message;
@@ -2282,6 +2130,51 @@
                  const { id, ...data } = proposal; 
                  await addDoc(collection(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION), { ...data, cliente: `${data.cliente} (Cópia)`, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
              } catch (e) { alert("Erro: " + e.message); }
+        };
+
+        // --- Duplicar Campanha ---
+        const handleDuplicateCampaign = async (docId) => {
+            const camp = allCampaigns.find(c => c.id === docId);
+            if(!camp || !confirm("Duplicar esta campanha (criar cópia exata com NOVO RG)?")) return;
+            
+            try {
+                // Remover ID original
+                const { id, rg, nome, createdAt, updatedAt, ...data } = camp;
+                
+                // Gerar NOVO RG Sequencial
+                const pattern = /^26-(\d{4})$/;
+                const existingRgs = allCampaigns
+                    .map(c => c.rg || "")
+                    .filter(rg => pattern.test(rg))
+                    .map(rg => parseInt(rg.split('-')[1], 10))
+                    .sort((a, b) => a - b);
+                
+                const maxRg = existingRgs.length > 0 ? existingRgs[existingRgs.length - 1] : 0;
+                const nextRg = maxRg + 1;
+                const newRg = `26-${String(nextRg).padStart(4, '0')}`;
+
+                // Gerar novo Nome
+                 const nameParts = [
+                        newRg, 
+                        data.agencia, 
+                        data.anunciante, 
+                        data.campanha, 
+                        data.mes
+                    ];
+                const newName = nameParts.filter(p => p).join('_');
+
+                const dataToSave = {
+                    ...data,
+                    rg: newRg,
+                    nome: newName,
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp()
+                };
+                
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', CAMPAIGNS_COLLECTION), dataToSave);
+            } catch(e) { 
+                alert("Erro ao duplicar campanha: " + e.message); 
+            }
         };
 
         const handleDelete = async (docId) => {
@@ -2336,13 +2229,10 @@
 
         // Listeners Campanhas (NOVO)
         if(addCampaignButton) addCampaignButton.onclick = () => showCampaignModal();
-        if(exportCampaignButton) exportCampaignButton.onclick = exportCampaignsToCSV; // NOVO listener
+        if(exportCampaignButton) exportCampaignButton.onclick = exportCampaignsToCSV;
         if(closeCampaignModalBtn) closeCampaignModalBtn.onclick = hideCampaignModal;
         if(campaignForm) campaignForm.onsubmit = handleCampaignSubmit;
         if(campaignModal) campaignModal.onclick = (e) => { if(e.target === campaignModal) hideCampaignModal(); };
-
-        // Listeners Financeiro (NOVO)
-        if(exportFinancialButton) exportFinancialButton.onclick = exportToCSV; // Reusa exportação de propostas
 
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('mobileOverlay');
@@ -2367,5 +2257,5 @@
         if(menuBtn) menuBtn.addEventListener('click', toggleMenu);
         if(overlay) overlay.addEventListener('click', toggleMenu);
     </script>
-</body>
+  </body>
 </html>
