@@ -717,7 +717,7 @@
         </div>
     </div>
 
-    <!-- MODAL CAMPANHAS (ATUALIZADO COM SOLICITAÇÕES) -->
+    <!-- MODAL CAMPANHAS (ATUALIZADO COM LISTAS SUSPENSAS) -->
     <div id="campaignModal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col">
             <!-- Cabeçalho -->
@@ -817,7 +817,30 @@
                     <!-- Linha 3 -->
                     <div class="md:col-span-1">
                         <label class="block mb-1 text-xs font-medium text-gray-700">Vertical</label>
-                        <input type="text" name="vertical" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                        <!-- LISTA SUSPENSA VERTICAL (SOLICITAÇÃO 2) -->
+                        <select name="vertical" id="camp_vertical" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                            <option value="">Selecione</option>
+                            <option value="Byte">Byte</option>
+                            <option value="Degusta">Degusta</option>
+                            <option value="Dinheiros">Dinheiros</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Entre Telas">Entre Telas</option>
+                            <option value="Entretê s/ entre telas">Entretê s/ entre telas</option>
+                            <option value="Gameon">Gameon</option>
+                            <option value="Homepage">Homepage</option>
+                            <option value="Nós">Nós</option>
+                            <option value="Planeta">Planeta</option>
+                            <option value="Terra Agora">Terra Agora</option>
+                            <option value="Terra Você">Terra Você</option>
+                            <option value="Visão do Corre">Visão do Corre</option>
+                            <option value="Esportes">Esportes</option>
+                            <option value="N/A">N/A</option>
+                            <option value="Mobilidade">Mobilidade</option>
+                            <option value="Regional">Regional</option>
+                            <option value="Notícias">Notícias</option>
+                            <option value="Diversão">Diversão</option>
+                            <option value="Apostas">Apostas</option>
+                        </select>
                     </div>
                     
                     <!-- CAMPO RECEITA (Lista Suspensa) -->
@@ -874,7 +897,25 @@
                     
                     <div class="md:col-span-1">
                         <label class="block mb-1 text-xs font-medium text-gray-700">Agenciador/Rep.</label>
-                        <input type="text" name="agenciador" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                        <!-- LISTA SUSPENSA AGENCIADOR (SOLICITAÇÃO 1) -->
+                        <select name="agenciador" id="camp_agenciador" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                            <option value="">Selecione</option>
+                            <option value="Direto">Direto</option>
+                            <option value="Minutrade">Minutrade</option>
+                            <option value="Streetmídia">Streetmídia</option>
+                            <option value="Siprocal">Siprocal</option>
+                            <option value="Adhow">Adhow</option>
+                            <option value="NetAds">NetAds</option>
+                            <option value="FPTI">FPTI</option>
+                            <option value="DueMidia">DueMidia</option>
+                            <option value="FSMT">FSMT</option>
+                            <option value="Casa2mídia">Casa2mídia</option>
+                            <option value="WCMCOM">WCMCOM</option>
+                            <option value="Upstream">Upstream</option>
+                            <option value="Zambra">Zambra</option>
+                            <option value="Akross">Akross</option>
+                            <option value="Alcance Rio">Alcance Rio</option>
+                        </select>
                     </div>
                     <div class="md:col-span-1">
                         <label class="block mb-1 text-xs font-medium text-gray-700">Atendimento</label>
@@ -884,7 +925,16 @@
                     <!-- Linha 5 -->
                     <div class="md:col-span-1">
                         <label class="block mb-1 text-xs font-medium text-gray-700">Anunciante</label>
-                        <input type="text" name="anunciante" id="camp_anunciante" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                        <!-- LISTA SUSPENSA ANUNCIANTE (SOLICITAÇÃO 5) - IGUAL AO CLIENTE COMERCIAL -->
+                        <select name="anunciante" id="camp_anunciante" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                            <option value="">Selecione Cliente</option>
+                            <option value="7k">7k</option>
+                            <option value="96Bet">96Bet</option>
+                            <option value="99 Taxi">99 Taxi</option>
+                            <option value="123 Milhas">123 Milhas</option>
+                            <option value="zurich seguros">zurich seguros</option>
+                            <option value="Zynga">Zynga</option>
+                        </select>
                     </div>
                     <div class="md:col-span-1">
                         <label class="block mb-1 text-xs font-medium text-gray-700">Agência</label>
@@ -929,7 +979,13 @@
                     
                     <div class="md:col-span-1">
                         <label class="block mb-1 text-xs font-medium text-gray-700">Projeto</label>
-                        <input type="text" name="projeto" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                        <!-- LISTA SUSPENSA PROJETO (SOLICITAÇÃO 4) - IGUAL AO PROJETOS COMERCIAL -->
+                        <select name="projeto" id="camp_projeto" class="w-full bg-gray-50 border border-gray-300 text-sm rounded p-2">
+                            <option value="">Selecione</option>
+                            <option value="Black Friday">Black Friday</option>
+                            <option value="Carnaval 2025">Carnaval 2025</option>
+                            <option value="CUSTOMIZADO">CUSTOMIZADO</option>
+                        </select>
                     </div>
 
                     <!-- Linha 6 -->
@@ -969,7 +1025,7 @@
                 <div id="campaignMessage" class="mt-2 text-center text-red-600 text-sm font-bold"></div>
             </form>
         </div>
-    </div> 
+    </div>
   <!-- Script Firebase e Lógica de Aplicação -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
@@ -1074,7 +1130,7 @@
         const campNomeInput = document.getElementById('camp_nome');
         const campMesSelect = document.getElementById('camp_mes');
         const campAgenciaInput = document.getElementById('camp_agencia');
-        const campAnuncianteInput = document.getElementById('camp_anunciante');
+        const campAnuncianteSelect = document.getElementById('camp_anunciante'); // Alterado para Select
         const campCampanhaInput = document.getElementById('camp_campanha');
         
         const campValorBruto = document.getElementById('camp_valor_bruto');
@@ -1168,7 +1224,8 @@
             // RG agora vem do input readonly, mas ainda compõe o nome se tiver valor
             const rg = campRgInput.value.trim() || "RG-PENDENTE";
             const agencia = campAgenciaInput.value.trim();
-            const anunciante = campAnuncianteInput.value.trim();
+            // Para selects, pegamos o value. Se for "A Definir" ou algo assim, ele pega o texto.
+            const anunciante = campAnuncianteSelect ? campAnuncianteSelect.value.trim() : "";
             const campanha = campCampanhaInput.value.trim();
             const mes = campMesSelect.value; 
             
@@ -1186,9 +1243,9 @@
         }
 
         // Listeners para Nome
-        if(campRgInput) campRgInput.addEventListener('input', updateCampaignName); // Caso mude manualmente (não deve acontecer se for readonly, mas por segurança)
+        if(campRgInput) campRgInput.addEventListener('input', updateCampaignName); 
         if(campAgenciaInput) campAgenciaInput.addEventListener('input', updateCampaignName);
-        if(campAnuncianteInput) campAnuncianteInput.addEventListener('input', updateCampaignName);
+        if(campAnuncianteSelect) campAnuncianteSelect.addEventListener('change', updateCampaignName);
         if(campCampanhaInput) campCampanhaInput.addEventListener('input', updateCampaignName);
         if(campMesSelect) campMesSelect.addEventListener('change', updateCampaignName);
 
@@ -1265,7 +1322,9 @@
         const sortAllDropdowns = () => {
             ['executivo', 'agencia', 'cliente', 'origem', 'tipo_venda', 'produto', 
              'projeto_especial', 'vertical', 'status', 'representante',
-             'filterExecutivo', 'filterStatus', 'filterCliente', 'filterProjeto', 'camp_executivo', 'camp_produto', 'camp_segmento', 'camp_receita'].forEach(id => sortSelectOptions(id));
+             'filterExecutivo', 'filterStatus', 'filterCliente', 'filterProjeto', 
+             'camp_executivo', 'camp_produto', 'camp_segmento', 'camp_receita', 
+             'camp_vertical', 'camp_agenciador', 'camp_anunciante', 'camp_projeto'].forEach(id => sortSelectOptions(id));
         };
 
         const populateFilterOptions = () => {
@@ -1917,9 +1976,17 @@
                     }
                 });
             };
+            // Propostas
             addOptions('cliente', 'cliente'); addOptions('filterCliente', 'cliente');
             addOptions('agencia', 'agencia');
             addOptions('projeto_especial', 'projeto'); addOptions('filterProjeto', 'projeto');
+            
+            // Campanhas (Vínculos solicitados)
+            // Item 4: Projetos em campanhas = mesmo do comercial
+            addOptions('camp_projeto', 'projeto');
+            // Item 5: Anunciante em campanhas = mesmo que Cliente no comercial
+            addOptions('camp_anunciante', 'cliente');
+
             sortAllDropdowns();
         };
 
@@ -2047,6 +2114,10 @@
             const docId = rawData.editCampaignId;
             delete rawData.editCampaignId;
             
+            // Garantir que os campos select sejam salvos corretamente
+            // rawData já deve conter 'vertical', 'agenciador', 'anunciante', 'projeto'
+            // pois são inputs/selects com atributo name no formulário.
+
             const baseData = {
                 ...rawData,
                 valor_bruto: parseFloat(rawData.valor_bruto) || 0,
@@ -2097,6 +2168,7 @@
                     }
                     
                     // Recalcula o nome pois o mês e o RG mudaram
+                    // Nota: dataToSave.anunciante já contém o valor do select (texto do cliente)
                     const nameParts = [
                         dataToSave.rg, 
                         dataToSave.agencia, 
