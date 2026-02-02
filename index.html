@@ -8,6 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Carregando PapaParse para Importação de CSV -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <!-- Carregando jsPDF para Exportação de PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <!-- Carregando a fonte Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -41,6 +44,26 @@
 
         #sidebar, #mainContent {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Estilos para o Briefing */
+        .briefing-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .briefing-input {
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+            width: 100%;
+            font-size: 0.875rem;
+            transition: border-color 0.2s;
+        }
+        .briefing-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            ring: 2px solid #e0e7ff;
         }
     </style>
 </head>
@@ -94,6 +117,14 @@
                         </button>
                     </li>
                     <li>
+                        <button onclick="switchView('view-calculator')" id="nav-calculator" class="nav-item w-full flex items-center p-2 rounded-lg transition-colors duration-200 text-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                            <span class="font-medium whitespace-nowrap text-sm">Calculadora de Preços</span>
+                        </button>
+                    </li>
+                    <li>
                         <button onclick="switchView('view-crm')" id="nav-crm" class="nav-item w-full flex items-center p-2 rounded-lg transition-colors duration-200 text-gray-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -144,6 +175,13 @@
                                 Pipeline de Propostas
                             </h3>
                             <p class="text-gray-500">Acesse o funil comercial completo, gerencie leads, status de negociações e acompanhe o fechamento de propostas.</p>
+                        </div>
+                        <div onclick="switchView('view-calculator')" class="cursor-pointer p-6 border border-gray-200 rounded-lg hover:shadow-md transition-shadow hover:border-indigo-300 group max-w-sm w-full">
+                            <h3 class="font-bold text-gray-800 group-hover:text-indigo-600 flex items-center text-xl mb-2">
+                                <svg class="w-6 h-6 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                                Calculadora
+                            </h3>
+                            <p class="text-gray-500">Simule valores de campanhas, calcule CPM/CPC e descontos baseados na Tabela 2025.</p>
                         </div>
                     </div>
                 </div>
@@ -336,9 +374,214 @@
                 </div>
             </div>
 
+            <!-- VIEW CALCULATOR (Nova) -->
+            <div id="view-calculator" class="view-section hidden">
+                <header class="mb-6 flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-gray-800">Calculadora de Preços 2025</h2>
+                    <button onclick="clearCalculator()" class="text-sm text-gray-500 hover:text-indigo-600 underline">Limpar tudo</button>
+                </header>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Coluna da Esquerda: Formulário de Cálculo -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="bg-white p-6 rounded-lg shadow border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4 border-b pb-2">Selecionar Produto</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
+                                    <select id="calcCategory" onchange="updateCalcProducts()" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                        <option value="">Selecione...</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Produto / Formato</label>
+                                    <select id="calcProduct" onchange="loadCalcProductDetails()" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-indigo-500 focus:border-indigo-500" disabled>
+                                        <option value="">Selecione a categoria primeiro</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="calcDetailsArea" class="hidden mt-6 pt-4 border-t border-gray-100">
+                                <!-- Infos Extras da Tabela (Plataforma/Device) -->
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-500 uppercase">Plataforma / Canal</label>
+                                        <input type="text" id="calcPlatform" class="w-full bg-gray-100 border-0 rounded text-sm font-medium text-gray-700 p-2" readonly>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-500 uppercase">Device / Segmentação</label>
+                                        <input type="text" id="calcDevice" class="w-full bg-gray-100 border-0 rounded text-sm font-medium text-gray-700 p-2" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-500 uppercase">Tipo Compra</label>
+                                        <input type="text" id="calcType" class="w-full bg-gray-100 border-0 rounded text-sm font-bold text-gray-700 p-2" readonly>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-500 uppercase">KPI / Unidade</label>
+                                        <input type="text" id="calcKPI" class="w-full bg-gray-100 border-0 rounded text-sm font-bold text-gray-700 p-2" readonly>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-500 uppercase">Preço Tabela (Unit/CPM)</label>
+                                        <input type="text" id="calcTablePriceDisplay" class="w-full bg-gray-100 border-0 rounded text-sm font-bold text-indigo-700 p-2" readonly>
+                                        <input type="hidden" id="calcTablePriceRaw">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                                    <div>
+                                        <label id="lblCalcVolume" class="block text-sm font-medium text-gray-900 mb-1">Quantidade / Volume</label>
+                                        <input type="number" id="calcInputVolume" oninput="calculatePrice()" class="w-full bg-white border border-indigo-300 rounded-lg p-2.5 text-sm font-semibold focus:ring-indigo-500 focus:border-indigo-500" placeholder="0">
+                                        <p id="helperCalcVolume" class="text-xs text-gray-500 mt-1"></p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-900 mb-1">Desconto (%)</label>
+                                        <input type="number" id="calcInputDiscount" oninput="calculatePrice()" class="w-full bg-white border border-indigo-300 rounded-lg p-2.5 text-sm font-semibold focus:ring-indigo-500 focus:border-indigo-500" placeholder="0">
+                                    </div>
+                                    <div>
+                                        <button onclick="addToCart()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-4 rounded-lg shadow transition-colors flex justify-center items-center gap-2">
+                                            <span>Adicionar à Lista</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Resultado Imediato -->
+                                <div class="mt-6 bg-gray-50 rounded-lg p-4 grid grid-cols-2 gap-4 border border-gray-200">
+                                    <div>
+                                        <span class="block text-xs text-gray-500 uppercase">Valor Tabela Total</span>
+                                        <span id="resTableTotal" class="block text-lg font-bold text-gray-700">R$ 0,00</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-xs text-gray-500 uppercase">Valor Líquido (Negociado)</span>
+                                        <div class="flex items-baseline gap-2">
+                                            <span id="resNetTotal" class="block text-xl font-extrabold text-green-600">R$ 0,00</span>
+                                            <span id="resNegCPM" class="text-xs text-gray-500 font-semibold bg-gray-200 px-2 py-0.5 rounded hidden">CPM Neg: R$ 0,00</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-span-2 text-xs text-gray-500 pt-2 border-t border-gray-200">
+                                        Custo Efetivo (Unit/Outros): <span id="resEffectiveCost" class="font-bold text-gray-800">R$ 0,00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coluna da Direita: Resumo / Carrinho -->
+                    <div class="bg-white p-6 rounded-lg shadow border border-gray-200 flex flex-col h-full">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor"><path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" /></svg>
+                            Simulação da Proposta
+                        </h3>
+                        
+                        <div class="flex-1 overflow-y-auto min-h-[200px] mb-4">
+                            <table class="w-full text-sm">
+                                <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-b">
+                                    <tr>
+                                        <th class="px-2 py-2 text-left">Item</th>
+                                        <th class="px-2 py-2 text-right">Total Liq.</th>
+                                        <th class="px-1 py-2"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cartTableBody" class="divide-y divide-gray-100">
+                                    <!-- Items -->
+                                </tbody>
+                            </table>
+                            <div id="cartEmptyMsg" class="text-center text-gray-400 py-8 italic text-sm">Nenhum item adicionado</div>
+                        </div>
+
+                        <div class="border-t border-gray-200 pt-4 mt-auto">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm text-gray-600">Total Tabela:</span>
+                                <span id="cartTotalTable" class="text-sm font-semibold text-gray-800">R$ 0,00</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-base font-bold text-gray-800">Total Investimento:</span>
+                                <span id="cartTotalNet" class="text-xl font-bold text-green-600">R$ 0,00</span>
+                            </div>
+                            <div class="text-xs text-gray-400 text-center">
+                                *Valores estimados baseados na Tabela 2025.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODELO DE BRIEFING (Novo Layout) -->
+                <div id="briefingArea" class="briefing-card p-8 rounded-lg mt-8">
+                    <div class="flex justify-between items-start mb-6 border-b pb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                                <svg class="w-6 h-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                Briefing Comercial
+                            </h3>
+                            <p class="text-sm text-gray-500 mt-1">Resumo executivo da proposta para aprovação interna.</p>
+                        </div>
+                        <button onclick="exportBriefingPDF()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow flex items-center transition-colors">
+                            <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg> 
+                            Exportar PDF
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Cliente / Anunciante</label>
+                            <input type="text" class="briefing-input" id="briefingClient" placeholder="Digite o nome do cliente...">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Campanha</label>
+                            <input type="text" class="briefing-input" id="briefingCampaign" placeholder="Nome da campanha...">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Período</label>
+                            <input type="text" class="briefing-input" id="briefingPeriod" placeholder="Ex: Março/2025...">
+                        </div>
+                    </div>
+
+                    <!-- Tabela Dinâmica do Briefing -->
+                    <div class="overflow-hidden border border-gray-200 rounded-lg mb-6">
+                        <table class="w-full text-sm text-left text-gray-600" id="briefingTableHTML">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th class="px-6 py-3 font-bold">Plataforma</th>
+                                    <th class="px-6 py-3 font-bold">Formato / Produto</th>
+                                    <th class="px-6 py-3 font-bold">Segmentação</th>
+                                    <th class="px-6 py-3 font-bold">KPI Estimado</th>
+                                    <th class="px-6 py-3 text-right font-bold text-indigo-700">Valor Líquido</th>
+                                </tr>
+                            </thead>
+                            <tbody id="briefingTableBody" class="bg-white divide-y divide-gray-100">
+                                <!-- Preenchido via JS -->
+                                <tr>
+                                    <td colspan="5" class="px-6 py-8 text-center text-gray-400 italic">Adicione itens na calculadora acima para gerar o briefing.</td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="bg-gray-50 border-t-2 border-gray-200">
+                                <tr>
+                                    <td colspan="4" class="px-6 py-4 text-right font-bold text-gray-800 text-base">INVESTIMENTO TOTAL:</td>
+                                    <td class="px-6 py-4 text-right font-extrabold text-indigo-700 text-lg" id="briefingTotalDisplay">R$ 0,00</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Observações / Considerações</label>
+                            <textarea id="briefingObs" class="briefing-input" rows="3" placeholder="Informações adicionais..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
-  <!-- MODAL ORIGINAL (PROPOSTAS) -->
+    
+    <!-- FIM DA PARTE 1 -->
+  <!-- INÍCIO DA PARTE 2 -->
+
+    <!-- MODAL ORIGINAL (PROPOSTAS) -->
     <div id="proposalModal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col">
             <!-- Cabeçalho -->
@@ -648,6 +891,103 @@
         import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
+        // --- DADOS DA TABELA DE PREÇO 2025 (ATUALIZADO COM PLATAFORMA E DEVICE) ---
+        const PRICING_DATA = {
+            "MULTIPLATAFORMA | VÍDEO": [
+                { name: "Blast Vídeo (60% inv/dia)", type: "DIARIA", price: 170775.00, kpi: "1.65MM Impressões", platform: "Terra, Vivo Ads e Vivo Free", device: "Web/Tablet/Mobile" }
+            ],
+            "MULTIPLATAFORMA | DISPLAY": [
+                { name: "Terra One Day (Blast 50%)", type: "DIARIA", price: 747832.00, kpi: "16.46MM Impressões", platform: "Terra, Vivo Ads e Vivo Free", device: "Web/Tablet/Mobile" },
+                { name: "Home Day Terra + Open Exch.", type: "DIARIA", price: 683340.00, kpi: "11.82MM Impressões", platform: "Terra + Vivo Ads Track", device: "Web/Tablet/Mobile" },
+                { name: "Terra Home Day (Blast Display)", type: "DIARIA", price: 414540.00, kpi: "8.46MM Impressões", platform: "Home Terra, Vivo Ads e Vivo Free", device: "Web/Tablet/Mobile" },
+                { name: "Retângulo Premium", type: "DIARIA", price: 325920.00, kpi: "7.76MM Impressões", platform: "Terra, Vivo Ads, Vivo Free e Email", device: "Web/Tablet/Mobile" }
+            ],
+            "MULTIPLATAFORMA | SOCIAL BOOST": [
+                { name: "Social Boost (PP)", type: "PACOTE", price: 650000.00, kpi: "5 Influenciadores", platform: "Instagram / TikTok / Terra Brasil", device: "Segmentos Diversos" },
+                { name: "Social Boost (P)", type: "PACOTE", price: 625000.00, kpi: "10 Influenciadores", platform: "Instagram / TikTok / Terra Brasil", device: "Segmentos Diversos" },
+                { name: "Social Boost (M)", type: "PACOTE", price: 1150000.00, kpi: "20 Influenciadores", platform: "Instagram / TikTok / Terra Brasil", device: "Segmentos Diversos" },
+                { name: "Social Boost (G)", type: "PACOTE", price: 2700000.00, kpi: "50 Influenciadores", platform: "Instagram / TikTok / Terra Brasil", device: "Segmentos Diversos" },
+                { name: "Social Boost (GG)", type: "PACOTE", price: 5200000.00, kpi: "100 Influenciadores", platform: "Instagram / TikTok / Terra Brasil", device: "Segmentos Diversos" }
+            ],
+            "MULTIPLATAFORMA | VIVO ADS TRACK": [
+                { name: "Display Open Exchange", type: "CPM", price: 80.00, kpi: "Impressões", platform: "Vivo Ads Track", device: "Web/Tablet/Mobile" },
+                { name: "Vídeo Open Exchange", type: "CPM", price: 180.00, kpi: "Impressões", platform: "Vivo Ads Track", device: "Web/Tablet/Mobile" },
+                { name: "Vídeo Private Marketplace (CTV)", type: "CPM", price: 280.00, kpi: "Impressões", platform: "Vivo Ads Track", device: "CTV" }
+            ],
+            "MULTIPLATAFORMA | RETAIL MEDIA": [
+                { name: "Pacote Retail Media (P)", type: "PACOTE", price: 1366520.00, kpi: "2.1MM Impactos", platform: "Terra & Vivo Ads", device: "Web/Tablet/Mobile + PDV" },
+                { name: "Pacote Retail Media (M)", type: "PACOTE", price: 3672327.00, kpi: "6.7MM Impressões", platform: "Terra & Vivo Ads", device: "Web/Tablet/Mobile + PDV" },
+                { name: "Pacote Retail Media (G)", type: "PACOTE", price: 7989625.00, kpi: "12.5MM Impressões", platform: "Terra & Vivo Ads", device: "Web/Tablet/Mobile + PDV" },
+                { name: "Pacote Retail Media (Plus)", type: "PACOTE", price: 11083485.00, kpi: "18.5MM Impressões", platform: "Terra & Vivo Ads", device: "Web/Tablet/Mobile + PDV" }
+            ],
+            "TERRA | DISPLAY | DIÁRIAS": [
+                { name: "Terra One Day (Blast 100%)", type: "DIARIA", price: 1574400.00, kpi: "32.8MM Impressões", platform: "Terra", device: "Web/Tablet/Mobile/Email" },
+                { name: "Terra One Day (Blast 75%)", type: "DIARIA", price: 1180800.00, kpi: "24.6MM Impressões", platform: "Terra", device: "Web/Tablet/Mobile/Email" },
+                { name: "Terra One Day (Blast 50%)", type: "DIARIA", price: 787200.00, kpi: "16.4MM Impressões", platform: "Terra", device: "Web/Tablet/Mobile/Email" },
+                { name: "Terra One Day (Blast 25%)", type: "DIARIA", price: 393600.00, kpi: "8.2MM Impressões", platform: "Terra", device: "Web/Tablet/Mobile/Email" },
+                { name: "Terra Home Day (Blast)", type: "DIARIA", price: 411600.00, kpi: "8.4MM Impressões", platform: "Home Terra", device: "Web/Tablet/Mobile" },
+                { name: "Retângulo (300x250)", type: "DIARIA", price: 239400.00, kpi: "5.7MM Impressões", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "Retângulo Premium", type: "DIARIA", price: 323400.00, kpi: "7.7MM Impressões", platform: "Terra e Email", device: "Web/Tablet/Mobile" },
+                { name: "Carrossel", type: "DIARIA", price: 239400.00, kpi: "5.7MM Impressões", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "Âncora Desktop", type: "DIARIA", price: 163800.00, kpi: "2.1MM Impressões", platform: "Terra", device: "Web/Tablet" },
+                { name: "Âncora Mobile", type: "DIARIA", price: 344400.00, kpi: "8.2MM Impressões", platform: "Terra", device: "Mobile" },
+                { name: "Billboard / Wide", type: "DIARIA", price: 78400.00, kpi: "1.4MM Impressões", platform: "Terra", device: "Web/Tablet" },
+                { name: "Top Banner Mobile", type: "DIARIA", price: 184800.00, kpi: "4.4MM Impressões", platform: "Terra", device: "Mobile" },
+                { name: "Parallax Mobile", type: "DIARIA", price: 86700.00, kpi: "1.7MM Impressões", platform: "Terra", device: "Mobile" }
+            ],
+            "TERRA | VÍDEO | DIÁRIAS": [
+                { name: "Blast Vídeo (60% inv)", type: "DIARIA", price: 144000.00, kpi: "1.5MM Impressões", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "Floater Vídeo Home", type: "DIARIA", price: 32010.00, kpi: "330k Impressões", platform: "Home Terra", device: "Web/Tablet/Mobile" },
+                { name: "In Banner Video (300x250)", type: "DIARIA", price: 278800.00, kpi: "3.28MM Impressões", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "In Banner Video (970x250)", type: "DIARIA", price: 118320.00, kpi: "1.36MM Impressões", platform: "Terra", device: "Web/Tablet" }
+            ],
+            "TERRA | DISPLAY | CPM/CPC": [
+                { name: "Formatos Standard", type: "CPM", price: 139.00, kpi: "Impressões", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "Native Ad Texto", type: "CPM", price: 139.00, kpi: "Impressões", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "Native Ad Vídeo", type: "CPM", price: 139.00, kpi: "Impressões", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "In Banner Video", type: "CPM", price: 173.60, kpi: "Impressões", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "Web Stories", type: "CPM", price: 173.60, kpi: "Impressões", platform: "Terra", device: "Web/Tablet" },
+                { name: "Native Ad Texto (CPC)", type: "CPC", price: 7.00, kpi: "Cliques", platform: "Terra", device: "Mobile" },
+                { name: "Native Ad Vídeo (CPC)", type: "CPC", price: 7.00, kpi: "Cliques", platform: "Terra", device: "Web/Tablet/Mobile" }
+            ],
+            "TERRA | VÍDEO | CPM/CPV": [
+                { name: "Inread/PreRoll (CPV)", type: "CPV", price: 2.42, kpi: "Views", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "Bumper Ad 6'' (CPV)", type: "CPV", price: 0.97, kpi: "Views", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "Inread/PreRoll (CPM)", type: "CPM", price: 316.00, kpi: "Impressões", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "Bumper Ad 6'' (CPM)", type: "CPM", price: 158.00, kpi: "Impressões", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "Floater Vídeo (CPM)", type: "CPM", price: 376.20, kpi: "Impressões", platform: "Home Terra", device: "Web/Tablet/Mobile" }
+            ],
+            "TERRA | PROJETOS ESPECIAIS": [
+                { name: "Brand Lift (1 Pergunta)", type: "PESQUISA", price: 38000.00, kpi: "Pesquisa", platform: "Terra & Vivo Ads", device: "Web/Tablet/Mobile" },
+                { name: "Brand Lift (2 Perguntas)", type: "PESQUISA", price: 43000.00, kpi: "Pesquisa", platform: "Terra & Vivo Ads", device: "Web/Tablet/Mobile" },
+                { name: "Brand Lift (3 Perguntas)", type: "PESQUISA", price: 48000.00, kpi: "Pesquisa", platform: "Terra & Vivo Ads", device: "Web/Tablet/Mobile" },
+                { name: "Publieditorial (P)", type: "PUBLICAÇÃO", price: 150000.00, kpi: "10k PVs", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "Publieditorial (M)", type: "PUBLICAÇÃO", price: 437500.00, kpi: "30k PVs", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "Publieditorial (G)", type: "PUBLICAÇÃO", price: 720000.00, kpi: "50k PVs", platform: "Terra", device: "Web/Tablet/Mobile" },
+                { name: "Post Feed (Social)", type: "PUBLICAÇÃO", price: 25000.00, kpi: "12k Impressões", platform: "Terra Brasil (IG+FB)", device: "Web/Tablet/Mobile" },
+                { name: "Stories Combo (Social)", type: "PUBLICAÇÃO", price: 9500.00, kpi: "5k Impressões", platform: "Terra Brasil (IG+FB)", device: "Web/Tablet/Mobile" }
+            ],
+            "VIVO ADS | ENGAJAMENTO": [
+                { name: "Vídeo <= 30\" (ECPV)", type: "CPV", price: 0.74, kpi: "View Completo", platform: "Vivo Ads", device: "Mobile" },
+                { name: "Vídeo > 30\" (ECPV)", type: "CPV", price: 0.95, kpi: "View Completo", platform: "Vivo Ads", device: "Mobile" },
+                { name: "Vídeo Redirect <= 30\"", type: "REDIRECT", price: 2.50, kpi: "Redirect", platform: "Vivo Ads", device: "Mobile" },
+                { name: "Vídeo Lead <= 30\"", type: "CPL", price: 4.90, kpi: "Lead", platform: "Vivo Ads", device: "Mobile" },
+                { name: "Lead Sem Segmentação", type: "CPL", price: 4.40, kpi: "Lead", platform: "Vivo Ads", device: "Mobile" },
+                { name: "Lead Com Segmentação", type: "CPL", price: 4.80, kpi: "Lead", platform: "Vivo Ads", device: "Mobile" },
+                { name: "Lead Off Site", type: "CPL", price: 17.00, kpi: "Lead", platform: "Vivo Ads", device: "Mobile" },
+                { name: "Instalação App (CPI)", type: "CPI", price: 9.90, kpi: "Instalação", platform: "Vivo Ads", device: "Mobile" },
+                { name: "Clique no Link (CPC)", type: "CPC", price: 1.30, kpi: "Clique", platform: "Vivo Ads", device: "Mobile" }
+            ],
+            "VIVO ADS | MENSAGERIA": [
+                { name: "SMS/RCS (até 100K)", type: "CPD", price: 0.65, kpi: "Disparos", platform: "Vivo Ads", device: "Mobile" },
+                { name: "SMS/RCS (até 200K)", type: "CPD", price: 0.46, kpi: "Disparos", platform: "Vivo Ads", device: "Mobile" },
+                { name: "SMS/RCS (+300K)", type: "CPD", price: 0.26, kpi: "Disparos", platform: "Vivo Ads", device: "Mobile" },
+                { name: "Push Notification (Diária)", type: "DIARIA", price: 504000.00, kpi: "Diária", platform: "Vivo Ads", device: "Mobile" },
+                { name: "Push Notification (CPD)", type: "CPD", price: 0.42, kpi: "Disparos", platform: "Vivo Ads", device: "Mobile" },
+                { name: "Push Notification (CPC)", type: "CPC", price: 2.52, kpi: "Cliques", platform: "Vivo Ads", device: "Mobile" }
+            ]
+        };
+
         // --- Configuração Firebase ---
         let firebaseConfig;
         let appId = 'meu-pipeline-propostas'; 
@@ -757,6 +1097,32 @@
         const filterCrmEmail = document.getElementById('filterCrmEmail');
         const clearCrmFiltersBtn = document.getElementById('clearCrmFilters');
         
+        // Seletores Calculadora
+        const calcCategory = document.getElementById('calcCategory');
+        const calcProduct = document.getElementById('calcProduct');
+        const calcType = document.getElementById('calcType');
+        const calcKPI = document.getElementById('calcKPI');
+        const calcPlatform = document.getElementById('calcPlatform');
+        const calcDevice = document.getElementById('calcDevice');
+        const calcTablePriceDisplay = document.getElementById('calcTablePriceDisplay');
+        const calcTablePriceRaw = document.getElementById('calcTablePriceRaw');
+        const calcInputVolume = document.getElementById('calcInputVolume');
+        const calcInputDiscount = document.getElementById('calcInputDiscount');
+        const resTableTotal = document.getElementById('resTableTotal');
+        const resNetTotal = document.getElementById('resNetTotal');
+        const resEffectiveCost = document.getElementById('resEffectiveCost');
+        const resNegCPM = document.getElementById('resNegCPM');
+        const lblCalcVolume = document.getElementById('lblCalcVolume');
+        const helperCalcVolume = document.getElementById('helperCalcVolume');
+        const cartTableBody = document.getElementById('cartTableBody');
+        const cartTotalTable = document.getElementById('cartTotalTable');
+        const cartTotalNet = document.getElementById('cartTotalNet');
+        const cartEmptyMsg = document.getElementById('cartEmptyMsg');
+
+        // Seletores Briefing
+        const briefingTableBody = document.getElementById('briefingTableBody');
+        const briefingTotalDisplay = document.getElementById('briefingTotalDisplay');
+
         // --- LIMPEZA DE FILTROS ---
         window.addEventListener('load', () => {
             const filterIds = [
@@ -768,6 +1134,8 @@
                 const el = document.getElementById(id);
                 if(el) el.value = '';
             });
+            // Init Calculator
+            initCalculator();
         });
 
         const AGENCIAS_MICHELE = [
@@ -1397,6 +1765,341 @@
                 return (a.executivo || '').localeCompare(b.executivo || '');
             });
             data.forEach(renderProposalRow);
+        };
+
+        // --- CALCULATOR LOGIC ---
+        window.initCalculator = () => {
+            if(!calcCategory) return;
+            calcCategory.innerHTML = '<option value="">Selecione...</option>';
+            Object.keys(PRICING_DATA).forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.text = cat;
+                calcCategory.appendChild(opt);
+            });
+        };
+
+        window.updateCalcProducts = () => {
+            const selectedCat = calcCategory.value;
+            calcProduct.innerHTML = '<option value="">Selecione...</option>';
+            calcProduct.disabled = true;
+            document.getElementById('calcDetailsArea').classList.add('hidden');
+            
+            if(!selectedCat || !PRICING_DATA[selectedCat]) return;
+
+            const products = PRICING_DATA[selectedCat];
+            products.forEach((prod, index) => {
+                const opt = document.createElement('option');
+                opt.value = index; 
+                opt.text = prod.name;
+                calcProduct.appendChild(opt);
+            });
+            calcProduct.disabled = false;
+        };
+
+        window.loadCalcProductDetails = () => {
+            const cat = calcCategory.value;
+            const prodIdx = calcProduct.value;
+            if(!cat || prodIdx === "") {
+                document.getElementById('calcDetailsArea').classList.add('hidden');
+                return;
+            }
+
+            const product = PRICING_DATA[cat][prodIdx];
+            document.getElementById('calcDetailsArea').classList.remove('hidden');
+            
+            calcType.value = product.type;
+            calcKPI.value = product.kpi;
+            
+            // Novos campos: Plataforma e Device
+            calcPlatform.value = product.platform || "N/A";
+            calcDevice.value = product.device || "N/A";
+            
+            // Format price display
+            const price = parseFloat(product.price);
+            calcTablePriceRaw.value = price;
+            calcTablePriceDisplay.value = formatCurrency(price);
+
+            // Adjust inputs based on type
+            if(product.type === 'CPM') {
+                lblCalcVolume.textContent = "Volume de Impressões";
+                helperCalcVolume.textContent = "Insira o total de impressões";
+            } else if (product.type === 'DIARIA') {
+                lblCalcVolume.textContent = "Quantidade de Dias";
+                helperCalcVolume.textContent = "";
+            } else if (product.type === 'PACOTE' || product.type === 'PUBLICAÇÃO') {
+                lblCalcVolume.textContent = "Quantidade de Pacotes/Pubs";
+                helperCalcVolume.textContent = "";
+            } else {
+                lblCalcVolume.textContent = "Volume / Quantidade";
+                helperCalcVolume.textContent = "";
+            }
+
+            // Reset inputs
+            calcInputVolume.value = "";
+            calcInputDiscount.value = "";
+            calculatePrice();
+        };
+
+        window.calculatePrice = () => {
+            const price = parseFloat(calcTablePriceRaw.value) || 0;
+            const volume = parseFloat(calcInputVolume.value) || 0;
+            const discount = parseFloat(calcInputDiscount.value) || 0;
+            const type = calcType.value;
+
+            let grossTotal = 0;
+
+            if(type === 'CPM') {
+                grossTotal = (volume / 1000) * price;
+            } else {
+                grossTotal = volume * price;
+            }
+
+            const netTotal = grossTotal * (1 - (discount / 100));
+            
+            resTableTotal.textContent = formatCurrency(grossTotal);
+            resNetTotal.textContent = formatCurrency(netTotal);
+
+            // Calculate Effective Cost (CPM/Unit) AND Negotiated CPM
+            let effectiveCost = 0;
+            let negCPM = 0;
+
+            if (volume > 0) {
+                if(type === 'CPM') {
+                    // Custo Efetivo em CPM
+                    effectiveCost = (netTotal / volume) * 1000;
+                    resEffectiveCost.textContent = formatCurrency(effectiveCost) + " (CPM)";
+                    
+                    // Mostrar CPM Negociado ao lado do Valor Líquido
+                    resNegCPM.textContent = "CPM Neg: " + formatCurrency(effectiveCost);
+                    resNegCPM.classList.remove('hidden');
+                } else {
+                    effectiveCost = netTotal / volume;
+                    resEffectiveCost.textContent = formatCurrency(effectiveCost) + " (Unit)";
+                    resNegCPM.classList.add('hidden'); // Ocultar se não for CPM
+                }
+            } else {
+                resEffectiveCost.textContent = "R$ 0,00";
+                resNegCPM.classList.add('hidden');
+            }
+        };
+
+        let calculatorCart = [];
+
+        window.addToCart = () => {
+            const cat = calcCategory.value;
+            const prodIdx = calcProduct.value;
+            if(!cat || prodIdx === "") return;
+            const product = PRICING_DATA[cat][prodIdx];
+            
+            const price = parseFloat(calcTablePriceRaw.value) || 0;
+            const volume = parseFloat(calcInputVolume.value) || 0;
+            const discount = parseFloat(calcInputDiscount.value) || 0;
+            
+            if(volume <= 0) { alert("Insira um volume/quantidade válido."); return; }
+
+            let grossTotal = 0;
+            if(product.type === 'CPM') grossTotal = (volume / 1000) * price;
+            else grossTotal = volume * price;
+
+            const netTotal = grossTotal * (1 - (discount / 100));
+
+            // Estimate KPI Volume String for Briefing
+            let kpiDisplay = "";
+            if (product.type === 'CPM') {
+                let v = volume;
+                let suffix = "";
+                if(v >= 1000000) { v = v/1000000; suffix = "MM"; }
+                else if(v >= 1000) { v = v/1000; suffix = "K"; }
+                kpiDisplay = `${v.toFixed(1).replace('.0','')}${suffix} Impr.`;
+            } else {
+                kpiDisplay = `${volume} ${product.kpi || 'Unid.'}`;
+            }
+
+            const item = {
+                name: product.name,
+                volume: volume,
+                type: product.type,
+                discount: discount,
+                gross: grossTotal,
+                net: netTotal,
+                // Extra fields for Briefing
+                platform: product.platform,
+                device: product.device,
+                kpiDisplay: kpiDisplay
+            };
+
+            calculatorCart.push(item);
+            renderCart();
+            updateBriefing(); // Atualizar briefing
+        };
+
+        const renderCart = () => {
+            cartTableBody.innerHTML = '';
+            if(calculatorCart.length === 0) {
+                cartEmptyMsg.classList.remove('hidden');
+                cartTotalTable.textContent = "R$ 0,00";
+                cartTotalNet.textContent = "R$ 0,00";
+                return;
+            }
+            cartEmptyMsg.classList.add('hidden');
+
+            let totalGross = 0;
+            let totalNet = 0;
+
+            calculatorCart.forEach((item, idx) => {
+                totalGross += item.gross;
+                totalNet += item.net;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="px-2 py-2">
+                        <div class="font-medium text-gray-800">${item.name}</div>
+                        <div class="text-xs text-gray-500">${item.volume.toLocaleString()} ${item.type === 'CPM' ? 'Impr.' : 'Qtd'} | -${item.discount}%</div>
+                    </td>
+                    <td class="px-2 py-2 text-right font-bold text-gray-700">${formatCurrency(item.net)}</td>
+                    <td class="px-1 py-2 text-center">
+                        <button onclick="removeFromCart(${idx})" class="text-red-400 hover:text-red-600 font-bold">×</button>
+                    </td>
+                `;
+                cartTableBody.appendChild(tr);
+            });
+
+            cartTotalTable.textContent = formatCurrency(totalGross);
+            cartTotalNet.textContent = formatCurrency(totalNet);
+        };
+
+        window.removeFromCart = (index) => {
+            calculatorCart.splice(index, 1);
+            renderCart();
+            updateBriefing(); // Atualizar briefing
+        };
+
+        window.clearCalculator = () => {
+            calculatorCart = [];
+            renderCart();
+            updateBriefing(); // Limpar briefing
+            document.getElementById('calcDetailsArea').classList.add('hidden');
+            calcCategory.value = "";
+            calcProduct.innerHTML = '<option value="">Selecione a categoria primeiro</option>';
+            calcProduct.disabled = true;
+        };
+
+        // --- AUTOMAÇÃO DO BRIEFING (TABELA DINÂMICA) ---
+        window.updateBriefing = () => {
+            briefingTableBody.innerHTML = '';
+            let totalInvest = 0;
+
+            if (calculatorCart.length === 0) {
+                briefingTableBody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-gray-400 italic">Adicione itens na calculadora acima para gerar o briefing.</td></tr>`;
+                briefingTotalDisplay.textContent = "R$ 0,00";
+                return;
+            }
+
+            calculatorCart.forEach(item => {
+                totalInvest += item.net;
+                
+                const tr = document.createElement('tr');
+                tr.className = "border-b border-gray-100 hover:bg-gray-50";
+                tr.innerHTML = `
+                    <td class="px-6 py-3 font-medium text-gray-800">${item.platform || '-'}</td>
+                    <td class="px-6 py-3 text-gray-600">${item.name}</td>
+                    <td class="px-6 py-3 text-gray-500 text-xs">${item.device || '-'}</td>
+                    <td class="px-6 py-3 font-semibold text-gray-700">${item.kpiDisplay}</td>
+                    <td class="px-6 py-3 text-right text-gray-800">${formatCurrency(item.net)}</td>
+                `;
+                briefingTableBody.appendChild(tr);
+            });
+
+            briefingTotalDisplay.textContent = formatCurrency(totalInvest);
+        };
+
+        // --- EXPORTAR BRIEFING PDF ---
+        window.exportBriefingPDF = () => {
+            if (calculatorCart.length === 0) {
+                alert("Adicione itens ao briefing antes de exportar.");
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Colors
+            const colorPrimary = [79, 70, 229]; // Indigo 600
+            const colorGray = [100, 100, 100];
+
+            // Header
+            doc.setFillColor(...colorPrimary);
+            doc.rect(0, 0, 210, 20, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(16);
+            doc.setFont("helvetica", "bold");
+            doc.text("TERRA SALES | BRIEFING COMERCIAL", 105, 13, { align: "center" });
+
+            // Info Section
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
+
+            const client = document.getElementById('briefingClient').value || "Não informado";
+            const campaign = document.getElementById('briefingCampaign').value || "Não informado";
+            const period = document.getElementById('briefingPeriod').value || "Não informado";
+
+            doc.text(`Cliente: ${client}`, 14, 30);
+            doc.text(`Campanha: ${campaign}`, 14, 36);
+            doc.text(`Período: ${period}`, 14, 42);
+
+            // Table Data Construction
+            const tableBody = calculatorCart.map(item => [
+                item.platform || '-',
+                item.name,
+                item.device || '-',
+                item.kpiDisplay,
+                formatCurrency(item.net)
+            ]);
+
+            // Add Total Row
+            tableBody.push([
+                { content: 'INVESTIMENTO TOTAL', colSpan: 4, styles: { fontStyle: 'bold', halign: 'right' } },
+                { content: briefingTotalDisplay.textContent, styles: { fontStyle: 'bold', textColor: colorPrimary } }
+            ]);
+
+            // AutoTable
+            doc.autoTable({
+                startY: 50,
+                head: [['Plataforma', 'Formato', 'Segmentação', 'KPI Estimado', 'Valor Líquido']],
+                body: tableBody,
+                theme: 'grid',
+                headStyles: { fillColor: colorPrimary, textColor: 255, fontStyle: 'bold' },
+                styles: { fontSize: 9, cellPadding: 3 },
+                columnStyles: {
+                    4: { halign: 'right' }
+                }
+            });
+
+            // Observations
+            const obs = document.getElementById('briefingObs').value;
+            if (obs) {
+                const finalY = doc.lastAutoTable.finalY + 10;
+                doc.setFontSize(10);
+                doc.setFont("helvetica", "bold");
+                doc.text("Observações:", 14, finalY);
+                doc.setFont("helvetica", "normal");
+                
+                const splitText = doc.splitTextToSize(obs, 180);
+                doc.text(splitText, 14, finalY + 6);
+            }
+
+            // Footer
+            const pageCount = doc.internal.getNumberOfPages();
+            for(let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(8);
+                doc.setTextColor(150);
+                doc.text(`Gerado em ${new Date().toLocaleDateString()} - Página ${i} de ${pageCount}`, 105, 290, { align: "center" });
+            }
+
+            doc.save(`Briefing_${client}_${new Date().toISOString().slice(0,10)}.pdf`);
         };
 
         // --- Firebase Listeners ---
