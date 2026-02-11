@@ -253,6 +253,7 @@
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Executivo</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cliente</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vertical</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Agência</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Produto</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Valor</th>
@@ -264,7 +265,7 @@
                         </thead>
                         <tbody id="proposalsTableBody" class="bg-white divide-y divide-gray-200">
                             <tr id="loadingRow">
-                                <td id="loadingStatusTd" colspan="13" class="px-6 py-10 text-center text-gray-500">
+                                <td id="loadingStatusTd" colspan="14" class="px-6 py-10 text-center text-gray-500">
                                     <div class="flex justify-center items-center flex-col">
                                         <div class="spinner mb-3"></div>
                                         <span>Carregando dados da API...</span>
@@ -721,6 +722,33 @@
                             <option value="Vivo Ads">Vivo Ads</option>
                         </select>
                     </div>
+                    <div>
+                        <label for="vertical" class="block mb-2 text-sm font-medium text-gray-900">Vertical</label>
+                        <select id="vertical" name="vertical" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5">
+                            <option value="">Selecione Vertical</option>
+                            <option value="Alimentos & Bebidas">Alimentos & Bebidas</option>
+                            <option value="Apostas e Jogos">Apostas e Jogos</option>
+                            <option value="Automobilístico">Automobilístico</option>
+                            <option value="Beleza">Beleza</option>
+                            <option value="Cauda Longa">Cauda Longa</option>
+                            <option value="CPG">CPG</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Eletrodomésticos">Eletrodomésticos</option>
+                            <option value="Financeiro">Financeiro</option>
+                            <option value="Games">Games</option>
+                            <option value="Governo">Governo</option>
+                            <option value="Imobiliário">Imobiliário</option>
+                            <option value="Indústria">Indústria</option>
+                            <option value="Mobilidade">Mobilidade</option>
+                            <option value="Mídia | Entretenimento">Mídia | Entretenimento</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Seguros">Seguros</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Turismo">Turismo</option>
+                            <option value="Varejo">Varejo</option>
+                            <option value="Óleo & Gás">Óleo & Gás</option>
+                        </select>
+                    </div>
 
                     <!-- LINHA 3 -->
                     <div>
@@ -944,7 +972,7 @@
   <!-- Script Firebase e Lógica de Aplicação -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, serverTimestamp, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, serverTimestamp, getDoc, setDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
         // --- DADOS DA TABELA DE PREÇO 2025 (ATUALIZADO COM PLATAFORMA E DEVICE) ---
@@ -1208,27 +1236,8 @@
             "siprocal | lepub", "wms", "wpp", "zetabe", "zetabé"
         ];
 
-        // --- SISTEMA DE SENHAS ---
-        const viewPasswords = {
-            'view-pipeline': '123'
-        };
-        const viewAuth = { 
-            'view-pipeline': false
-        };
-
         // --- Navegação ---
         window.switchView = (viewId) => {
-            // VERIFICAR SENHA
-            if (viewPasswords[viewId] && !viewAuth[viewId]) {
-                const pass = prompt("Por favor, insira a senha de acesso:");
-                if (pass === viewPasswords[viewId]) {
-                    viewAuth[viewId] = true;
-                } else {
-                    alert("Senha incorreta!");
-                    return; // Bloqueia a navegação
-                }
-            }
-
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.nav-item').forEach(el => {
                 el.classList.remove('active', 'text-white');
@@ -1766,6 +1775,7 @@
                 <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${formatDate(proposal.data)}</div></td>
                 <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.executivo || 'N/A'}</div></td>
                 <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm font-medium text-gray-900">${proposal.cliente || 'N/A'}</div></td>
+                <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.vertical || '-'}</div></td>
                 <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.agencia || '-'}</div></td>
                 <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm text-gray-700">${proposal.produto || '-'}</div></td>
                 <td class="px-4 py-4 whitespace-nowrap"><div class="text-sm font-medium text-gray-900">${formatCurrency(proposal.valor)}</div></td>
@@ -1815,7 +1825,7 @@
         const renderTable = (data = allProposals) => {
             proposalsTableBody.innerHTML = '';
             if (data.length === 0) {
-                proposalsTableBody.innerHTML = `<tr><td colspan="13" class="px-6 py-10 text-center text-gray-500">Nenhuma proposta encontrada.</td></tr>`;
+                proposalsTableBody.innerHTML = `<tr><td colspan="14" class="px-6 py-10 text-center text-gray-500">Nenhuma proposta encontrada.</td></tr>`;
                 return;
             }
             data.sort((a, b) => {
@@ -2294,6 +2304,60 @@
             }
         };
 
+        // --- Função para replicar RG entre propostas com mesmo ID Proposta ---
+        const replicateRGToOtherProposals = async (idProposta, novoRG, currentDocId = null) => {
+            if (!idProposta || !novoRG || !db) {
+                console.log('Replicação de RG cancelada: dados insuficientes', {idProposta, novoRG});
+                return;
+            }
+
+            try {
+                console.log(`🔄 Iniciando replicação de RG: ${novoRG} para ID Proposta: ${idProposta}`);
+                
+                // Buscar todas as propostas com o mesmo ID Proposta
+                const proposalsRef = collection(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION);
+                const q = query(proposalsRef, where('id_proposta', '==', idProposta));
+                const querySnapshot = await getDocs(q);
+                
+                if (querySnapshot.empty) {
+                    console.log(`⚠️ Nenhuma proposta encontrada com ID Proposta: ${idProposta}`);
+                    return;
+                }
+
+                // Atualizar o RG em todas as propostas encontradas (exceto a atual se especificada)
+                let updatedCount = 0;
+                const updatePromises = [];
+                
+                querySnapshot.forEach((docSnapshot) => {
+                    // Não atualizar o documento atual (que acabou de ser salvo)
+                    if (currentDocId && docSnapshot.id === currentDocId) {
+                        return;
+                    }
+                    
+                    const proposalRef = doc(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION, docSnapshot.id);
+                    updatePromises.push(
+                        updateDoc(proposalRef, {
+                            numero_rg: novoRG,
+                            updatedAt: serverTimestamp(),
+                            rg_synced: true // Flag para indicar que foi sincronizado
+                        })
+                    );
+                    updatedCount++;
+                });
+
+                await Promise.all(updatePromises);
+                
+                if (updatedCount > 0) {
+                    console.log(`✅ RG replicado com sucesso para ${updatedCount} proposta(s)`);
+                } else {
+                    console.log(`ℹ️ Nenhuma outra proposta para atualizar com ID Proposta: ${idProposta}`);
+                }
+                
+            } catch (error) {
+                console.error('❌ Erro ao replicar RG:', error);
+            }
+        };
+
         // --- Handlers PROPOSTAS ---
         const handleFormSubmit = async (e) => {
             e.preventDefault();
@@ -2381,6 +2445,12 @@
                     const existing = allCrmContacts.find(c => c.email === rawData.email);
                     if (!existing) await addDoc(collection(db, 'artifacts', appId, 'public', 'data', CRM_COLLECTION), { nome: rawData.contato, empresa: rawData.cliente, email: rawData.email, obs: 'Importado via Proposta', createdAt: serverTimestamp() });
                 }
+                
+                // REPLICAR RG para todas as propostas com o mesmo ID Proposta
+                if (commonData.numero_rg && commonData.id_proposta) {
+                    await replicateRGToOtherProposals(commonData.id_proposta, commonData.numero_rg, docId);
+                }
+                
                 hideModal();
             } catch (error) { modalMessage.textContent = "Erro: " + error.message; } finally { submitButton.disabled = false; }
         };
@@ -2407,8 +2477,13 @@
              const proposal = allProposals.find(p => p.id === docId);
              if (!proposal || !confirm(`Duplicar proposta?`)) return;
              try {
-                 const { id, ...data } = proposal; 
-                 await addDoc(collection(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION), { ...data, cliente: `${data.cliente} (Cópia)`, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
+                 const { id, ...data } = proposal;
+                 const newDocRef = await addDoc(collection(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION), { ...data, cliente: `${data.cliente} (Cópia)`, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
+                 
+                 // REPLICAR RG para outras propostas com o mesmo ID Proposta (se houver)
+                 if (data.numero_rg && data.id_proposta) {
+                     await replicateRGToOtherProposals(data.id_proposta, data.numero_rg, newDocRef.id);
+                 }
              } catch (e) { alert("Erro: " + e.message); }
         };
 
