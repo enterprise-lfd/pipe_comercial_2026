@@ -1408,6 +1408,7 @@
         const PROPOSALS_COLLECTION = 'proposals';
         const CRM_COLLECTION = 'crm_contacts'; 
         const SETTINGS_COLLECTION = 'system_settings';
+        const CAMPAIGNS_COLLECTION = 'campaigns_pipeline';
 
         let allProposals = [];
         let filteredProposals = [];
@@ -2697,6 +2698,9 @@
             renderKanban();
         };
 
+        // Expor funções globalmente para uso nos eventos HTML
+        window.renderKanban = renderKanban;
+
         // --- REPORTS FUNCTIONS ---
         let chartStatusInstance = null;
         let chartExecutivosInstance = null;
@@ -3025,6 +3029,9 @@
             }
         };
 
+        // Expor funções globalmente
+        window.renderReports = renderReports;
+
         const renderRanking = (type, data) => {
             const container = document.getElementById(`ranking-${type}`);
             if (!container) return;
@@ -3236,6 +3243,156 @@
             }
         };
 
+        // --- Função para sincronizar com Pipeline de Campanhas ---
+        let syncedProposalIds = new Set(); // Controle de IDs já sincronizados nesta sessão
+        
+        const syncToCampaignsPipeline = async (proposalData) => {
+            if (!proposalData || !db) return;
+            if (!proposalData.id_proposta) return;
+            
+            // Verificar se já sincronizou este ID Proposta nesta sessão
+            const syncKey = proposalData.id_proposta + '_' + (proposalData.produto || 'default');
+            if (syncedProposalIds.has(syncKey)) {
+                console.log('⏭️ Produto já sincronizado nesta sessão:', syncKey);
+                return;
+            }
+            
+            try {
+                console.log('🔄 Sincronizando proposta com Pipeline de Campanhas...', proposalData.id_proposta);
+                
+                const campaignsRef = collection(db, 'artifacts', appId, 'public', 'data', CAMPAIGNS_COLLECTION);
+                
+                // Extrair mês da data
+                let mesAbrev = '';
+                if (proposalData.data) {
+                    const date = new Date(proposalData.data);
+                    const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+                    mesAbrev = meses[date.getMonth()];
+                }
+                
+                // Se tem produtos PI detalhados, criar UMA campanha para CADA produto
+                if (proposalData.pi_products && proposalData.pi_products.length > 0) {
+                    console.log('📦 Criando campanhas para', proposalData.pi_products.length, 'produtos do PI');
+                    
+                    for (const piProduct of proposalData.pi_products) {
+                        // Verificar se já existe campanha para este produto específico
+                        const q = query(
+                            campaignsRef, 
+                            where('id_proposta', '==', proposalData.id_proposta),
+                            where('produto', '==', piProduct.produto)
+                        );
+                        const existingCampaigns = await getDocs(q);
+                        
+                        // Nome: RG_Agencia_Anunciante_Produto_Mes
+                        const nomeParts = [
+                            proposalData.numero_rg,
+                            proposalData.agencia,
+                            proposalData.cliente,
+                            piProduct.produto,
+                            mesAbrev
+                        ].filter(Boolean);
+                        const nomeCompleto = nomeParts.join('_');
+                        
+                        const campaignData = {
+                            id_proposta: proposalData.id_proposta,
+                            rg: proposalData.numero_rg || '',
+                            nome: nomeCompleto,
+                            mes: mesAbrev,
+                            agencia: proposalData.agencia || '',
+                            anunciante: proposalData.cliente || '',
+                            campanha: piProduct.produto, // Nome do produto específico
+                            produto: piProduct.produto,
+                            valor_bruto: piProduct.valor || 0,
+                            desc_agencia: 0,
+                            valor_liquido: piProduct.valor || 0,
+                            executivo: proposalData.executivo || '',
+                            vertical: proposalData.vertical || '',
+                            projeto: proposalData.projeto_especial || '',
+                            obs: proposalData.observacao || '',
+                            finalizada: 'Pendente',
+                            faturar: 'Não',
+                            synced_from_commercial: true,
+                            updatedAt: serverTimestamp()
+                        };
+                        
+                        if (!existingCampaigns.empty) {
+                            // Atualizar campanha existente deste produto
+                            const existingDoc = existingCampaigns.docs[0];
+                            await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', CAMPAIGNS_COLLECTION, existingDoc.id), campaignData);
+                            console.log('✅ Campanha atualizada:', piProduct.produto);
+                        } else {
+                            // Criar nova campanha para este produto
+                            campaignData.createdAt = serverTimestamp();
+                            await addDoc(campaignsRef, campaignData);
+                            console.log('✅ Nova campanha criada:', piProduct.produto);
+                        }
+                    }
+                    
+                } else {
+                    // Se NÃO tem produtos PI, criar apenas UMA campanha com o produto geral
+                    const q = query(campaignsRef, where('id_proposta', '==', proposalData.id_proposta));
+                    const existingCampaigns = await getDocs(q);
+                    
+                    // Limpar duplicatas se existirem
+                    if (existingCampaigns.size > 1) {
+                        console.log('⚠️ Encontradas', existingCampaigns.size, 'duplicatas. Removendo...');
+                        const docs = existingCampaigns.docs;
+                        for (let i = 1; i < docs.length; i++) {
+                            await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', CAMPAIGNS_COLLECTION, docs[i].id));
+                            console.log('🗑️ Duplicata removida');
+                        }
+                    }
+                    
+                    const nomeParts = [
+                        proposalData.numero_rg,
+                        proposalData.agencia,
+                        proposalData.cliente,
+                        proposalData.produto,
+                        mesAbrev
+                    ].filter(Boolean);
+                    const nomeCompleto = nomeParts.join('_');
+                    
+                    const campaignData = {
+                        id_proposta: proposalData.id_proposta,
+                        rg: proposalData.numero_rg || '',
+                        nome: nomeCompleto,
+                        mes: mesAbrev,
+                        agencia: proposalData.agencia || '',
+                        anunciante: proposalData.cliente || '',
+                        campanha: proposalData.produto || '',
+                        produto: proposalData.produto || '',
+                        valor_bruto: proposalData.valor || 0,
+                        desc_agencia: 0,
+                        valor_liquido: proposalData.valor || 0,
+                        executivo: proposalData.executivo || '',
+                        vertical: proposalData.vertical || '',
+                        projeto: proposalData.projeto_especial || '',
+                        obs: proposalData.observacao || '',
+                        finalizada: 'Pendente',
+                        faturar: 'Não',
+                        synced_from_commercial: true,
+                        updatedAt: serverTimestamp()
+                    };
+                    
+                    if (!existingCampaigns.empty) {
+                        const existingDoc = existingCampaigns.docs[0];
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', CAMPAIGNS_COLLECTION, existingDoc.id), campaignData);
+                        console.log('✅ Campanha atualizada com sucesso');
+                    } else {
+                        campaignData.createdAt = serverTimestamp();
+                        await addDoc(campaignsRef, campaignData);
+                        console.log('✅ Nova campanha criada com sucesso');
+                    }
+                }
+                
+                // Marcar como sincronizado
+                syncedProposalIds.add(syncKey);
+                
+            } catch (error) {
+                console.error('❌ Erro ao sincronizar com Pipeline de Campanhas:', error);
+            }
+        };
+
         // --- Handlers PROPOSTAS ---
         const handleFormSubmit = async (e) => {
             e.preventDefault();
@@ -3327,6 +3484,21 @@
                 // REPLICAR RG para todas as propostas com o mesmo ID Proposta
                 if (commonData.numero_rg && commonData.id_proposta) {
                     await replicateRGToOtherProposals(commonData.id_proposta, commonData.numero_rg, docId);
+                }
+                
+                // SINCRONIZAR com Pipeline de Campanhas quando status for PI na casa
+                // Verifica se o status mudou para PI na casa (seja criação ou edição)
+                if (commonData.status === 'PI na casa' || commonData.status === 'PI na casa 90') {
+                    // Buscar dados completos da proposta se estiver editando
+                    let fullProposalData = commonData;
+                    if (docId) {
+                        const proposalRef = doc(db, 'artifacts', appId, 'public', 'data', PROPOSALS_COLLECTION, docId);
+                        const proposalDoc = await getDoc(proposalRef);
+                        if (proposalDoc.exists()) {
+                            fullProposalData = { ...proposalDoc.data(), ...commonData };
+                        }
+                    }
+                    await syncToCampaignsPipeline(fullProposalData);
                 }
                 
                 hideModal();
